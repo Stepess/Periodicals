@@ -72,8 +72,7 @@ public class JdbcUserDao implements UserDao {
         User user = null;
         try (
                 Connection connection = source.getConnection();
-                PreparedStatement statement =
-                        connection.prepareStatement(manager.getProperty("db.user.query.by.login"));
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.by.login"))
         ) {
             statement.setString(1, login);
             try (
@@ -106,6 +105,6 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void close()  {
-        
+
     }
 }
