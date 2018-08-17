@@ -26,6 +26,20 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
+      <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+      <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>8.0.11</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+      <dependency>
+          <groupId>commons-dbcp</groupId>
+          <artifactId>commons-dbcp</artifactId>
+          <version>1.4</version>
+      </dependency>
   </dependencies>
 
   <build>
@@ -63,5 +77,15 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
