@@ -18,18 +18,6 @@ public class User {
     private String address;
     private BigDecimal account;
 
-
-    public User(int id, String login, String email, RoleEnum role, String firstName, String lastName, String address, BigDecimal account) {
-        this.id = id;
-        this.login = login;
-        this.email = email;
-        this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.account = account;
-    }
-
     public User(UserBuilder builder){
         this.id = builder.getId();
         this.login = builder.getLogin();
