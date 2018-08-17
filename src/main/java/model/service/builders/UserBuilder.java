@@ -1,44 +1,54 @@
-package model.entity;
+package model.service.builders;
 
-import model.service.builders.UserBuilder;
+import model.entity.User;
 
 import java.math.BigDecimal;
 
-public class User {
+public class UserBuilder {
     private int id;
     private String login;
     private String email;
-    public enum RoleEnum {
-        USER, ADMIN
-    }
-    private RoleEnum role;
+    private User.RoleEnum role;
     private String firstName;
     private String lastName;
     private String address;
     private BigDecimal account;
 
-
-    public User(int id, String login, String email, RoleEnum role, String firstName, String lastName, String address, BigDecimal account) {
+    public UserBuilder(int id, String login, String email) {
         this.id = id;
         this.login = login;
         this.email = email;
-        this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.account = account;
     }
 
-    public User(UserBuilder builder){
-        this.id = builder.getId();
-        this.login = builder.getLogin();
-        this.email = builder.getEmail();
-        this.role = builder.getRole();
-        this.firstName = builder.getFirstName();
-        this.lastName = builder.getLastName();
-        this.address = builder.getAddress();
-        this.account = builder.getAccount();
+    public UserBuilder buildRole(User.RoleEnum role) {
+        this.role = role;
+        return this;
     }
+
+    public UserBuilder buildFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public UserBuilder buildLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public UserBuilder buildAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public UserBuilder buildAccount(BigDecimal account) {
+        this.account = account;
+        return this;
+    }
+
+    public User build() {
+        return new User(this);
+    }
+
 
     public int getId() {
         return id;
@@ -52,7 +62,7 @@ public class User {
         return email;
     }
 
-    public RoleEnum getRole() {
+    public User.RoleEnum getRole() {
         return role;
     }
 
