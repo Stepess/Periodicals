@@ -23,4 +23,28 @@ public class Publication {
         this.description = builder.getDescription();
         this.image = builder.getImage();
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Image getImage() {
+        return image;
+    }
 }

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class PublicationMapper implements ObjectMapper<Publication> {
     @Override
     public Publication extractFromResultSet(ResultSet resultSet) throws SQLException {
-        ResourceManager manager = new DBFieldsManager();//TODO switch lenguage
+        ResourceManager manager = new DBFieldsManager();//TODO switch language
         PublicationBuilder builder = new PublicationBuilder(resultSet.getInt("id"),
                 resultSet.getString(manager.getProperty("db.publication.title")),
                 resultSet.getString(manager.getProperty("db.publication.genre")))
