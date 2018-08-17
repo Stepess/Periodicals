@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 public class User {
     private int id;
     private String login;
+    private String password;
     private String email;
     public enum RoleEnum {
         USER, ADMIN
@@ -46,6 +47,10 @@ public class User {
 
     public String getLogin() {
         return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail() {
