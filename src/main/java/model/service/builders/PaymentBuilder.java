@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class PaymentBuilder {
     private int id;
     private BigDecimal bill;
-    private Payment.StateEnum state;
     private LocalDateTime dateTimeOfPayment;
 
     public PaymentBuilder(int id) {
@@ -20,12 +19,7 @@ public class PaymentBuilder {
         return this;
     }
 
-    public PaymentBuilder buildState(Payment.StateEnum state) {
-        this.state = state;
-        return this;
-    }
-
-    public PaymentBuilder buildDateTOmeOFPayment(LocalDateTime dateTimeOfPayment) {
+    public PaymentBuilder buildDateTimeOFPayment(LocalDateTime dateTimeOfPayment) {
         this.dateTimeOfPayment = dateTimeOfPayment;
         return this;
     }
@@ -40,10 +34,6 @@ public class PaymentBuilder {
 
     public BigDecimal getBill() {
         return bill;
-    }
-
-    public Payment.StateEnum getState() {
-        return state;
     }
 
     public LocalDateTime getDateTimeOfPayment() {

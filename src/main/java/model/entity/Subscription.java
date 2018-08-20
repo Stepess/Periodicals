@@ -11,21 +11,20 @@ public class Subscription {
     private int id;
     private LocalDate dateOfStart;
     private LocalDate dateOfEnd;
-    public enum StateEnum {
-        ACTIVE, INACTIVE
+    public enum StateEnum{
+        PAID, UNPAID
     }
     private StateEnum state;
-    private BigDecimal sum;
-    private List<BookedPublication> publicationList;
+    private Publication publication;
     private Payment payment;
     private int ownerId;
 
     public Subscription(SubscriptionBuilder builder) {
         this.id = builder.getId();
         this.dateOfStart = builder.getDateOfStart();
-        //this.state = builder.getState();
-        this.sum = builder.getSum();
-        this.publicationList = builder.getPublicationList();
+        this.dateOfEnd = builder.getDateOfEnd();
+        this.state = builder.getState();
+        this.publication = builder.getPublication();
         this.payment = builder.getPayment();
         this.ownerId = builder.getOwnerId();
     }
@@ -38,12 +37,17 @@ public class Subscription {
         return dateOfStart;
     }
 
-    public BigDecimal getSum() {
-        return sum;
+    public LocalDate getDateOfEnd() {
+        return dateOfEnd;
     }
 
-    public List<BookedPublication> getPublicationList() {
-        return publicationList;
+    public StateEnum getState() {
+        return state;
+    }
+
+
+    public Publication getPublication() {
+        return publication;
     }
 
     public Payment getPayment() {

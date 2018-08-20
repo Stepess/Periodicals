@@ -13,9 +13,10 @@ import java.util.List;
 public class SubscriptionBuilder {
     private int id;
     private LocalDate dateOfStart;
-    //private Subscription.StateEnum state;
-    private BigDecimal sum;
-    private List<BookedPublication> publicationList;
+    private LocalDate dateOfEnd;
+    private Subscription.StateEnum state;
+    private BigDecimal sum;//TODO maybe delete
+    private Publication publication;
     private Payment payment;
     private int ownerId;
 
@@ -28,18 +29,23 @@ public class SubscriptionBuilder {
         return this;
     }
 
-    /*public SubscriptionBuilder buildState(Subscription.StateEnum state) {
+    public SubscriptionBuilder buildDateOfEnd(LocalDate dateOfEnd) {
+        this.dateOfEnd = dateOfEnd;
+        return this;
+    }
+
+    public SubscriptionBuilder buildState(Subscription.StateEnum state) {
         this.state = state;
         return this;
-    }*/
+    }
 
     public SubscriptionBuilder buildSum(BigDecimal sum) {
         this.sum = sum;
         return this;
     }
 
-    public SubscriptionBuilder buildPublicationList(List<BookedPublication> publicationList) {//TODO check null?
-        this.publicationList = new ArrayList<>(publicationList);
+    public SubscriptionBuilder buildPublication(Publication publication) {//TODO check null?
+        this.publication = publication;
         return this;
     }
 
@@ -65,16 +71,20 @@ public class SubscriptionBuilder {
         return dateOfStart;
     }
 
-    /*public Subscription.StateEnum getState() {
+    public LocalDate getDateOfEnd() {
+        return dateOfEnd;
+    }
+
+    public Subscription.StateEnum getState() {
         return state;
-    }*/
+    }
 
     public BigDecimal getSum() {
         return sum;
     }
 
-    public List<BookedPublication> getPublicationList() {
-        return publicationList;
+    public Publication getPublication() {
+        return publication;
     }
 
     public Payment getPayment() {

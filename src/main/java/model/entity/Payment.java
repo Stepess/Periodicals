@@ -8,16 +8,11 @@ import java.time.LocalDateTime;
 public class Payment {
     private int id;
     private BigDecimal bill;
-    public enum StateEnum{
-        PAID, UNPAID
-    }
-    private StateEnum state;
     private LocalDateTime dateTimeOfPayment;
 
     public Payment(PaymentBuilder builder) {
         this.id = builder.getId();
         this.bill = builder.getBill();
-        this.state = builder.getState();
         this.dateTimeOfPayment = builder.getDateTimeOfPayment();
     }
 
@@ -27,10 +22,6 @@ public class Payment {
 
     public BigDecimal getBill() {
         return bill;
-    }
-
-    public StateEnum getState() {
-        return state;
     }
 
     public LocalDateTime getDateTimeOfPayment() {
