@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 public class UserBuilder {
     private int id;
     private String login;
+    private String password;
     private String email;
     private User.RoleEnum role;
     private String firstName;
@@ -14,10 +15,23 @@ public class UserBuilder {
     private String address;
     private BigDecimal account;
 
-    public UserBuilder(int id, String login, String email) {
+    public UserBuilder(int id) {
         this.id = id;
+    }
+
+    public UserBuilder buildLogin(String login) {
         this.login = login;
+        return this;
+    }
+
+    public UserBuilder buildPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public UserBuilder buildEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public UserBuilder buildRole(User.RoleEnum role) {
@@ -56,6 +70,10 @@ public class UserBuilder {
 
     public String getLogin() {
         return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail() {

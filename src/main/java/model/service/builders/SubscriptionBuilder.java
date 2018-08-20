@@ -1,5 +1,6 @@
 package model.service.builders;
 
+import model.entity.BookedPublication;
 import model.entity.Payment;
 import model.entity.Publication;
 import model.entity.Subscription;
@@ -12,10 +13,11 @@ import java.util.List;
 public class SubscriptionBuilder {
     private int id;
     private LocalDate dateOfStart;
-    private Subscription.StateEnum state;
+    //private Subscription.StateEnum state;
     private BigDecimal sum;
-    private List<Publication> publicationList;
+    private List<BookedPublication> publicationList;
     private Payment payment;
+    private int ownerId;
 
     public SubscriptionBuilder(int id) {
         this.id = id;
@@ -26,23 +28,28 @@ public class SubscriptionBuilder {
         return this;
     }
 
-    public SubscriptionBuilder buildState(Subscription.StateEnum state) {
+    /*public SubscriptionBuilder buildState(Subscription.StateEnum state) {
         this.state = state;
         return this;
-    }
+    }*/
 
     public SubscriptionBuilder buildSum(BigDecimal sum) {
         this.sum = sum;
         return this;
     }
 
-    public SubscriptionBuilder buildPublicationList(List<Publication> publicationList) {//TODO check null?
+    public SubscriptionBuilder buildPublicationList(List<BookedPublication> publicationList) {//TODO check null?
         this.publicationList = new ArrayList<>(publicationList);
         return this;
     }
 
     public SubscriptionBuilder buildPayment(Payment payment) {
         this.payment = payment;
+        return this;
+    }
+
+    public SubscriptionBuilder buildOwnerId(int ownerId) {
+        this.ownerId = ownerId;
         return this;
     }
 
@@ -58,19 +65,23 @@ public class SubscriptionBuilder {
         return dateOfStart;
     }
 
-    public Subscription.StateEnum getState() {
+    /*public Subscription.StateEnum getState() {
         return state;
-    }
+    }*/
 
     public BigDecimal getSum() {
         return sum;
     }
 
-    public List<Publication> getPublicationList() {
+    public List<BookedPublication> getPublicationList() {
         return publicationList;
     }
 
     public Payment getPayment() {
         return payment;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
     }
 }

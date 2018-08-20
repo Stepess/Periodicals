@@ -3,6 +3,8 @@ package model.entity;
 import model.service.builders.UserBuilder;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private int id;
@@ -17,16 +19,19 @@ public class User {
     private String lastName;
     private String address;
     private BigDecimal account;
+    private Map<String, String> nationalFields;
 
     public User(UserBuilder builder){
         this.id = builder.getId();
         this.login = builder.getLogin();
+        this.password = builder.getPassword();
         this.email = builder.getEmail();
         this.role = builder.getRole();
         this.firstName = builder.getFirstName();
         this.lastName = builder.getLastName();
         this.address = builder.getAddress();
         this.account = builder.getAccount();
+        nationalFields = new HashMap<>();
     }
 
     public int getId() {
@@ -63,5 +68,32 @@ public class User {
 
     public BigDecimal getAccount() {
         return account;
+    }
+
+    public Map<String, String> getNationalFields() {
+        return nationalFields;
+    }
+
+    public void setNationalFields(Map<String, String> nationalFields) {
+        this.nationalFields = nationalFields;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", account=" + account +
+                '}';
     }
 }

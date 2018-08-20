@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public class PublicationBuilder {
     private int id;
     private String title;
+    private String author;
     private String genre;
     private BigDecimal price;
     private String description;
@@ -17,6 +18,11 @@ public class PublicationBuilder {
         this.id = id;
         this.title = title;
         this.genre = genre;
+    }
+
+    public PublicationBuilder buildAuthor(String author) {
+        this.author = author;
+        return this;
     }
 
     public PublicationBuilder buildPrice(BigDecimal price) {
@@ -44,6 +50,10 @@ public class PublicationBuilder {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     public String getGenre() {

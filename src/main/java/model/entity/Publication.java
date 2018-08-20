@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 public class Publication {
     private int id;
     private String title;
+    private String author;
     private String genre;
     private BigDecimal price;
     private String description;
@@ -18,6 +19,7 @@ public class Publication {
     public Publication(PublicationBuilder builder) {
         this.id = builder.getId();
         this.title = builder.getTitle();
+        this.author = builder.getAuthor();
         this.genre = builder.getGenre();
         this.price = builder.getPrice();
         this.description = builder.getDescription();
@@ -30,6 +32,10 @@ public class Publication {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     public String getGenre() {
@@ -46,5 +52,18 @@ public class Publication {
 
     public Image getImage() {
         return image;
+    }
+
+    @Override
+    public String toString() {
+        return "Publication{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", genre='" + genre + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", image=" + image +
+                '}';
     }
 }

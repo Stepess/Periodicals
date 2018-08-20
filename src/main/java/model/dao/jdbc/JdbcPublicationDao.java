@@ -1,5 +1,6 @@
 package model.dao.jdbc;
 
+import com.mysql.cj.jdbc.Blob;
 import model.dao.PublicationDao;
 import model.dao.mappers.PublicationMapper;
 import model.entity.Publication;
@@ -11,11 +12,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JbdcPublicationDao implements PublicationDao {
+public class JdbcPublicationDao implements PublicationDao {
     private DataSource source;
     private ResourceManager manager;
 
-    public JbdcPublicationDao(DataSource source) {
+    public JdbcPublicationDao(DataSource source) {
         this.source = source;
         this.manager = new DataBaseManager();
     }
@@ -27,15 +28,19 @@ public class JbdcPublicationDao implements PublicationDao {
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.set"))
         ) {
+
+
             //TODO write after final version of schema
             statement.setString(1,entity.getTitle());
             statement.setString(2,entity.getTitle());
-            statement.setString(3,entity.getGenre());
+            statement.setString(3,"author");
+
             statement.setString(4,entity.getGenre());
-            statement.setString(5,entity.getPrice().toString());//TODO guess what to do with money
-            statement.setString(6,entity.getDescription());//TODO guess how put right name
-            statement.setString(7,entity.getDescription());
-            //statement.setString(8,entity.getImage());//TODO guess how put right name
+            statement.setString(5,entity.getGenre());
+            statement.setString(6,entity.getPrice().toString());//TODO guess what to do with money
+            statement.setString(7,entity.getDescription());//TODO guess how put right name
+            statement.setString(8,entity.getDescription());
+            statement.setBlob(9, connection.createBlob());//TODO guess how put right name
             result = statement.executeUpdate();
 
         } catch (SQLException e) {

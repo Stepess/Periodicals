@@ -20,4 +20,20 @@ public class Payment {
         this.state = builder.getState();
         this.dateTimeOfPayment = builder.getDateTimeOfPayment();
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public BigDecimal getBill() {
+        return bill;
+    }
+
+    public StateEnum getState() {
+        return state;
+    }
+
+    public LocalDateTime getDateTimeOfPayment() {
+        return dateTimeOfPayment;
+    }
 }

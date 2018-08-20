@@ -7,17 +7,24 @@ import model.service.resource.manager.ResourceManager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class PublicationMapper implements ObjectMapper<Publication> {
     @Override
     public Publication extractFromResultSet(ResultSet resultSet) throws SQLException {
-        ResourceManager manager = new DBFieldsManager();//TODO switch language
+        ResourceManager manager = new DBFieldsManager(new Locale("uk", "UA"));//TODO switch language
         PublicationBuilder builder = new PublicationBuilder(resultSet.getInt("id"),
-                resultSet.getString(manager.getProperty("db.publication.title")),
-                resultSet.getString(manager.getProperty("db.publication.genre")))
+                resultSet.getString(manager.getProperty("db.publication.title")) == null ?
+                        resultSet.getString("title_en") :
+                        resultSet.getString(manager.getProperty("db.publication.title")),
+                resultSet.getString(manager.getProperty("db.publication.genre")) == null ?
+                        resultSet.getString("genre_en") :
+                        resultSet.getString(manager.getProperty("db.publication.genre")))
                 .buildPrice(resultSet.getBigDecimal("price"))
                 //.getImage(resultSet.getBlob("image"));
-                .buildDescription(resultSet.getString(manager.getProperty("db.publication.description")));
+                .buildDescription(resultSet.getString( manager.getProperty("db.publication.description")) == null ?
+                        resultSet.getString("description_en") :
+                        resultSet.getString(manager.getProperty("db.publication.description")));
         return builder.build();
     }
 }

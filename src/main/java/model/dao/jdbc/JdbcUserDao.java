@@ -3,6 +3,8 @@ package model.dao.jdbc;
 import model.dao.UserDao;
 import model.dao.mappers.UserMapper;
 import model.entity.User;
+import model.service.LocaleHolder;
+import model.service.resource.manager.DBFieldsManager;
 import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
 
@@ -12,14 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO handle exception
+//TODO maybe send to the dao DTO
 
 public class JdbcUserDao implements UserDao {
     private DataSource source;
     private ResourceManager manager;
+    //private LocaleHolder localeHolder;
 
     public JdbcUserDao(DataSource source) {
         this.source = source;
         this.manager = new DataBaseManager();
+        //this.localeHolder = localeHolderl;
     }
 
     @Override
@@ -29,16 +34,19 @@ public class JdbcUserDao implements UserDao {
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.set"))
         ) {
+
+
             statement.setString(1,entity.getLogin());
             statement.setString(2,entity.getPassword());
             statement.setString(3,entity.getEmail());
             statement.setString(4,entity.getRole().toString().toLowerCase());
             statement.setString(5,entity.getFirstName());
-            statement.setString(6,entity.getFirstName());//TODO guess how put right name
+            statement.setString(6,entity.getNationalFields().get("firstName"));//TODO guess how put right name
             statement.setString(7,entity.getLastName());
-            statement.setString(8,entity.getLastName());//TODO guess how put right name
+            statement.setString(8,entity.getNationalFields().get("lastName"));//TODO guess how put right name
             statement.setString(9,entity.getAddress());
-            statement.setFloat(10,entity.getAccount().floatValue());//TODO guess how handle money
+            statement.setString(10,entity.getNationalFields().get("address"));//TODO guess how put right name
+            statement.setFloat(11,entity.getAccount().floatValue());//TODO guess how handle money
             result = statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -78,6 +86,7 @@ public class JdbcUserDao implements UserDao {
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         UserMapper userMapper = new UserMapper();
+
         try (
                 Connection connection = source.getConnection();
                 Statement statement = connection.createStatement();
@@ -95,6 +104,7 @@ public class JdbcUserDao implements UserDao {
         return users;
     }
 
+    //TODO todo
     @Override
     public boolean isUserExist(String login, String password) {
         List<User> users = getAll();
@@ -147,12 +157,13 @@ public class JdbcUserDao implements UserDao {
             statement.setString(3,entity.getEmail());
             statement.setString(4,entity.getRole().toString().toLowerCase());
             statement.setString(5,entity.getFirstName());
-            statement.setString(6,entity.getFirstName());//TODO guess how put right name
+            statement.setString(6,entity.getNationalFields().get("firstName"));//TODO guess how put right name
             statement.setString(7,entity.getLastName());
-            statement.setString(8,entity.getLastName());//TODO guess how put right name
+            statement.setString(8,entity.getNationalFields().get("lastName"));//TODO guess how put right name
             statement.setString(9,entity.getAddress());
-            statement.setFloat(10,entity.getAccount().floatValue());//TODO guess how handle money
-            statement.setInt(11,entity.getId());
+            statement.setString(10,entity.getNationalFields().get("address"));//TODO guess how put right name
+            statement.setFloat(11,entity.getAccount().floatValue());//TODO guess how handle money
+            statement.setInt(12,entity.getId());
             result = statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -174,7 +185,7 @@ public class JdbcUserDao implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result<0;//TODO test is it right
+        return result>0;
     }
 
     @Override
