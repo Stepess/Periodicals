@@ -5,6 +5,9 @@ import model.service.builders.PublicationBuilder;
 
 import java.awt.*;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Publication {
     private int id;
@@ -15,6 +18,7 @@ public class Publication {
     private String description;
     private Image image; //TODO figure out about work with image
     //private Blob blob;
+    private Map<String, String> nationalFields;
 
     public Publication(PublicationBuilder builder) {
         this.id = builder.getId();
@@ -24,6 +28,7 @@ public class Publication {
         this.price = builder.getPrice();
         this.description = builder.getDescription();
         this.image = builder.getImage();
+        nationalFields = new HashMap<>();
     }
 
     public int getId() {
@@ -55,6 +60,25 @@ public class Publication {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Publication that = (Publication) o;
+        return id == that.id &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(author, that.author) &&
+                Objects.equals(genre, that.genre) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(image, that.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, author, genre, price, description, image);
+    }
+
+    @Override
     public String toString() {
         return "Publication{" +
                 "id=" + id +
@@ -65,5 +89,13 @@ public class Publication {
                 ", description='" + description + '\'' +
                 ", image=" + image +
                 '}';
+    }
+
+    public String getNationalField(String key) {
+        return nationalFields.get(key);
+    }
+
+    public void setNationalField(String key, String field) {
+        this.nationalFields.put(key, field);
     }
 }

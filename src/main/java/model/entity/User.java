@@ -74,8 +74,12 @@ public class User {
         return nationalFields;
     }
 
-    public void setNationalFields(Map<String, String> nationalFields) {
-        this.nationalFields = nationalFields;
+    public String getNationalField(String key) {
+        return nationalFields.get(key);
+    }
+
+    public void setNationalField(String key, String field) {
+        this.nationalFields.put(key, field);
     }
 
     public void setPassword(String password) {

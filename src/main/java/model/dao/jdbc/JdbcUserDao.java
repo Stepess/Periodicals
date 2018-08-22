@@ -2,6 +2,7 @@ package model.dao.jdbc;
 
 import model.dao.UserDao;
 import model.dao.mappers.UserMapper;
+import model.entity.Payment;
 import model.entity.User;
 import model.service.LocaleHolder;
 import model.service.resource.manager.DBFieldsManager;
@@ -41,11 +42,11 @@ public class JdbcUserDao implements UserDao {
             statement.setString(3,entity.getEmail());
             statement.setString(4,entity.getRole().toString().toLowerCase());
             statement.setString(5,entity.getFirstName());
-            statement.setString(6,entity.getNationalFields().get("firstName"));//TODO guess how put right name
+            statement.setString(6,entity.getNationalField("firstName"));//TODO guess how put right name
             statement.setString(7,entity.getLastName());
-            statement.setString(8,entity.getNationalFields().get("lastName"));//TODO guess how put right name
+            statement.setString(8,entity.getNationalField("lastName"));//TODO guess how put right name
             statement.setString(9,entity.getAddress());
-            statement.setString(10,entity.getNationalFields().get("address"));//TODO guess how put right name
+            statement.setString(10,entity.getNationalField("address"));//TODO guess how put right name
             statement.setFloat(11,entity.getAccount().floatValue());//TODO guess how handle money
             result = statement.executeUpdate();
 
@@ -157,11 +158,11 @@ public class JdbcUserDao implements UserDao {
             statement.setString(3,entity.getEmail());
             statement.setString(4,entity.getRole().toString().toLowerCase());
             statement.setString(5,entity.getFirstName());
-            statement.setString(6,entity.getNationalFields().get("firstName"));//TODO guess how put right name
+            statement.setString(6,entity.getNationalField("firstName"));//TODO guess how put right name
             statement.setString(7,entity.getLastName());
-            statement.setString(8,entity.getNationalFields().get("lastName"));//TODO guess how put right name
+            statement.setString(8,entity.getNationalField("lastName"));//TODO guess how put right name
             statement.setString(9,entity.getAddress());
-            statement.setString(10,entity.getNationalFields().get("address"));//TODO guess how put right name
+            statement.setString(10,entity.getNationalField("address"));//TODO guess how put right name
             statement.setFloat(11,entity.getAccount().floatValue());//TODO guess how handle money
             statement.setInt(12,entity.getId());
             result = statement.executeUpdate();
@@ -186,6 +187,30 @@ public class JdbcUserDao implements UserDao {
             e.printStackTrace();
         }
         return result>0;
+    }
+
+    @Override
+    public boolean pay(User user,Payment payment) {
+        boolean success;
+
+
+
+                try (Connection connection = source.getConnection();
+                        PreparedStatement moneyStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.money"));
+                        PreparedStatement billStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.bill"));
+                        PreparedStatement setPaidPubStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.pub"))
+                        )
+        {
+
+            connection.setAutoCommit(false);
+            moneyStatement.executeUpdate();
+
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     @Override

@@ -28,18 +28,15 @@ public class JdbcPublicationDao implements PublicationDao {
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.set"))
         ) {
-
-
             //TODO write after final version of schema
             statement.setString(1,entity.getTitle());
-            statement.setString(2,entity.getTitle());
+            statement.setString(2,entity.getNationalField("title"));
             statement.setString(3,"author");
-
             statement.setString(4,entity.getGenre());
-            statement.setString(5,entity.getGenre());
-            statement.setString(6,entity.getPrice().toString());//TODO guess what to do with money
+            statement.setString(5,entity.getNationalField("genre"));
+            statement.setFloat(6,entity.getPrice().floatValue());//TODO guess what to do with money
             statement.setString(7,entity.getDescription());//TODO guess how put right name
-            statement.setString(8,entity.getDescription());
+            statement.setString(8,entity.getNationalField("description"));
             statement.setBlob(9, connection.createBlob());//TODO guess how put right name
             result = statement.executeUpdate();
 
@@ -105,14 +102,15 @@ public class JdbcPublicationDao implements PublicationDao {
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.update"))
         ) {
             statement.setString(1,entity.getTitle());
-            statement.setString(2,entity.getTitle());
-            statement.setString(3,entity.getGenre());
+            statement.setString(2,entity.getNationalField("title"));
+            statement.setString(3,"author");
             statement.setString(4,entity.getGenre());
-            statement.setString(5,entity.getPrice().toString());//TODO guess what to do with money
-            statement.setString(6,entity.getDescription());//TODO guess how put right name
-            statement.setString(7,entity.getDescription());
-            //statement.setString(8,entity.getImage());//TODO guess how put right name
-            statement.setInt(8,entity.getId());
+            statement.setString(5,entity.getNationalField("genre"));
+            statement.setFloat(6,entity.getPrice().floatValue());//TODO guess what to do with money
+            statement.setString(7,entity.getDescription());//TODO guess how put right name
+            statement.setString(8,entity.getNationalField("description"));
+            statement.setBlob(9, connection.createBlob());//TODO guess how put right name
+            statement.setInt(10,entity.getId());
             result = statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -134,7 +132,7 @@ public class JdbcPublicationDao implements PublicationDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result<0;//TODO test is it right
+        return result>0;
     }
 
     @Override

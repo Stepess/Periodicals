@@ -11,7 +11,9 @@ public class PaymentMapper implements ObjectMapper<Payment> {
     public Payment extractFromResultSet(ResultSet resultSet) throws SQLException {
         PaymentBuilder builder = new PaymentBuilder(resultSet.getInt("id"))
                 .buildBill(resultSet.getBigDecimal("bill"))
-                .buildDateTimeOFPayment(resultSet.getTimestamp("date_time_of_payment").toLocalDateTime());
+                .buildDateTimeOFPayment(resultSet.getTimestamp("date_time_of_payment") == null ?
+                        null :
+                        resultSet.getTimestamp("date_time_of_payment").toLocalDateTime());
         return builder.build();
     }
 }

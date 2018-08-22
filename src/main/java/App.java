@@ -1,14 +1,19 @@
 import model.dao.DaoFactory;
 import model.dao.PublicationDao;
+import model.dao.SubscriptionDao;
 import model.dao.UserDao;
 import model.dao.jdbc.JdbcDaoFactory;
 import model.entity.Publication;
+import model.entity.Subscription;
 import model.entity.User;
 import model.service.builders.PublicationBuilder;
+import model.service.builders.SubscriptionBuilder;
 import model.service.builders.UserBuilder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class App {
@@ -18,7 +23,7 @@ public class App {
         /*UserDao dao = factory.createUserDao();
         System.out.println(dao.getAll());
 
-        User user = new UserBuilder(7)
+        User user = new UserBuilder(9)
                  .buildLogin("Jedi")
                 .buildPassword("asdasdsad")
                 .buildEmail("email@email.com")
@@ -28,20 +33,18 @@ public class App {
                 .buildAddress("Far-far galaxy")
                 .buildAccount(BigDecimal.valueOf(54664.21))
                 .build();
-        Map<String, String> map = new HashMap<>();
-        map.put("firstName", "Обі-Ван");
-        map.put("lastName", "Кенобі");
-        map.put("address", "Далека-далека галактика");
-        user.setNationalFields(map);
-        user.setPassword("may0the0force");
 
+
+        user.setNationalField("firstName", "Обі-Ван");
+        user.setNationalField("lastName", "Кенобі");
+        user.setNationalField("address", "Далека-далека галактика");
+        user.setPassword("may0the0force");
 
 
         System.out.println(dao.setInDb(user));
         System.out.println(dao.getAll());
 
-        map.put("address", "Дуже далека-далека галактика");
-        user.setNationalFields(map);
+        user.setNationalField("address", "Дуже далека-далека галактика");
 
         System.out.println(dao.update(user));
         System.out.println(dao.getAll());
@@ -64,5 +67,35 @@ public class App {
 
         System.out.println(dao.getAll());
 */
+
+
+        SubscriptionDao dao = factory.createSubscriptionDao();
+        PublicationDao publicationDao = factory.createPublicationDao();
+
+        List<Subscription> list = dao.getAll();
+
+        list.forEach(System.out::println);
+
+        Subscription subscription = new SubscriptionBuilder(5)
+                .buildDateOfStart(LocalDate.now())
+                .buildDateOfEnd(LocalDate.now().plusMonths(2))
+                .buildOwnerId(2)
+                .buildPublication(publicationDao.getById(2))
+                .buildState(Subscription.StateEnum.UNPAID)
+                .buildPayment(null)
+                .build();
+
+        System.out.println(dao.setInDb(subscription));
+
+        list = dao.getAll();
+
+        list.forEach(System.out::println);
+
+        System.out.println(dao.delete(subscription));
+
+        list = dao.getAll();
+
+        list.forEach(System.out::println);
+
     }
 }

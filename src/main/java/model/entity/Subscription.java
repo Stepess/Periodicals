@@ -57,4 +57,17 @@ public class Subscription {
     public int getOwnerId() {
         return ownerId;
     }
+
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", dateOfStart=" + dateOfStart +
+                ", dateOfEnd=" + dateOfEnd +
+                ", state=" + state +
+                ", publication=" + publication +
+                ", payment=" + payment +
+                ", ownerId=" + ownerId +
+                '}';
+    }
 }

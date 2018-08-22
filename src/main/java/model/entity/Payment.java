@@ -27,4 +27,13 @@ public class Payment {
     public LocalDateTime getDateTimeOfPayment() {
         return dateTimeOfPayment;
     }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "id=" + id +
+                ", bill=" + bill +
+                ", dateTimeOfPayment=" + dateTimeOfPayment +
+                '}';
+    }
 }
