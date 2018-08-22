@@ -2,11 +2,14 @@ package controller.command;
 
 import model.entity.User;
 import model.service.UserService;
+import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.ResourceManager;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Locale;
 import java.util.Map;
 
 public class LoginCommand implements Command {
@@ -36,7 +39,13 @@ public class LoginCommand implements Command {
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.page.main");
         } else {
-            request.setAttribute("errorLoginPassMessage", "Wrong login password");
+
+            System.out.println(new MessageManager(new Locale(((String) request.getSession().getAttribute("language")).substring(0,2), ((String) request.getSession().getAttribute("language")).substring(3,5)))
+                    .getProperty("message.wrong.login.password"));
+
+            request.setAttribute("errorLoginPassMessage",
+                    new MessageManager(new Locale(((String) request.getSession().getAttribute("language")).substring(0,2), ((String) request.getSession().getAttribute("language")).substring(3,5)))
+                    .getProperty("message.wrong.login.password"));
         }
         return manager.getProperty("path.page.index");
     }

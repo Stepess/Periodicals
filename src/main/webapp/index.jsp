@@ -5,6 +5,8 @@
 <h2>Hello, ${sessionScope.login}, ${sessionScope.role}!</h2>
 <jsp:include page="/WEB-INF/component/header.jsp"></jsp:include>
 <br/>
-<a href="/${sessionScope.role}/main.jsp">Home</a>
+<c:if test="${sessionScope.role == 'guest'}">
+    <a href="/${sessionScope.role}/main.jsp">Home</a>
+</c:if>
 </body>
 </html>
