@@ -11,6 +11,22 @@ public enum CommandEnum {
         {
             this.command = new LogoutCommand();
         }
+    },
+
+    CATALOG {
+        {
+            this.command = new CatalogCommand();
+        }
+    },
+    PAYMENTS {
+        {
+            this.command = new PaymentCommand();
+        }
+    },
+    SUBSCRIPTIONS {
+        {
+            this.command = new SubscriptionCommand();
+        }
     };
 
     Command command;

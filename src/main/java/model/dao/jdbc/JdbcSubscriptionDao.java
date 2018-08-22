@@ -4,6 +4,7 @@ import model.dao.SubscriptionDao;
 import model.dao.mappers.SubscriptionMapper;
 import model.entity.Payment;
 import model.entity.Subscription;
+import model.entity.User;
 import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
 
@@ -35,14 +36,14 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
                 try{
                     statement.setString(1, entity.getState().toString().toLowerCase());
-                    statement.setDate(2, Date.valueOf(entity.getDateOfStart()));
-                    statement.setDate(3, Date.valueOf(entity.getDateOfEnd()));
+                    statement.setDate(2, Date.valueOf(entity.getStartDate()));
+                    statement.setDate(3, Date.valueOf(entity.getEndDate()));
                     statement.setInt(4, entity.getOwnerId());
                     statement.setInt(5, entity.getPublication().getId());
                     Payment payment = entity.getPayment();
                     if (payment != null) {
                         paymentStatement.setFloat(1, payment.getBill().floatValue());
-                        paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getDateTimeOfPayment()));
+                        paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentDateTime()));
                         paymentStatement.setInt(3, entity.getPublication().getId());
                         paymentStatement.setInt(4, entity.getOwnerId());
                     }
@@ -122,15 +123,15 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
                 try{
                     statement.setString(1, entity.getState().toString().toLowerCase());
-                    statement.setDate(2, Date.valueOf(entity.getDateOfStart()));
-                    statement.setDate(3, Date.valueOf(entity.getDateOfEnd()));
+                    statement.setDate(2, Date.valueOf(entity.getStartDate()));
+                    statement.setDate(3, Date.valueOf(entity.getEndDate()));
                     statement.setInt(4, entity.getOwnerId());
                     statement.setInt(5, entity.getPublication().getId());
                     statement.setInt(6, entity.getId());
                     Payment payment = entity.getPayment();
                     if (payment != null) {
                         paymentStatement.setFloat(1, payment.getBill().floatValue());
-                        paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getDateTimeOfPayment()));
+                        paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentDateTime()));
                         paymentStatement.setInt(3, entity.getPublication().getId());
                         paymentStatement.setInt(4, entity.getOwnerId());
                         paymentStatement.setInt(5, payment.getId());
@@ -172,5 +173,31 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     @Override
     public void close() {
 
+    }
+
+    @Override
+    public List<Subscription> getByUserLogin(String login) {
+        SubscriptionMapper subscriptionMapper = new SubscriptionMapper();
+        List<Subscription> subscriptions = new ArrayList<>();
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))
+        ) {
+            statement.setString(1, login);
+            try (
+                    ResultSet resultSet = statement.executeQuery()
+            ) {
+                while (resultSet.next()) {
+                    subscriptions.add(subscriptionMapper.extractFromResultSet(resultSet));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return subscriptions;
     }
 }

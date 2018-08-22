@@ -77,8 +77,8 @@ public class App {
         list.forEach(System.out::println);
 
         Subscription subscription = new SubscriptionBuilder(5)
-                .buildDateOfStart(LocalDate.now())
-                .buildDateOfEnd(LocalDate.now().plusMonths(2))
+                .buildStartDate(LocalDate.now())
+                .buildEndDate(LocalDate.now().plusMonths(2))
                 .buildOwnerId(2)
                 .buildPublication(publicationDao.getById(2))
                 .buildState(Subscription.StateEnum.UNPAID)

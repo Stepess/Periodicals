@@ -33,10 +33,10 @@ public class LoginCommand implements Command {
 
         if (loginService.checkLoginPassword(login, password)) {
             if (request.getSession().getServletContext().getAttribute(login) != null){
+                System.out.println("sadasdsadsadsadsa");
                 ((HttpSession) request.getSession().getServletContext().getAttribute(login)).invalidate();
             }
             //loginUser(request, login);
-
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
             request.getSession().getServletContext().setAttribute(login, request.getSession());
@@ -44,11 +44,12 @@ public class LoginCommand implements Command {
                     + manager.getProperty("path.page.main");
         } else {
 
-            System.out.println(new MessageManager(new Locale(((String) request.getSession().getAttribute("language")).substring(0,2), ((String) request.getSession().getAttribute("language")).substring(3,5)))
-                    .getProperty("message.wrong.login.password"));
+
 
             request.setAttribute("errorLoginPassMessage",
-                    new MessageManager(new Locale(((String) request.getSession().getAttribute("language")).substring(0,2), ((String) request.getSession().getAttribute("language")).substring(3,5)))
+                    //
+                    new MessageManager(new Locale(((String) request.getSession().getAttribute("language")).substring(0,2),
+                            ((String) request.getSession().getAttribute("language")).substring(3,5)))
                     .getProperty("message.wrong.login.password"));
         }
         return manager.getProperty("path.page.index");

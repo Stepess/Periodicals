@@ -12,8 +12,8 @@ import java.util.List;
 
 public class SubscriptionBuilder {
     private int id;
-    private LocalDate dateOfStart;
-    private LocalDate dateOfEnd;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Subscription.StateEnum state;
     private BigDecimal sum;//TODO maybe delete
     private Publication publication;
@@ -24,13 +24,13 @@ public class SubscriptionBuilder {
         this.id = id;
     }
 
-    public SubscriptionBuilder buildDateOfStart(LocalDate dateOfStart) {
-        this.dateOfStart = dateOfStart;
+    public SubscriptionBuilder buildStartDate(LocalDate startDate) {
+        this.startDate = startDate;
         return this;
     }
 
-    public SubscriptionBuilder buildDateOfEnd(LocalDate dateOfEnd) {
-        this.dateOfEnd = dateOfEnd;
+    public SubscriptionBuilder buildEndDate(LocalDate endDate) {
+        this.endDate = endDate;
         return this;
     }
 
@@ -68,11 +68,11 @@ public class SubscriptionBuilder {
     }
 
     public LocalDate getDateOfStart() {
-        return dateOfStart;
+        return startDate;
     }
 
     public LocalDate getDateOfEnd() {
-        return dateOfEnd;
+        return endDate;
     }
 
     public Subscription.StateEnum getState() {

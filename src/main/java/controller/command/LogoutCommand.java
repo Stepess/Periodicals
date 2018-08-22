@@ -15,7 +15,7 @@ public class LogoutCommand implements Command{
             /*Map<String, Object> map = (Map<String, Object>) session.getServletContext().getAttribute("loginedUsers");
             if (session.getAttribute("login") != null && map.containsKey(session.getAttribute("login")))
                 map.remove(session.getAttribute("login"));*/
-            request.removeAttribute((String) session.getAttribute("login"));
+            request.getSession().getServletContext().removeAttribute((String) session.getAttribute("login"));
             session.invalidate();
         }
         return "redirect:" + new PagePathManager().getProperty("path.page.index"); //TODO with redirect create new session??

@@ -18,8 +18,8 @@ public class SubscriptionMapper implements ObjectMapper<Subscription> {
         Map<Integer, Publication> publications = new HashMap<>();
         SubscriptionBuilder builder = new SubscriptionBuilder(resultSet.getInt("id"))
                 .buildState(Subscription.StateEnum.valueOf(resultSet.getString("state").toUpperCase()))
-                .buildDateOfStart(resultSet.getDate("start_date").toLocalDate())
-                .buildDateOfEnd(resultSet.getDate("end_date").toLocalDate())
+                .buildStartDate(resultSet.getDate("start_date").toLocalDate())
+                .buildEndDate(resultSet.getDate("end_date").toLocalDate())
                 .buildPublication(publicationMapper.makeUnique(publications,
                         publicationMapper.extractFromResultSet(resultSet)))
                 .buildPayment(new PaymentMapper().extractFromResultSet(resultSet))

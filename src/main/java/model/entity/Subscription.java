@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Subscription {
     private int id;
-    private LocalDate dateOfStart;
-    private LocalDate dateOfEnd;
+    private LocalDate startDate;
+    private LocalDate endDate;
     public enum StateEnum{
         PAID, UNPAID
     }
@@ -21,8 +21,8 @@ public class Subscription {
 
     public Subscription(SubscriptionBuilder builder) {
         this.id = builder.getId();
-        this.dateOfStart = builder.getDateOfStart();
-        this.dateOfEnd = builder.getDateOfEnd();
+        this.startDate = builder.getDateOfStart();
+        this.endDate = builder.getDateOfEnd();
         this.state = builder.getState();
         this.publication = builder.getPublication();
         this.payment = builder.getPayment();
@@ -33,12 +33,12 @@ public class Subscription {
         return id;
     }
 
-    public LocalDate getDateOfStart() {
-        return dateOfStart;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public LocalDate getDateOfEnd() {
-        return dateOfEnd;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public StateEnum getState() {
@@ -62,8 +62,8 @@ public class Subscription {
     public String toString() {
         return "Subscription{" +
                 "id=" + id +
-                ", dateOfStart=" + dateOfStart +
-                ", dateOfEnd=" + dateOfEnd +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", state=" + state +
                 ", publication=" + publication +
                 ", payment=" + payment +

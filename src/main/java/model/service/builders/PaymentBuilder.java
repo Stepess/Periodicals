@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class PaymentBuilder {
     private int id;
     private BigDecimal bill;
-    private LocalDateTime dateTimeOfPayment;
+    private LocalDateTime paymentDateTime;
 
     public PaymentBuilder(int id) {
         this.id = id;
@@ -19,8 +19,8 @@ public class PaymentBuilder {
         return this;
     }
 
-    public PaymentBuilder buildDateTimeOFPayment(LocalDateTime dateTimeOfPayment) {
-        this.dateTimeOfPayment = dateTimeOfPayment;
+    public PaymentBuilder buildPaymentDateTime(LocalDateTime paymentDateTime) {
+        this.paymentDateTime = paymentDateTime;
         return this;
     }
 
@@ -36,8 +36,8 @@ public class PaymentBuilder {
         return bill;
     }
 
-    public LocalDateTime getDateTimeOfPayment() {
-        return dateTimeOfPayment;
+    public LocalDateTime getPaymentDateTime() {
+        return paymentDateTime;
     }
 }
 

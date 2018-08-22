@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 public class Payment {
     private int id;
     private BigDecimal bill;
-    private LocalDateTime dateTimeOfPayment;
+    private LocalDateTime paymentDateTime;
 
     public Payment(PaymentBuilder builder) {
         this.id = builder.getId();
         this.bill = builder.getBill();
-        this.dateTimeOfPayment = builder.getDateTimeOfPayment();
+        this.paymentDateTime = builder.getPaymentDateTime();
     }
 
     public int getId() {
@@ -24,8 +24,8 @@ public class Payment {
         return bill;
     }
 
-    public LocalDateTime getDateTimeOfPayment() {
-        return dateTimeOfPayment;
+    public LocalDateTime getPaymentDateTime() {
+        return paymentDateTime;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Payment {
         return "Payment{" +
                 "id=" + id +
                 ", bill=" + bill +
-                ", dateTimeOfPayment=" + dateTimeOfPayment +
+                ", paymentDateTime=" + paymentDateTime +
                 '}';
     }
 }

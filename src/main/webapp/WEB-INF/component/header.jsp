@@ -19,10 +19,10 @@
         <option value="uk_UA" ${language == 'uk_UA' ? 'selected' : ''}>Ukrainian</option>
     </select>
 </form>
-<c:set var="language" value="${not empty param.language ? param.language : 'en_US'}" scope="session"/>
-
+<%--<c:set var="language" value="${not empty param.language ? param.language : 'en_US'}" scope="session"/>--%>
+<fmt:bundle basename="pagecontent" prefix="label.">
 <c:if test="${sessionScope.role == 'guest'}">
-    <fmt:bundle basename="pagecontent" prefix="label.">
+
         <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/login">
             <fmt:message key="login"/><br/>
             <input type="text" name="login" value=""/>
@@ -34,6 +34,8 @@
             <br/>
             <input type="submit" value="Log in"/>
         </form>
-    </fmt:bundle>
+
+
 </c:if>
-<p>Hello, ${sessionScope.role}, ${sessionScope.login}</p>
+</fmt:bundle>
+
