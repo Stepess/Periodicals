@@ -8,13 +8,18 @@ import model.service.UserService;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.ResourceManager;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class LoginCommand implements Command {
     @Override
-    public String execute(SessionRequestContent content) {
+    public String execute(HttpServletRequest request) {
         ResourceManager manager = new PagePathManager();
 
-        String login = content.getRequestParameter("login");//request.getParameter("login");
-        String password =  content.getRequestParameter("password");//request.getParameter("password");
+        String login = request.getParameter("login");
+        String password =  request.getParameter("password");
 
         if (login == null || password == null){
             return manager.getProperty("path.page.index");
@@ -22,27 +27,45 @@ public class LoginCommand implements Command {
 
         UserService loginService = new UserService();
 
-        if (!content.getSessionAttribute("role").equals(User.RoleEnum.GUEST.getValue())) {
-            System.out.println("hello from if");
+        if (!request.getSession().getAttribute("role").equals(User.RoleEnum.GUEST.getValue())) {
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.page.main");
         }
 
-
-
-
-
         if (loginService.checkLoginPassword(login, password)) {
-            /*content.addAttributeToSetSession("login", login);
-            content.addAttributeToSetSession("role", loginService.getUserRole(login).getValue());*/
-            content.addAttributeToSession("login", login);
-            content.addAttributeToSession("role", loginService.getUserRole(login).getValue());
+
+            loginUser(request, login);
+
+            request.getSession().setAttribute("login", login);
+            request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.page.main");
         } else {
-            content.addAttributeToRequest("errorLoginPassMessage", "Wrong login password");
+            request.setAttribute("errorLoginPassMessage", "Wrong login password");
             //request.setAttribute("errorLoginPassMessage", "Wrong login password");
         }
         return manager.getProperty("path.page.index");
     }
+
+
+    private void loginUser(HttpServletRequest request, String login) {
+        Map<String, Object> loginedUsers = (Map<String, Object>) request.getSession().getServletContext().getAttribute("loginedUsers");
+
+        if (loginedUsers == null) {
+            loginedUsers = new ConcurrentHashMap<>();
+            loginedUsers.put(login, request.getSession());
+            request.getSession().getServletContext().setAttribute("loginedUsers", loginedUsers);
+        } else {
+            if (loginedUsers.get(login) != null){
+                ((HttpSession)loginedUsers.get(login)).invalidate();
+            }
+            loginedUsers.put(login, request.getSession());
+        }
+
+
+
+    }
 }
+
+
+

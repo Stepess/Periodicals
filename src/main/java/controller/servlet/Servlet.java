@@ -26,15 +26,15 @@ public class Servlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        SessionRequestContent content = new SessionRequestContent();
+        /*SessionRequestContent content = new SessionRequestContent();*/
         CommandFactory commandFactory = new CommandFactory();
         Command command = commandFactory.getCommandFromRequest(request);
 
-        content.extractValues(request);
-        String page = command.execute(content);
-        System.out.println("bef " + request.getSession().getAttribute("role"));
+        /*content.extractValues(request);*/
+        String page = command.execute(request);
+        /*System.out.println("bef " + request.getSession().getAttribute("role"));
         content.acceptChanges(request);
-        System.out.println(request.getSession().getAttribute("role"));
+        System.out.println(request.getSession().getAttribute("role"));*/
         if (page.contains("redirect:")) {
             response.sendRedirect(request.getContextPath() + page.replace("redirect:", ""));
         } else {
