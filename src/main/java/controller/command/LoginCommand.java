@@ -32,10 +32,14 @@ public class LoginCommand implements Command {
         }
 
         if (loginService.checkLoginPassword(login, password)) {
-            loginUser(request, login);
+            if (request.getSession().getServletContext().getAttribute(login) != null){
+                ((HttpSession) request.getSession().getServletContext().getAttribute(login)).invalidate();
+            }
+            //loginUser(request, login);
 
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
+            request.getSession().getServletContext().setAttribute(login, request.getSession());
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.page.main");
         } else {
@@ -51,11 +55,11 @@ public class LoginCommand implements Command {
     }
 
     private void loginUser(HttpServletRequest request, String login) {
-        Map<String, Object> loginedUsers = (Map<String, Object>) request.getSession().getServletContext().getAttribute("loginedUsers");
+        /*Map<String, Object> loginedUsers = (Map<String, Object>) request.getSession().getServletContext().getAttribute("loginedUsers");
         if (loginedUsers.get(login) != null){
             ((HttpSession)loginedUsers.get(login)).invalidate();
         }
-        loginedUsers.put(login, request.getSession());
+        loginedUsers.put(login, request.getSession());*/
     }
 
 

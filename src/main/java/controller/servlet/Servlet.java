@@ -15,7 +15,7 @@ public class Servlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        getServletContext().setAttribute("loginedUsers", new ConcurrentHashMap<>());
+        //getServletContext().setAttribute("loginedUsers", new ConcurrentHashMap<>());
     }
 
     @Override
