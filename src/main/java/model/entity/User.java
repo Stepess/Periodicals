@@ -12,7 +12,18 @@ public class User {
     private String password;
     private String email;
     public enum RoleEnum {
-        USER, ADMIN
+        GUEST("guest"), USER("user"), ADMIN("admin");
+
+        private String value;
+
+        RoleEnum(String value) {
+            this.value = value;
+        }
+
+        public String getValue(){
+            return value;
+        }
+
     }
     private RoleEnum role;
     private String firstName;
