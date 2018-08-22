@@ -1,8 +1,5 @@
 package controller.command;
 
-
-import controller.utils.SessionRequestContent;
-
 import model.entity.User;
 import model.service.UserService;
 import model.service.resource.manager.PagePathManager;
@@ -11,7 +8,6 @@ import model.service.resource.manager.ResourceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class LoginCommand implements Command {
     @Override
@@ -33,7 +29,6 @@ public class LoginCommand implements Command {
         }
 
         if (loginService.checkLoginPassword(login, password)) {
-
             loginUser(request, login);
 
             request.getSession().setAttribute("login", login);
@@ -42,13 +37,22 @@ public class LoginCommand implements Command {
                     + manager.getProperty("path.page.main");
         } else {
             request.setAttribute("errorLoginPassMessage", "Wrong login password");
-            //request.setAttribute("errorLoginPassMessage", "Wrong login password");
         }
         return manager.getProperty("path.page.index");
     }
 
-
     private void loginUser(HttpServletRequest request, String login) {
+        Map<String, Object> loginedUsers = (Map<String, Object>) request.getSession().getServletContext().getAttribute("loginedUsers");
+        if (loginedUsers.get(login) != null){
+            ((HttpSession)loginedUsers.get(login)).invalidate();
+        }
+        loginedUsers.put(login, request.getSession());
+    }
+
+
+}
+
+/*private void loginUser(HttpServletRequest request, String login) {
         Map<String, Object> loginedUsers = (Map<String, Object>) request.getSession().getServletContext().getAttribute("loginedUsers");
 
         if (loginedUsers == null) {
@@ -56,16 +60,11 @@ public class LoginCommand implements Command {
             loginedUsers.put(login, request.getSession());
             request.getSession().getServletContext().setAttribute("loginedUsers", loginedUsers);
         } else {
-            if (loginedUsers.get(login) != null){
+        if (loginedUsers.get(login) != null){
                 ((HttpSession)loginedUsers.get(login)).invalidate();
             }
             loginedUsers.put(login, request.getSession());
+
         }
-
-
-
-    }
-}
-
-
+    }*/
 

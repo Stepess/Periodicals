@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+//TODO think about it
 public class JspRedirectFilter implements Filter {
 
     @Override

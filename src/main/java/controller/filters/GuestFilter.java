@@ -30,7 +30,7 @@ public class GuestFilter implements Filter {
             dispatcher.forward(request, response);
             return;
         }
-        System.out.println(session.getId());
+
         filterChain.doFilter(request,response);
     }
 
