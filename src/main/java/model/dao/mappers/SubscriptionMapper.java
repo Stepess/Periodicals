@@ -17,6 +17,7 @@ public class SubscriptionMapper implements ObjectMapper<Subscription> {
         PublicationMapper publicationMapper = new PublicationMapper();
         Map<Integer, Publication> publications = new HashMap<>();
         SubscriptionBuilder builder = new SubscriptionBuilder(resultSet.getInt("id"))
+                .buildTotal(resultSet.getBigDecimal("total"))
                 .buildState(Subscription.StateEnum.valueOf(resultSet.getString("state").toUpperCase()))
                 .buildStartDate(resultSet.getDate("start_date").toLocalDate())
                 .buildEndDate(resultSet.getDate("end_date").toLocalDate())

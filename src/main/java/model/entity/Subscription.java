@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Subscription {
     private int id;
+    private BigDecimal total;
     private LocalDate startDate;
     private LocalDate endDate;
     public enum StateEnum{
@@ -21,8 +22,9 @@ public class Subscription {
 
     public Subscription(SubscriptionBuilder builder) {
         this.id = builder.getId();
-        this.startDate = builder.getDateOfStart();
-        this.endDate = builder.getDateOfEnd();
+        this.total = builder.getTotal();
+        this.startDate = builder.getStartDate();
+        this.endDate = builder.getEndDate();
         this.state = builder.getState();
         this.publication = builder.getPublication();
         this.payment = builder.getPayment();
@@ -31,6 +33,10 @@ public class Subscription {
 
     public int getId() {
         return id;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
     }
 
     public LocalDate getStartDate() {

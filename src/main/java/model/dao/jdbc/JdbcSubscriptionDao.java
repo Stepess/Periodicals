@@ -43,12 +43,13 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
                 try{
                     statement.setString(1, entity.getState().toString().toLowerCase());
-                    statement.setDate(2, Date.valueOf(entity.getStartDate()));
+                    statement.setFloat(2, entity.getTotal().floatValue());
+                    statement.setDate(3, Date.valueOf(entity.getStartDate()));
                     System.out.println("dao " + entity.getStartDate());
                     System.out.println(Date.valueOf(entity.getStartDate()));
-                    statement.setDate(3, Date.valueOf(entity.getEndDate()));
-                    statement.setInt(4, entity.getOwnerId());
-                    statement.setInt(5, entity.getPublication().getId());
+                    statement.setDate(4, Date.valueOf(entity.getEndDate()));
+                    statement.setInt(5, entity.getOwnerId());
+                    statement.setInt(6, entity.getPublication().getId());
                     //Payment payment = entity.getPayment();
                    /* if (payment != null) {
                         paymentStatement.setFloat(1, payment.getBill().floatValue());
@@ -132,12 +133,20 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             ) {
 
                 try{
-                    statement.setString(1, entity.getState().toString().toLowerCase());
+                    /*statement.setString(1, entity.getState().toString().toLowerCase());
                     statement.setDate(2, Date.valueOf(entity.getStartDate()));
                     statement.setDate(3, Date.valueOf(entity.getEndDate()));
                     statement.setInt(4, entity.getOwnerId());
                     statement.setInt(5, entity.getPublication().getId());
-                    statement.setInt(6, entity.getId());
+                    statement.setInt(6, entity.getId());*/
+                    statement.setString(1, entity.getState().toString().toLowerCase());
+                    statement.setFloat(2, entity.getTotal().floatValue());
+                    statement.setDate(3, Date.valueOf(entity.getStartDate()));
+                    System.out.println("dao " + entity.getStartDate());
+                    System.out.println(Date.valueOf(entity.getStartDate()));
+                    statement.setDate(4, Date.valueOf(entity.getEndDate()));
+                    statement.setInt(5, entity.getOwnerId());
+                    statement.setInt(6, entity.getPublication().getId());
                     Payment payment = entity.getPayment();
                     if (payment != null) {
                         paymentStatement.setFloat(1, payment.getBill().floatValue());
@@ -240,9 +249,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                 BigDecimal account = user.getAccount();
 
                 //BigDecimal bill = subscription.getPayment().getBill();
-                BigDecimal bill = subscription.getPublication().getPrice().multiply(
-                        BigDecimal.valueOf(MONTHS.between(subscription.getStartDate(), subscription.getEndDate())));//TODO think about it static
-                System.out.println("bill   " + bill);
+                BigDecimal bill = subscription.getTotal();
                 if (account.compareTo(bill) < 0) {
                     throw new NotEnoughMoney();
                 }

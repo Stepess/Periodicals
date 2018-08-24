@@ -27,6 +27,9 @@
     </a>|
     <a href="${pageContext.request.contextPath}/app/payments">
         <fmt:message key="payment"/>
+    </a>|
+    <a href="${pageContext.request.contextPath}/admin/addPublication.jsp">
+        <fmt:message key="add.publication"/>
     </a>
 </fmt:bundle>
 

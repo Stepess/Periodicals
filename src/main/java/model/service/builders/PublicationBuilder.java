@@ -14,10 +14,20 @@ public class PublicationBuilder {
     private String description;
     private Image image; //TODO figure out about work with image
 
-    public PublicationBuilder(int id, String title, String genre) {
+    public PublicationBuilder() {}
+
+    public PublicationBuilder(int id) {
         this.id = id;
+    }
+
+    public PublicationBuilder buildTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public PublicationBuilder buildGenre(String genre) {
         this.genre = genre;
+        return this;
     }
 
     public PublicationBuilder buildAuthor(String author) {

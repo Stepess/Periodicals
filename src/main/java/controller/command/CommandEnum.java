@@ -37,6 +37,11 @@ public enum CommandEnum {
         {
             this.command = new SubscriptCommand();
         }
+    },
+    ADDPUBLICATION {
+        {
+            this.command = new AddPublicationCommand();
+        }
     };
 
     Command command;

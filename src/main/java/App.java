@@ -68,7 +68,7 @@ public class App {
         System.out.println(dao.getAll());
 */
 
-
+/*
         SubscriptionDao dao = factory.createSubscriptionDao();
         PublicationDao publicationDao = factory.createPublicationDao();
 
@@ -95,7 +95,15 @@ public class App {
 
         list = dao.getAll();
 
-        list.forEach(System.out::println);
+        list.forEach(System.out::println);*/
+
+
+        String string = "title/enukraina/ua";
+        int index = string.indexOf("/en");
+        System.out.println(string.substring(0,index));
+
+        System.out.println(string.substring(index+3, string.length()-3));
+
 
     }
 }

@@ -21,4 +21,8 @@ public class PublicationService {
     public Publication getById(int id) {
         return publicationDao.getById(id);
     }
+
+    public void setInDb(Publication publication){
+        System.out.println(publicationDao.setInDb(publication));
+    }
 }

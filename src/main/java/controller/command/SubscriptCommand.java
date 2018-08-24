@@ -36,6 +36,7 @@ public class SubscriptCommand implements Command{
 
         Subscription subscription = new SubscriptionBuilder()
                 .buildStartDate(from)
+                .buildTotal(publication.getPrice().multiply(BigDecimal.valueOf(months)))
                 .buildPublication(publication)
                 .buildEndDate(from.plusMonths(months))
                 .buildState(Subscription.StateEnum.UNPAID)

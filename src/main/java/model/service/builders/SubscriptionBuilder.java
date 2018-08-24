@@ -12,6 +12,7 @@ import java.util.List;
 
 public class SubscriptionBuilder {
     private int id;
+    private BigDecimal total;
     private LocalDate startDate;
     private LocalDate endDate;
     private Subscription.StateEnum state;
@@ -24,6 +25,11 @@ public class SubscriptionBuilder {
 
     public SubscriptionBuilder(int id) {
         this.id = id;
+    }
+
+    public SubscriptionBuilder buildTotal(BigDecimal total) {
+        this.total = total;
+        return this;
     }
 
     public SubscriptionBuilder buildStartDate(LocalDate startDate) {
@@ -69,11 +75,15 @@ public class SubscriptionBuilder {
         return id;
     }
 
-    public LocalDate getDateOfStart() {
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public LocalDate getDateOfEnd() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 

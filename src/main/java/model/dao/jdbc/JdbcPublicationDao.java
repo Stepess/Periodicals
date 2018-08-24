@@ -29,14 +29,17 @@ public class JdbcPublicationDao implements PublicationDao {
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.set"))
         ) {
             //TODO write after final version of schema
-            statement.setString(1,entity.getTitle());
-            statement.setString(2,entity.getNationalField("title"));
+
+
+
+            statement.setString(1,getEnString(entity.getTitle()));
+            statement.setString(2,getUaString(entity.getTitle()));
             statement.setString(3,"author");
-            statement.setString(4,entity.getGenre());
-            statement.setString(5,entity.getNationalField("genre"));
+            statement.setString(4,getEnString(entity.getGenre()));
+            statement.setString(5,getUaString(entity.getGenre()));
             statement.setFloat(6,entity.getPrice().floatValue());//TODO guess what to do with money
-            statement.setString(7,entity.getDescription());//TODO guess how put right name
-            statement.setString(8,entity.getNationalField("description"));
+            statement.setString(7,getEnString(entity.getDescription()));//TODO guess how put right name
+            statement.setString(8,getUaString(entity.getDescription()));
             statement.setBlob(9, connection.createBlob());//TODO guess how put right name
             result = statement.executeUpdate();
 
@@ -45,6 +48,17 @@ public class JdbcPublicationDao implements PublicationDao {
         }
         return result>0;
     }
+
+    private String getEnString(String string) {
+        int index = string.indexOf("/en");
+        return string.substring(0,index);
+    }
+
+    private String getUaString(String string) {
+        int index = string.indexOf("/en");
+        return string.substring(index+3, string.length()-3);
+    }
+
 
     @Override
     public Publication getById(int id) {

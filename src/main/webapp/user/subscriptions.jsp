@@ -35,6 +35,9 @@ ${success}
         <th>
             <fmt:message key="end.date"/>
         </th>
+        <th>
+            <fmt:message key="price"/>
+        </th>
 
     </tr>
 
@@ -44,6 +47,7 @@ ${success}
             <td><c:out value="${subscription.state}"/></td>
             <td><c:out value="${subscription.startDate}"/></td>
             <td><c:out value="${subscription.endDate}"/></td>
+            <td><c:out value="${subscription.total}"/> </td>
             <td>
                 <form method="POST" action="${pageContext.request.contextPath}/app/pay">
                     <input type="hidden" name="subId" value="${subscription.id}">
