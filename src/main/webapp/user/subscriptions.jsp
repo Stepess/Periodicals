@@ -39,6 +39,7 @@ ${success}
             <fmt:message key="price"/>
         </th>
 
+
     </tr>
 
     <c:forEach items="${requestScope.subscriptions}" var="subscription">
@@ -54,6 +55,7 @@ ${success}
                     <input type="submit" value="<fmt:message key="pay"/>">
                 </form>
             </td>
+
 
                 <%--<td>
                     <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>

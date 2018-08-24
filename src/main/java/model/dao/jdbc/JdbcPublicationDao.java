@@ -3,14 +3,18 @@ package model.dao.jdbc;
 import com.mysql.cj.jdbc.Blob;
 import model.dao.PublicationDao;
 import model.dao.mappers.PublicationMapper;
+import model.dao.mappers.UserMapper;
 import model.entity.Publication;
+import model.entity.User;
 import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JdbcPublicationDao implements PublicationDao {
     private DataSource source;
@@ -147,6 +151,53 @@ public class JdbcPublicationDao implements PublicationDao {
             e.printStackTrace();
         }
         return result>0;
+    }
+
+    public Map<String, Integer> getStatistics() {
+        Map<String, Integer> result = new HashMap<>();
+
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.statistics"))
+        ) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                result.put(resultSet.getString("title_en"), resultSet.getInt("count(title_en)"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<User> getReport(int id) {
+        List<User> report = new ArrayList<>();
+        User user = null;
+        UserMapper mapper = new UserMapper();
+
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.get.report"))
+        ) {
+            statement.setInt(1, id);
+            try (
+                    ResultSet resultSet = statement.executeQuery()
+
+            ) {
+                while (resultSet.next()) {
+                    user = mapper.extractFromResultSet(resultSet);
+                    report.add(user);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return report;
     }
 
     @Override

@@ -36,6 +36,9 @@
             <th>
                 <fmt:message key="description"/>
             </th>
+
+
+        </th>
         </tr>
         <c:forEach items="${requestScope.publications}" var="publication">
             <tr>
@@ -56,6 +59,20 @@
                             <br>
                             <input type="hidden" name="subId" value="${publication.id}">
                             <input type="submit" value="<fmt:message key="subscript"/>">
+                        </form>
+                    </td>
+                </c:if>
+                <c:if test="${sessionScope.role == 'admin'}">
+                    <td>
+                        <form method="POST" action="${pageContext.request.contextPath}/app/editPublication">
+                            <input type="hidden" name="pubId" value="${publication.id}">
+                            <input type="submit" value="<fmt:message key="edit"/>">
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" action="${pageContext.request.contextPath}/app/showReport">
+                            <input type="hidden" name="pubId" value="${publication.id}">
+                            <input type="submit" value="<fmt:message key="edit"/>">
                         </form>
                     </td>
                 </c:if>

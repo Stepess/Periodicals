@@ -42,6 +42,27 @@ public enum CommandEnum {
         {
             this.command = new AddPublicationCommand();
         }
+    },
+    REGISTRATION {
+        {
+            this.command = new RegistrationCommand();
+        }
+
+    },
+    EDITPUBLICATION {
+        {
+            this.command = new EditPublicationCommand();
+        }
+    },
+    STATISTICS {
+        {
+            this.command = new StatisticsCommand();
+        }
+    },
+    SHOWREPORT {
+        {
+            this.command = new ShowReportCommand();
+        }
     };
 
     Command command;

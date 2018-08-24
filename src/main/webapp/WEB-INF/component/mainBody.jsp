@@ -31,6 +31,9 @@
     <a href="${pageContext.request.contextPath}/admin/addPublication.jsp">
         <fmt:message key="add.publication"/>
     </a>
+    <a href="${pageContext.request.contextPath}/app/statistics">
+        <fmt:message key="statistics"/>
+    </a>
 </fmt:bundle>
 
 
