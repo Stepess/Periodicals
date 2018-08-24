@@ -16,6 +16,9 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
+<jsp:include page="/WEB-INF/component/mainBody.jsp"/>
+${fail}
+${success}
 <fmt:bundle basename="pagecontent" prefix="field.">
 <table border="1" cellpadding="5">
     <caption><h2>Subscription List</h2></caption>
@@ -32,6 +35,7 @@
         <th>
             <fmt:message key="end.date"/>
         </th>
+
     </tr>
 
     <c:forEach items="${requestScope.subscriptions}" var="subscription">
@@ -40,6 +44,12 @@
             <td><c:out value="${subscription.state}"/></td>
             <td><c:out value="${subscription.startDate}"/></td>
             <td><c:out value="${subscription.endDate}"/></td>
+            <td>
+                <form method="POST" action="${pageContext.request.contextPath}/app/pay">
+                    <input type="hidden" name="subId" value="${subscription.id}">
+                    <input type="submit" value="<fmt:message key="pay"/>">
+                </form>
+            </td>
 
                 <%--<td>
                     <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>

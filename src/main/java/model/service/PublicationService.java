@@ -17,4 +17,8 @@ public class PublicationService {
     public List<Publication> getAll() {
         return publicationDao.getAll();
     }
+
+    public Publication getById(int id) {
+        return publicationDao.getById(id);
+    }
 }

@@ -224,31 +224,9 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public boolean pay(User user,Payment payment) {
-        boolean success;
-
-
-
-                try (Connection connection = source.getConnection();
-                        PreparedStatement moneyStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.money"));
-                        PreparedStatement billStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.bill"));
-                        PreparedStatement setPaidPubStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.pub"))
-                        )
-        {
-
-            connection.setAutoCommit(false);
-            moneyStatement.executeUpdate();
-
-
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public void close()  {
+    public void close() {
 
     }
+
+
 }

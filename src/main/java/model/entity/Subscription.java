@@ -58,6 +58,10 @@ public class Subscription {
         return ownerId;
     }
 
+    public boolean isPaid() {
+        return state == StateEnum.PAID;
+    }
+
     @Override
     public String toString() {
         return "Subscription{" +

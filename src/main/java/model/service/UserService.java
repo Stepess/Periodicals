@@ -19,4 +19,6 @@ public class UserService {
     public User.RoleEnum getUserRole(String login) {
         return userDao.getByLogin(login).getRole();
     }
+
+    public int getUserId(String login) {return userDao.getByLogin(login).getId();}
 }

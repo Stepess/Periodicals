@@ -27,6 +27,16 @@ public enum CommandEnum {
         {
             this.command = new SubscriptionCommand();
         }
+    },
+    PAY {
+        {
+            this.command = new PayCommand();
+        }
+    },
+    SUBSCRIPT {
+        {
+            this.command = new SubscriptCommand();
+        }
     };
 
     Command command;

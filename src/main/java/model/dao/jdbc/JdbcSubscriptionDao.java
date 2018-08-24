@@ -1,5 +1,6 @@
 package model.dao.jdbc;
 
+import controller.exception.NotEnoughMoney;
 import model.dao.SubscriptionDao;
 import model.dao.mappers.SubscriptionMapper;
 import model.entity.Payment;
@@ -9,9 +10,15 @@ import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.MONTHS;
 
 public class JdbcSubscriptionDao implements SubscriptionDao {
     private DataSource source;
@@ -31,23 +38,25 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             connection.setAutoCommit(false);
             try (
                     PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.set"));
-                    PreparedStatement paymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
+                    //PreparedStatement paymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
                     ) {
 
                 try{
                     statement.setString(1, entity.getState().toString().toLowerCase());
                     statement.setDate(2, Date.valueOf(entity.getStartDate()));
+                    System.out.println("dao " + entity.getStartDate());
+                    System.out.println(Date.valueOf(entity.getStartDate()));
                     statement.setDate(3, Date.valueOf(entity.getEndDate()));
                     statement.setInt(4, entity.getOwnerId());
                     statement.setInt(5, entity.getPublication().getId());
-                    Payment payment = entity.getPayment();
-                    if (payment != null) {
+                    //Payment payment = entity.getPayment();
+                   /* if (payment != null) {
                         paymentStatement.setFloat(1, payment.getBill().floatValue());
-                        paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentDateTime()));
-                        paymentStatement.setInt(3, entity.getPublication().getId());
-                        paymentStatement.setInt(4, entity.getOwnerId());
-                    }
-
+                       // paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentDateTime()));
+                        paymentStatement.setInt(2, entity.getPublication().getId());
+                        paymentStatement.setInt(3, entity.getOwnerId());
+                    }*/
+                    //result +=paymentStatement.executeUpdate();
                     result = statement.executeUpdate();
 
                     connection.commit();
@@ -76,6 +85,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             ) {
                 while (resultSet.next()) {
                     subscription = subscriptionMapper.extractFromResultSet(resultSet);
+                    System.out.println("sub1111: " + subscription);
                 }
 
             } catch (SQLException e) {
@@ -199,5 +209,110 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
         }
         return subscriptions;
+    }
+
+    @Override
+    public boolean pay(User user,Subscription subscription) throws SQLException {
+        boolean success;
+
+        try(Connection connection = source.getConnection();){
+            try (
+                    PreparedStatement moneyStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.money"));
+                    PreparedStatement billStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.bill"));
+                    PreparedStatement setPaidPubStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.pub"));
+                    PreparedStatement updateSubStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.sub.paid"));
+                    PreparedStatement updateAccountStatement = connection.prepareStatement(manager.getProperty("db.user.query.update.account"));
+                    PreparedStatement updatePayment = connection.prepareStatement(manager.getProperty("db.user.query.update.payment"));
+                    PreparedStatement setPayment = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
+            )
+            {
+
+
+            /*moneyStatement.setString(1, user.getLogin());
+            ResultSet set = moneyStatement.executeQuery();
+            set.next();
+            BigDecimal account = set.getBigDecimal("account");
+            billStatement.setString(1, user.getLogin());*/
+            /*set = moneyStatement.executeQuery();
+            set.next();
+            BigDecimal bill = set.getBigDecimal("bill");*/
+
+                BigDecimal account = user.getAccount();
+
+                //BigDecimal bill = subscription.getPayment().getBill();
+                BigDecimal bill = subscription.getPublication().getPrice().multiply(
+                        BigDecimal.valueOf(MONTHS.between(subscription.getStartDate(), subscription.getEndDate())));//TODO think about it static
+                System.out.println("bill   " + bill);
+                if (account.compareTo(bill) < 0) {
+                    throw new NotEnoughMoney();
+                }
+                connection.setAutoCommit(false);
+                updateAccountStatement.setBigDecimal(1,account.subtract(bill));
+                updateAccountStatement.setString(2,user.getLogin());
+                updateAccountStatement.executeUpdate();
+                updateSubStatement.setInt(1, subscription.getId());
+                updateSubStatement.executeUpdate();
+                setPaidPubStatement.setInt(1, user.getId());
+                setPaidPubStatement.setInt(2, subscription.getPublication().getId());
+                System.out.println(setPaidPubStatement);
+                setPaidPubStatement.executeUpdate();
+                /*updatePayment.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+                updatePayment.setInt(2, subscription.getPayment().getId());
+                updatePayment.executeUpdate();*/
+                setPayment.setFloat(1, bill.floatValue());
+                setPayment.setTimestamp(2,Timestamp.valueOf(LocalDateTime.now()));
+                setPayment.setInt(3, subscription.getId());
+                setPayment.setInt(4, user.getId());
+                setPayment.executeUpdate();
+                connection.commit();
+
+
+
+
+            } catch (SQLException ex) {
+                connection.rollback();
+                ex.printStackTrace();
+                throw ex;
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+            throw ex;
+
+        }
+
+
+        return true;
+    }
+
+    @Override
+    public boolean isUserSubscriptionUnique(String login, int publicationId) {
+
+
+        SubscriptionMapper mapper = new SubscriptionMapper();
+        Subscription subscription= null;
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.check.unique"))
+        ) {
+            statement.setString(1, login);
+            statement.setInt(2, publicationId);
+            System.out.println(statement);
+            try (
+                    ResultSet resultSet = statement.executeQuery()
+
+            ) {
+                while (resultSet.next()) {
+                    subscription = mapper.extractFromResultSet(resultSet);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return subscription==null;
     }
 }

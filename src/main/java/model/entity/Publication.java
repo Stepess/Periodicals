@@ -78,6 +78,8 @@ public class Publication {
         return Objects.hash(id, title, author, genre, price, description, image);
     }
 
+
+
     @Override
     public String toString() {
         return "Publication{" +

@@ -10,6 +10,8 @@ public class PaymentBuilder {
     private BigDecimal bill;
     private LocalDateTime paymentDateTime;
 
+    public PaymentBuilder(){};
+
     public PaymentBuilder(int id) {
         this.id = id;
     }

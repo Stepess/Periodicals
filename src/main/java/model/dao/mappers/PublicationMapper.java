@@ -14,7 +14,7 @@ public class PublicationMapper implements ObjectMapper<Publication> {
     @Override
     public Publication extractFromResultSet(ResultSet resultSet) throws SQLException {
         ResourceManager manager = new DBFieldsManager(new Locale("uk", "UA"));//TODO switch language
-        PublicationBuilder builder = new PublicationBuilder(resultSet.getInt("id"),
+        PublicationBuilder builder = new PublicationBuilder(resultSet.getInt("publication.id"),
                 resultSet.getString(manager.getProperty("db.publication.title")) == null ?
                         resultSet.getString("title_en") :
                         resultSet.getString(manager.getProperty("db.publication.title")),

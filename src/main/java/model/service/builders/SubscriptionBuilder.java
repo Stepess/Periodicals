@@ -20,6 +20,8 @@ public class SubscriptionBuilder {
     private Payment payment;
     private int ownerId;
 
+    public SubscriptionBuilder(){}
+
     public SubscriptionBuilder(int id) {
         this.id = id;
     }
@@ -94,4 +96,6 @@ public class SubscriptionBuilder {
     public int getOwnerId() {
         return ownerId;
     }
+
+
 }

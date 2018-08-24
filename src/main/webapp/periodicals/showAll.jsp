@@ -15,7 +15,9 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
+<jsp:include page="/WEB-INF/component/mainBody.jsp"/>
 <fmt:bundle basename="pagecontent" prefix="field.">
+    ${fail}
     <table border="1" cellpadding="5">
         <caption><h2>Periodicals List</h2></caption>
         <tr>
@@ -42,6 +44,21 @@
                 <td><c:out value="${publication.genre}"/></td>
                 <td><c:out value="${publication.price}"/></td>
                 <td><c:out value="${publication.description}"/></td>
+                <c:if test="${sessionScope.role == 'user'}">
+                    <td>
+                        <form method="POST" action="${pageContext.request.contextPath}/app/subscript">
+                            <input type="hidden" name="pubId" value="${publication.id}">
+                            <input type="hidden" name="price" value="${publication.price}">
+                            <fmt:message key="from"/><br>
+                            <input type="date" name="from" min="1"><br>
+                            <fmt:message key="to"/><br>
+                            <input type="number" name="months">
+                            <br>
+                            <input type="hidden" name="subId" value="${publication.id}">
+                            <input type="submit" value="<fmt:message key="subscript"/>">
+                        </form>
+                    </td>
+                </c:if>
                     <%--<td>
                         <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>
                     </td>

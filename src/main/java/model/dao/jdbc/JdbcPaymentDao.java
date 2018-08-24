@@ -66,6 +66,30 @@ public class JdbcPaymentDao implements PaymentDao {
 
     @Override
     public boolean update(Payment entity) {
+        /*int result=0;
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
+        ) {
+
+
+            statement.setBigDecimal(1,entity.getBill());
+            statement.setString(2,entity.);
+            statement.setString(3,entity.getEmail());
+            statement.setString(4,entity.getRole().toString().toLowerCase());
+            statement.setString(5,entity.getFirstName());
+            statement.setString(6,entity.getNationalField("firstName"));//TODO guess how put right name
+            statement.setString(7,entity.getLastName());
+            statement.setString(8,entity.getNationalField("lastName"));//TODO guess how put right name
+            statement.setString(9,entity.getAddress());
+            statement.setString(10,entity.getNationalField("address"));//TODO guess how put right name
+            statement.setFloat(11,entity.getAccount().floatValue());//TODO guess how handle money
+            result = statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result>0;*/
         return false;
     }
 

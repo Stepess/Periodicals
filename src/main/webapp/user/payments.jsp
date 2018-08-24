@@ -7,6 +7,7 @@
     <title>Payments</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/component/mainBody.jsp"/>
 <fmt:bundle basename="pagecontent" prefix="field.">
     <table border="1" cellpadding="5">
         <caption><h2>Payments List</h2></caption>
@@ -24,6 +25,7 @@
         </tr>
 
         <c:forEach items="${requestScope.subscriptions}" var="subscription">
+            <c:if test="${not empty subscription.payment.paymentDateTime}">
             <tr>
                 <td><c:out value="${subscription.publication.title}"/></td>
                 <td><c:out value="${subscription.payment.bill}"/></td>
@@ -36,6 +38,7 @@
                         <input type="checkbox" name="${image.name}" >
                     </td>--%>
             </tr>
+            </c:if>
         </c:forEach>
     </table>
 </fmt:bundle>
