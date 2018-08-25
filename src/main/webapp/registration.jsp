@@ -12,37 +12,63 @@
 
 
 
-<form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/addPublication">
+<form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/registration">
     <fmt:message key="login"/><br/>
-    <input type="text" name="title_en" value=""/>
+    <input type="text" name="login" value="${param.login}" required/>
+    ${wronglogin}
     <br/>
-    <fmt:message key="title_ua"/><br/>
-    <input type="text" name="title_ua" value=""/>
+    <fmt:message key="password"/><br/>
+    <input type="password" name="password" value="" required/>
+    ${wrongpassword}
     <br/>
-    <fmt:message key="author"/><br/>
-    <input type="text" name="author" value=""/>
+    <fmt:message key="password"/><br/>
+    <input type="password" name="passwordDuplicate" value="" required/>
     <br/>
-    <fmt:message key="genre_en"/><br/>
-    <input type="text" name="genre_en" value=""/>
+        ${wrongpasswordDuplicate}
+
+    <fmt:message key="email"/><br/>
+    <input type="text" name="email" value="${param.email}" required/>
     <br/>
-    <fmt:message key="genre_ua"/><br/>
-    <input type="text" name="genre_ua" value=""/>
+    ${wrongemail}
+    <fmt:message key="first.name"/><br/>
+    <input type="text" name="firstName" value="${param.firstName}" required/>
     <br/>
-    <fmt:message key="price"/><br/>
-    <input type="number" step=".01" name="price" value=""/>
+    ${wrongfirstName}
+
+    <fmt:message key="last.name"/><br/>
+    <input type="text" name="lastName" value="${param.lastName}" required/>
     <br/>
-    <fmt:message key="description_en"/><br/>
-    <input type="text" name="description_en" value=""/>
+    ${wronglastName}
+    <%--<fmt:message key="address"/><br/>
+    <input type="text" name="address" value=""/>
+    <br/>--%>
+    <fmt:message key="country"/><br/>
+    <input type="text" name="country" value="${param.country}" required/>
     <br/>
-    <fmt:message key="description_ua"/><br/>
+    ${wrongcountry}
+    <fmt:message key="city"/><br/>
+    <input type="text" name="city" value="${param.city}" required/>
+    <br/>
+    ${wrongcity}
+    <fmt:message key="street"/><br/>
+    <input type="text" name="street" value="${param.street}" required/>
+    <br/>
+    ${wrongstreet}
+    <fmt:message key="building"/><br/>
+    <input type="number" name="building" value="${param.building}" required/>
+    <br/>
+    ${wrongbuilding}
+
+
+    <%--<fmt:message key="description_ua"/><br/>
     <input type="text" name="description_ua" value=""/>
-    <br/>
+    <br/>--%>
 
 
 
     <br/>
 
-    <input type="submit" value="<fmt:message key="add.publication"/>"/>
+    <input type="submit" value="<fmt:message key="sign.up"/>"/>
 </form>
 
 

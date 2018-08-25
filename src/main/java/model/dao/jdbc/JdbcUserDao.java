@@ -44,12 +44,12 @@ public class JdbcUserDao implements UserDao {
             statement.setString(3,entity.getEmail());
             statement.setString(4,entity.getRole().toString().toLowerCase());
             statement.setString(5,entity.getFirstName());
-            statement.setString(6,entity.getNationalField("firstName"));//TODO guess how put right name
-            statement.setString(7,entity.getLastName());
-            statement.setString(8,entity.getNationalField("lastName"));//TODO guess how put right name
-            statement.setString(9,entity.getAddress());
-            statement.setString(10,entity.getNationalField("address"));//TODO guess how put right name
-            statement.setFloat(11,entity.getAccount().floatValue());//TODO guess how handle money
+            //statement.setString(6,entity.getNationalField("firstName"));//TODO guess how put right name
+            statement.setString(6,entity.getLastName());
+            //statement.setString(8,entity.getNationalField("lastName"));//TODO guess how put right name
+            statement.setString(7,entity.getAddress());
+            //statement.setString(10,entity.getNationalField("address"));//TODO guess how put right name
+            //statement.setFloat(8,entity.getAccount().floatValue());//TODO guess how handle money
             result = statement.executeUpdate();
 
         } catch (SQLException e) {

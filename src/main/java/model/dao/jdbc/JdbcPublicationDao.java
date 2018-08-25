@@ -73,10 +73,7 @@ public class JdbcPublicationDao implements PublicationDao {
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.get.by.id"))
         ) {
             statement.setInt(1, id);
-            try (
-                    ResultSet resultSet = statement.executeQuery()
-
-            ) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     publication = mapper.extractFromResultSet(resultSet);
                 }

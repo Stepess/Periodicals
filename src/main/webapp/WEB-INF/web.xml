@@ -78,4 +78,7 @@
   <listener>
     <listener-class>controller.listener.SessionListener</listener-class>
   </listener>
+  <listener>
+    <listener-class>controller.listener.SessionAttributeListener</listener-class>
+  </listener>
 </web-app>

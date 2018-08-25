@@ -21,4 +21,8 @@ public class UserService {
     }
 
     public int getUserId(String login) {return userDao.getByLogin(login).getId();}
+
+    public void setInDb(User user) {
+        userDao.setInDb(user);
+    }
 }

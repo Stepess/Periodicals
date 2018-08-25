@@ -35,6 +35,11 @@
             <input type="submit" value="Log in"/>
         </form>
 
+    <br/>
+    <a href="registration.jsp">
+        <fmt:message key="sign.up"/>
+    </a>
+
 
 </c:if>
 </fmt:bundle>

@@ -15,6 +15,8 @@ public class UserBuilder {
     private String address;
     private BigDecimal account;
 
+    public UserBuilder(){}
+
     public UserBuilder(int id) {
         this.id = id;
     }
