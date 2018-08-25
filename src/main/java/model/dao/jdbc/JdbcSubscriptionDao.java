@@ -245,6 +245,9 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
                 //BigDecimal bill = subscription.getPayment().getBill();
                 BigDecimal bill = subscription.getTotal();
+                System.out.println(BigDecimal.ZERO);
+                System.out.println(account);
+                System.out.println(bill);
                 if (account.compareTo(bill) < 0) {
                     throw new NotEnoughMoney();
                 }

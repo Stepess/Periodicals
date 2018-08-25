@@ -25,4 +25,8 @@ public class UserService {
     public void setInDb(User user) {
         userDao.setInDb(user);
     }
+
+    public void checkDataUnique(String login, String email) {
+        userDao.checkDataUnique(login, email);
+    }
 }

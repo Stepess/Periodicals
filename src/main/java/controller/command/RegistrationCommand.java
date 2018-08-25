@@ -2,6 +2,8 @@ package controller.command;
 
 import controller.utils.DataValidationUtil;
 import model.entity.User;
+import model.exception.NotUniqueEmailException;
+import model.exception.NotUniqueLoginException;
 import model.service.UserService;
 import model.service.builders.UserBuilder;
 import model.service.resource.manager.MessageManager;
@@ -10,6 +12,7 @@ import model.service.resource.manager.RegexpManager;
 import model.service.resource.manager.ResourceManager;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Enumeration;
 import java.util.Locale;
 
@@ -21,6 +24,17 @@ public class RegistrationCommand implements Command {
         ResourceManager regexManager = new RegexpManager(new Locale("en", "US"));
 
         DataValidationUtil validationUtil = new DataValidationUtil(new Locale("en", "US"));
+
+        try{
+            new UserService().checkDataUnique(request.getParameter("login"),
+                    request.getParameter("email"));
+        } catch (NotUniqueLoginException ex) {
+            request.setAttribute("wronglogin", new MessageManager(new Locale("en", "US"))
+                    .getProperty("message.not.unique.login"));
+        } catch (NotUniqueEmailException ex) {
+            request.setAttribute("wrongemail", new MessageManager(new Locale("en", "US"))
+            .getProperty("message.not.unique.email"));
+        }
 
         validationUtil.isDataValid(request, "login", regexManager.getProperty("user.login"));
         validationUtil.isDataValid(request, "password", regexManager.getProperty("user.password"));
@@ -57,7 +71,9 @@ public class RegistrationCommand implements Command {
                 .buildFirstName(request.getParameter("firstName"))
                 .buildLastName(request.getParameter("lastName"))
                 .buildAddress(sb.toString())
+                .buildAccount(BigDecimal.ZERO)
                 .build();
+        //System.out.println(user);
         new UserService().setInDb(user);
 
         request.getSession().setAttribute("login", user.getLogin());

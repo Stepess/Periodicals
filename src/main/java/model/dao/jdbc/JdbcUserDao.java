@@ -4,6 +4,9 @@ import model.dao.UserDao;
 import model.dao.mappers.UserMapper;
 import model.entity.Payment;
 import model.entity.User;
+import model.exception.NotUniqueEmailException;
+import model.exception.NotUniqueLoginException;
+import model.exception.NotUniqueUserException;
 import model.service.LocaleHolder;
 import model.service.resource.manager.DBFieldsManager;
 import model.service.resource.manager.DataBaseManager;
@@ -49,7 +52,7 @@ public class JdbcUserDao implements UserDao {
             //statement.setString(8,entity.getNationalField("lastName"));//TODO guess how put right name
             statement.setString(7,entity.getAddress());
             //statement.setString(10,entity.getNationalField("address"));//TODO guess how put right name
-            //statement.setFloat(8,entity.getAccount().floatValue());//TODO guess how handle money
+            statement.setFloat(8,entity.getAccount().floatValue());//TODO guess how handle money
             result = statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -166,10 +169,11 @@ public class JdbcUserDao implements UserDao {
                     ResultSet resultSet = statement.executeQuery()
 
             ) {
-                while (resultSet.next()) {
-                    user = userMapper.extractFromResultSet(resultSet);
-                }
-
+            if (resultSet.next()){//TODO change
+                user = userMapper.extractFromResultSet(resultSet);
+            } else {
+                throw new NotUniqueUserException();
+            }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -178,6 +182,31 @@ public class JdbcUserDao implements UserDao {
 
         }
         return user;
+    }
+
+    @Override
+    public void checkDataUnique(String login, String email) {
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement loginStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.login"));
+                PreparedStatement emailStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.email"))
+        ) {
+            loginStatement.setString(1, login);
+            try (ResultSet resultSet = loginStatement.executeQuery()) {
+                if (resultSet.next()){throw new NotUniqueLoginException();}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            emailStatement.setString(1, email);
+            try (ResultSet resultSet = emailStatement.executeQuery()) {
+                if (resultSet.next()){throw new NotUniqueEmailException();}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
     }
 
     @Override

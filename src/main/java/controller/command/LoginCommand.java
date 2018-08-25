@@ -33,7 +33,7 @@ public class LoginCommand implements Command {
 
         if (loginService.checkLoginPassword(login, password)) {
             //TODO if session already invalidated by time what to do - exception
-            if (request.getSession().getServletContext().getAttribute(login) != null && request.isRequestedSessionIdValid()){
+            if (request.getSession().getServletContext().getAttribute(login) != null){
                 ((HttpSession) request.getSession().getServletContext().getAttribute(login)).invalidate();
             }
             //loginUser(request, login);
