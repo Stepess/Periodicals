@@ -6,6 +6,8 @@ import model.dao.mappers.PublicationMapper;
 import model.dao.mappers.UserMapper;
 import model.entity.Publication;
 import model.entity.User;
+import model.exception.NotUniqueTitleEnException;
+import model.exception.NotUniqueTitleUaException;
 import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
 
@@ -195,6 +197,31 @@ public class JdbcPublicationDao implements PublicationDao {
         }
 
         return report;
+    }
+
+    @Override
+    public void checkDataUnique(String titleEn, String titleUa) {
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement titleEnStatement = connection.prepareStatement(manager.getProperty("db.publication.query.get.title.en"));
+                PreparedStatement titleUaStatement = connection.prepareStatement(manager.getProperty("db.publication.query.get.title.ua"))
+        ) {
+            titleEnStatement.setString(1, titleEn);
+            try (ResultSet resultSet = titleEnStatement.executeQuery()) {
+                if (resultSet.next()){throw new NotUniqueTitleEnException();}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            titleUaStatement.setString(1, titleUa);
+            try (ResultSet resultSet = titleUaStatement.executeQuery()) {
+                if (resultSet.next()){throw new NotUniqueTitleUaException();}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
     }
 
     @Override

@@ -6,7 +6,7 @@ import model.entity.Payment;
 import model.entity.User;
 import model.exception.NotUniqueEmailException;
 import model.exception.NotUniqueLoginException;
-import model.exception.NotUniqueUserException;
+
 import model.service.LocaleHolder;
 import model.service.resource.manager.DBFieldsManager;
 import model.service.resource.manager.DataBaseManager;
@@ -169,11 +169,9 @@ public class JdbcUserDao implements UserDao {
                     ResultSet resultSet = statement.executeQuery()
 
             ) {
-            if (resultSet.next()){//TODO change
+            if (resultSet.next())//TODO change
                 user = userMapper.extractFromResultSet(resultSet);
-            } else {
-                throw new NotUniqueUserException();
-            }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

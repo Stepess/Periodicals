@@ -15,10 +15,12 @@
 <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/registration">
     <fmt:message key="login"/><br/>
     <input type="text" name="login" value="${param.login}" required/>
+    <br/>
     ${wronglogin}
     <br/>
     <fmt:message key="password"/><br/>
     <input type="password" name="password" value="" required/>
+    <br/>
     ${wrongpassword}
     <br/>
     <fmt:message key="password"/><br/>

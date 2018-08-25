@@ -9,4 +9,5 @@ import java.util.Map;
 public interface PublicationDao extends GenericDao<Publication>{
     Map<String, Integer> getStatistics();
     List<User> getReport(int id);
+    void checkDataUnique(String titleEn, String titleUa);
 }

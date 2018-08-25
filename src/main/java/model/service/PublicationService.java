@@ -35,4 +35,8 @@ public class PublicationService {
     public List<User> getReport(int publicationId) {
         return publicationDao.getReport(publicationId);
     }
+
+    public void checkDataUnique(String titleEn, String titleUa) {
+        publicationDao.checkDataUnique(titleEn, titleUa);
+    }
 }
