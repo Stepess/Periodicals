@@ -25,7 +25,7 @@ public class PublicationService {
     }
 
     public void setInDb(Publication publication){
-        System.out.println(publicationDao.setInDb(publication));
+        publicationDao.setInDb(publication);
     }
 
     public Map<String, Integer> getStatistics() {

@@ -29,7 +29,6 @@ public class AddPublicationCommand implements Command {
                             request.getParameter("description_ua")+
                             "/ua")
                     .build();
-            System.out.println(publication);
             new PublicationService().setInDb(publication);
         }
         return new PagePathManager().getProperty("path.page.add.publication");

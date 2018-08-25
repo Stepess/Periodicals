@@ -32,23 +32,13 @@ public class Servlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("REQUEST!!!!!!!");
-        System.out.println("lang class" + request.getSession().getAttribute("language").getClass());
-        //System.out.println(new MessageManager((Locale)request.getSession().getAttribute("language")).getProperty("message.paid"));
-        // System.out.println(new Locale.Builder().setLanguageTag((String)request.getSession().getAttribute("language")));
-        System.out.println(new Locale("en", "US"));
-        System.out.println("locale from request" + request.getLocale());
-
         CommandFactory commandFactory = new CommandFactory();
         Command command = commandFactory.getCommandFromRequest(request);
         String page = command.execute(request);
-        System.out.println(page);
         if (page.contains("redirect:")) {
-            System.out.println(page);
             response.sendRedirect(request.getContextPath() + page.replace("redirect:", ""));
         } else {
             request.getRequestDispatcher(page).forward(request, response);
         }
-
     }
 }

@@ -98,11 +98,6 @@ public class App {
         list.forEach(System.out::println);*/
 
 
-        String string = "title/enukraina/ua";
-        int index = string.indexOf("/en");
-        System.out.println(string.substring(0,index));
-
-        System.out.println(string.substring(index+3, string.length()-3));
 
 
     }

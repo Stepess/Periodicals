@@ -45,8 +45,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                     statement.setString(1, entity.getState().toString().toLowerCase());
                     statement.setFloat(2, entity.getTotal().floatValue());
                     statement.setDate(3, Date.valueOf(entity.getStartDate()));
-                    System.out.println("dao " + entity.getStartDate());
-                    System.out.println(Date.valueOf(entity.getStartDate()));
                     statement.setDate(4, Date.valueOf(entity.getEndDate()));
                     statement.setInt(5, entity.getOwnerId());
                     statement.setInt(6, entity.getPublication().getId());
@@ -86,7 +84,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             ) {
                 while (resultSet.next()) {
                     subscription = subscriptionMapper.extractFromResultSet(resultSet);
-                    System.out.println("sub1111: " + subscription);
                 }
 
             } catch (SQLException e) {
@@ -142,8 +139,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                     statement.setString(1, entity.getState().toString().toLowerCase());
                     statement.setFloat(2, entity.getTotal().floatValue());
                     statement.setDate(3, Date.valueOf(entity.getStartDate()));
-                    System.out.println("dao " + entity.getStartDate());
-                    System.out.println(Date.valueOf(entity.getStartDate()));
                     statement.setDate(4, Date.valueOf(entity.getEndDate()));
                     statement.setInt(5, entity.getOwnerId());
                     statement.setInt(6, entity.getPublication().getId());
@@ -261,7 +256,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                 updateSubStatement.executeUpdate();
                 setPaidPubStatement.setInt(1, user.getId());
                 setPaidPubStatement.setInt(2, subscription.getPublication().getId());
-                System.out.println(setPaidPubStatement);
                 setPaidPubStatement.executeUpdate();
                 /*updatePayment.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
                 updatePayment.setInt(2, subscription.getPayment().getId());
@@ -303,7 +297,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         ) {
             statement.setString(1, login);
             statement.setInt(2, publicationId);
-            System.out.println(statement);
             try (
                     ResultSet resultSet = statement.executeQuery()
 

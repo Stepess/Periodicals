@@ -25,20 +25,22 @@
     <input type="password" name="passwordDuplicate" value="" required/>
     <br/>
         ${wrongpasswordDuplicate}
-
+    <br/>
     <fmt:message key="email"/><br/>
     <input type="text" name="email" value="${param.email}" required/>
     <br/>
     ${wrongemail}
+    <br/>
     <fmt:message key="first.name"/><br/>
     <input type="text" name="firstName" value="${param.firstName}" required/>
     <br/>
     ${wrongfirstName}
-
+    <br/>
     <fmt:message key="last.name"/><br/>
     <input type="text" name="lastName" value="${param.lastName}" required/>
     <br/>
     ${wronglastName}
+    <br/>
     <%--<fmt:message key="address"/><br/>
     <input type="text" name="address" value=""/>
     <br/>--%>
@@ -46,14 +48,17 @@
     <input type="text" name="country" value="${param.country}" required/>
     <br/>
     ${wrongcountry}
+    <br/>
     <fmt:message key="city"/><br/>
     <input type="text" name="city" value="${param.city}" required/>
     <br/>
     ${wrongcity}
+    <br/>
     <fmt:message key="street"/><br/>
     <input type="text" name="street" value="${param.street}" required/>
     <br/>
     ${wrongstreet}
+    <br/>
     <fmt:message key="building"/><br/>
     <input type="number" name="building" value="${param.building}" required/>
     <br/>
