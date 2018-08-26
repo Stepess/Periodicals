@@ -83,6 +83,13 @@
                             <input type="submit" value="<fmt:message key="report"/>">
                         </form>
                     </td>
+                <td>
+                    <form method="POST" action="${pageContext.request.contextPath}/app/delete">
+                        <input type="hidden" name="pubId" value="${publication.id}">
+                        <input type="submit" value="<fmt:message key="delete"/>">
+                    </form>
+                </td>
+
 
                     <%--<td>
                         <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>
