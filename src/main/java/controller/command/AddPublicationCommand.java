@@ -25,11 +25,6 @@ public class AddPublicationCommand implements Command {
 
         DataValidationUtil validationUtil = new DataValidationUtil(new Locale("en", "US"));
 
-        System.out.println(request.getParameter("title_en"));
-        System.out.println(request.getParameter("title_en").matches(regexManager.getProperty("publication.title_en")));
-        System.out.println(regexManager.getProperty("publication.title_en"));
-        System.out.println(request.getParameter("title_en").matches("^[A-Z0-9]+[A-Za-z0-9#%&()\\\\*!,\\\\.\\\\s\\\\-\\\\$]*$"));
-
         try{
             new PublicationService().checkDataUnique(request.getParameter("title_en"),
                     request.getParameter("title_ua"));
@@ -43,8 +38,6 @@ public class AddPublicationCommand implements Command {
 
        // Pattern pattern = Pattern.compile("^[А-ЩЄІЇЮЯҐ0-9]+[А-ЩЄІЇЮЯҐа-щєіїьюяґ0-9'#&%!,()№:\\*\\s\\-\\$\\.]*$")
 
-        System.out.println(request.getParameter("author"));
-        System.out.println(request.getParameter("author").matches(regexManager.getProperty("publication.author")));
 
         validationUtil.isDataValid(request, "title_en", regexManager.getProperty("publication.title_en"));
         validationUtil.isDataValid(request, "title_ua", regexManager.getProperty("publication.title_ua"));

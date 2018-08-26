@@ -2,6 +2,7 @@ package model.service;
 
 import model.dao.DaoFactory;
 import model.dao.PublicationDao;
+import model.entity.DTO.PublicationDTO;
 import model.entity.Publication;
 import model.entity.User;
 
@@ -38,5 +39,17 @@ public class PublicationService {
 
     public void checkDataUnique(String titleEn, String titleUa) {
         publicationDao.checkDataUnique(titleEn, titleUa);
+    }
+
+    public List<PublicationDTO> getAllMultiLanguagePublication() {
+        return publicationDao.getAllMultiLanguagePublication();
+    }
+
+    public void setPublicationDto(PublicationDTO dto) {
+        publicationDao.insertPublicationDto(dto);
+    }
+
+    public void delete(int id) {
+        publicationDao.delete(id);
     }
 }

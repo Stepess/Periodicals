@@ -1,6 +1,7 @@
 package model.entity;
 
 import com.mysql.cj.jdbc.Blob;
+import model.entity.DTO.PublicationDTO;
 import model.service.builders.PublicationBuilder;
 
 import java.awt.*;
@@ -30,6 +31,7 @@ public class Publication {
         this.image = builder.getImage();
         nationalFields = new HashMap<>();
     }
+
 
     public int getId() {
         return id;

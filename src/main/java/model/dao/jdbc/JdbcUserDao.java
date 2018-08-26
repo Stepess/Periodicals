@@ -2,13 +2,10 @@ package model.dao.jdbc;
 
 import model.dao.UserDao;
 import model.dao.mappers.UserMapper;
-import model.entity.Payment;
 import model.entity.User;
 import model.exception.NotUniqueEmailException;
 import model.exception.NotUniqueLoginException;
 
-import model.service.LocaleHolder;
-import model.service.resource.manager.DBFieldsManager;
 import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
 
@@ -235,13 +232,13 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public boolean delete(User entity) {
+    public boolean delete(int id) {
         int result=0;
         try (
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.delete"))
         ) {
-            statement.setInt(1,entity.getId());
+            statement.setInt(1,id);
             result = statement.executeUpdate();
 
         } catch (SQLException e) {

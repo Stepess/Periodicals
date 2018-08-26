@@ -31,6 +31,7 @@ public class PublicationMapper implements ObjectMapper<Publication> {
                 .buildGenre(resultSet.getString(manager.getProperty("db.publication.genre")) == null ?
                         resultSet.getString("genre_en") :
                         resultSet.getString(manager.getProperty("db.publication.genre")))
+                .buildAuthor(resultSet.getString("author"))
                 .buildPrice(resultSet.getBigDecimal("price"))
                 //.getImage(resultSet.getBlob("image"));//TODO
                 .buildDescription(resultSet.getString( manager.getProperty("db.publication.description")) == null ?

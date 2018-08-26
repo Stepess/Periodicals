@@ -13,12 +13,8 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.time.temporal.ChronoUnit.MONTHS;
 
 public class JdbcSubscriptionDao implements SubscriptionDao {
     private DataSource source;
@@ -169,13 +165,13 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     }
 
     @Override
-    public boolean delete(Subscription entity) {
+    public boolean delete(int id) {
         int result=0;
         try (
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.delete"))
         ) {
-            statement.setInt(1,entity.getId());
+            statement.setInt(1,id);
             result = statement.executeUpdate();
 
         } catch (SQLException e) {

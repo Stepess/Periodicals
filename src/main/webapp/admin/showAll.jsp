@@ -16,68 +16,74 @@
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
 <jsp:include page="/WEB-INF/component/mainBody.jsp"/>
-<fmt:bundle basename="pagecontent" prefix="field.">
+<fmt:bundle basename="pagecontent" prefix="label.">
     ${fail}
     <table border="1" cellpadding="5">
         <caption><h2>Periodicals List</h2></caption>
         <tr>
             <th>
-                <fmt:message key="title"/>
+                <fmt:message key="title_en"/>
+            </th>
+            <th>
+                <fmt:message key="title_ua"/>
             </th>
             <th>
                 <fmt:message key="author"/>
             </th>
             <th>
-                <fmt:message key="genre"/>
+                <fmt:message key="genre_en"/>
+            </th>
+            <th>
+                <fmt:message key="genre_ua"/>
             </th>
             <th>
                 <fmt:message key="price"/>
             </th>
             <th>
-                <fmt:message key="description"/>
+                <fmt:message key="description_en"/>
+            </th>
+            <th>
+                <fmt:message key="description_ua"/>
             </th>
 
 
-        </th>
+            </th>
         </tr>
         <c:forEach items="${requestScope.publications}" var="publication">
             <tr>
-                <td><c:out value="${publication.title}"/></td>
+                <td><c:out value="${publication.titleEn}"/></td>
+                <td><c:out value="${publication.titleUa}"/></td>
                 <td><c:out value="${publication.author}"/></td>
-                <td><c:out value="${publication.genre}"/></td>
+                <td><c:out value="${publication.genreEn}"/></td>
+                <td><c:out value="${publication.genreUa}"/></td>
                 <td><c:out value="${publication.price}"/></td>
-                <td><c:out value="${publication.description}"/></td>
-                <c:if test="${sessionScope.role == 'user'}">
+                <td><c:out value="${publication.descriptionEn}"/></td>
+                <td><c:out value="${publication.descriptionUa}"/></td>
+
+
                     <td>
-                        <form method="POST" action="${pageContext.request.contextPath}/app/subscript">
+                        <form method="POST" action="${pageContext.request.contextPath}/admin/editPublication.jsp">
                             <input type="hidden" name="pubId" value="${publication.id}">
+                            <input type="hidden" name="title_en" value="${publication.titleEn}">
+                            <input type="hidden" name="title_ua" value="${publication.titleUa}">
+                            <input type="hidden" name="author" value="${publication.author}">
+                            <input type="hidden" name="genre_en" value="${publication.genreEn}">
+                            <input type="hidden" name="genre_ua" value="${publication.genreUa}">
                             <input type="hidden" name="price" value="${publication.price}">
-                            <fmt:message key="from"/><br>
-                            <input type="date" name="from" min="1"><br>
-                            <fmt:message key="to"/><br>
-                            <input type="number" name="months">
-                            <br>
-                            <input type="hidden" name="subId" value="${publication.id}">
-                            <input type="submit" value="<fmt:message key="subscript"/>">
-                        </form>
-                    </td>
-                </c:if>
-                <c:if test="${sessionScope.role == 'admin'}">
-                    <td>
-                        <form method="POST" action="${pageContext.request.contextPath}/app/editPublication">
-                            <input type="hidden" name="pubId" value="${publication.id}">
-                            <input type="hidden" name="title" value="${publication.title}">
-                            <input type="hidden" name=""
+
+                            <input type="hidden" name="description_en" value="${publication.descriptionEn}">
+                            <input type="hidden" name="description_ua" value="${publication.descriptionUa}">
+
                             <input type="submit" value="<fmt:message key="edit"/>">
                         </form>
                     </td>
                     <td>
                         <form method="POST" action="${pageContext.request.contextPath}/app/showReport">
                             <input type="hidden" name="pubId" value="${publication.id}">
-                            <input type="submit" value="<fmt:message key="edit"/>">
+                            <input type="submit" value="<fmt:message key="report"/>">
                         </form>
                     </td>
-                </c:if>
+
                     <%--<td>
                         <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>
                     </td>

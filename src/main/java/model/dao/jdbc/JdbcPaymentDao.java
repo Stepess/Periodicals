@@ -94,7 +94,7 @@ public class JdbcPaymentDao implements PaymentDao {
     }
 
     @Override
-    public boolean delete(Payment entity) {
+    public boolean delete(int id) {
         return false;
     }
 

@@ -12,31 +12,47 @@
 <jsp:include page="/WEB-INF/component/mainBody.jsp"/>
 
 
-<form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/addPublication">
+<form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/editPublication">
+    <input type="hidden" name="pubId" value="${param.pubId}"
     <fmt:message key="title_en"/><br/>
-    <input type="text" name="title_en" value="${requestScope.publication.title}"/>
+    <input type="text" name="title_en" value="${param.title_en}"/>
     <br/>
+        ${wrongtitle_en}
     <fmt:message key="title_ua"/><br/>
-    <input type="text" name="title_ua" value=""/>
+    <input type="text" name="title_ua" value="${param.title_ua}"/>
     <br/>
+        ${wrongtitle_ua}
     <fmt:message key="author"/><br/>
-    <input type="text" name="author" value=""/>
+    <input type="text" name="author" value="${param.author}"/>
     <br/>
+        ${wrongauthor}
     <fmt:message key="genre_en"/><br/>
-    <input type="text" name="genre_en" value=""/>
+    <input type="text" name="genre_en" value="${param.genre_en}"/>
+    <br/>
+        ${wronggenre_en}
     <br/>
     <fmt:message key="genre_ua"/><br/>
-    <input type="text" name="genre_ua" value=""/>
+    <input type="text" name="genre_ua" value="${param.genre_ua}"/>
+    <br/>
+        ${wronggenre_ua}
     <br/>
     <fmt:message key="price"/><br/>
-    <input type="number" step=".01" name="price" value=""/>
+    <input type="number" step=".01" name="price" value="${param.price}"/>
+    <br/>
+        ${wrongprice}
     <br/>
     <fmt:message key="description_en"/><br/>
-    <input type="text" name="description_en" value=""/>
+    <input type="text" name="description_en" value="${param.description_en}"/>
+    <br/>
+        ${wrongdescription_en}
     <br/>
     <fmt:message key="description_ua"/><br/>
-    <input type="text" name="description_ua" value=""/>
+    <input type="text" name="description_ua" value="${param.description_ua}"/>
     <br/>
+        ${wrongdescription_ua}
+    <br/>
+
+
 
 
 

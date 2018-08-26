@@ -1,9 +1,10 @@
 package model.dao.jdbc;
 
-import com.mysql.cj.jdbc.Blob;
 import model.dao.PublicationDao;
+import model.dao.mappers.PublicationDTOMapper;
 import model.dao.mappers.PublicationMapper;
 import model.dao.mappers.UserMapper;
+import model.entity.DTO.PublicationDTO;
 import model.entity.Publication;
 import model.entity.User;
 import model.exception.NotUniqueTitleEnException;
@@ -120,7 +121,7 @@ public class JdbcPublicationDao implements PublicationDao {
         ) {
             statement.setString(1,entity.getTitle());
             statement.setString(2,entity.getNationalField("title"));
-            statement.setString(3,"author");
+            statement.setString(3,entity.getAuthor());
             statement.setString(4,entity.getGenre());
             statement.setString(5,entity.getNationalField("genre"));
             statement.setFloat(6,entity.getPrice().floatValue());//TODO guess what to do with money
@@ -137,13 +138,13 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     @Override
-    public boolean delete(Publication entity) {
+    public boolean delete(int id) {
         int result=0;
         try (
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.delete"))
         ) {
-            statement.setInt(1,entity.getId());
+            statement.setInt(1,id);
             result = statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -222,6 +223,52 @@ public class JdbcPublicationDao implements PublicationDao {
             e.printStackTrace();
 
         }
+    }
+
+    @Override
+    public List<PublicationDTO> getAllMultiLanguagePublication() {
+        List<PublicationDTO> publicationsDto = new ArrayList<>();
+        PublicationDTOMapper mapper = new PublicationDTOMapper();
+        try (
+                Connection connection = source.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(manager.getProperty("db.publication.query.get.all"))
+        ) {
+            while (resultSet.next()) {
+                PublicationDTO publicationDTO = mapper.extractFromResultSet(resultSet);
+                publicationsDto.add(publicationDTO);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return publicationsDto;
+    }
+
+    @Override
+    public void insertPublicationDto(PublicationDTO dto) {
+        int result=0;
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.update"))
+        ) {
+            statement.setString(1,dto.getTitleEn());
+            statement.setString(2,dto.getTitleUa());
+            statement.setString(3,dto.getAuthor());
+            statement.setString(4,dto.getGenreEn());
+            statement.setString(5,dto.getGenreUa());
+            statement.setFloat(6,dto.getPrice().floatValue());//TODO guess what to do with money
+            statement.setString(7,dto.getDescriptionEn());//TODO guess how put right name
+            statement.setString(8,dto.getDescriptionUa());
+            statement.setBlob(9, connection.createBlob());//TODO guess how put right name
+            statement.setInt(10,dto.getId());
+            result = statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
