@@ -1,5 +1,6 @@
 package controller.command;
 
+import model.entity.DTO.PublicationDTO;
 import model.service.PublicationService;
 import model.service.resource.manager.PagePathManager;
 

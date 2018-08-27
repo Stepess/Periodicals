@@ -1,14 +1,17 @@
 package model.entity.DTO;
 
+import model.entity.Publication;
 import model.service.builders.PublicationBuilder;
 import model.service.builders.PublicationDtoBuilder;
 
 import java.awt.*;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
+
 
 public class PublicationDTO {
+    private String ukrainian = "uk";
+
     private int id;
     private String titleEn;
     private String titleUa;
@@ -32,6 +35,15 @@ public class PublicationDTO {
         this.descriptionUa = builder.getDescriptionUa();
     }
 
+    public Publication convertToInternationalizedEntity(Locale locale) {
+        return new PublicationBuilder(id)
+                .buildTitle(locale.getLanguage().equals(ukrainian) ? titleUa : titleEn)
+                .buildGenre(locale.getLanguage().equals(ukrainian) ? genreUa : genreEn)
+                .buildAuthor(author)
+                .buildPrice(price)
+                .buildDescription(locale.getLanguage().equals(ukrainian) ? descriptionUa : descriptionEn)
+                .build();
+    }
 
     public int getId() {
         return id;
