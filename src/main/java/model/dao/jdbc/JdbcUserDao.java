@@ -10,6 +10,7 @@ import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -237,6 +238,24 @@ public class JdbcUserDao implements UserDao {
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.delete"))
         ) {
             statement.setInt(1,id);
+            result = statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result>0;
+    }
+
+    @Override
+    public boolean addMoneyToUser(String login, BigDecimal money) {
+        int result=0;
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.add.money"))
+        ) {
+
+            statement.setString(2, login);
+            statement.setFloat(1, money.floatValue());
             result = statement.executeUpdate();
 
         } catch (SQLException e) {

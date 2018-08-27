@@ -20,6 +20,9 @@
 </c:if>
 
 <fmt:bundle basename="pagecontent" prefix="field.">
+    <form method="get" action="${pageContext.request.contextPath}/app/search">
+        <fmt:message
+    </form>
     ${fail}
     <table border="1" cellpadding="5">
         <caption><h2>Periodicals List</h2></caption>

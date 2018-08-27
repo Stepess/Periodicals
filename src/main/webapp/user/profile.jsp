@@ -8,25 +8,34 @@
     <title>Title</title>
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/component/header.jsp"/>
+<jsp:include page="/WEB-INF/component/userMenu.jsp"/>
+<fmt:bundle basename="pagecontent" prefix="label.">
+    <br/><fmt:message key="login"/><br/>
 <c:out value="${user.login}"/>
 <br/>
 <fmt:message key="email"/><br/>
 <c:out value="${user.email}"/>
 <br/>
-${wrongemail}
-<br/>
-<br/>
+
+
 <fmt:message key="first.name"/><br/>
 <c:out value="${user.firstName}"/>
 <br/>
-${wrongfirstName}
-<br/>
+
 <fmt:message key="last.name"/><br/>
 <c:out value="${user.lastName}"/>
 <br/>
-<fmt:message key="country"/><br/>
+<fmt:message key="address"/><br/>
 <c:out value="${user.address}"/>
 <br/>
+<fmt:message key="account"/><br/>
+    <c:out value="${user.account}"/>
+    <br/>
+    <form method="POST" action="app/replenish">
+        <input type="number" name="money">
+        <input type="submit" value="<fmt:message key="replenish"/>"/>
+    </form>
+</fmt:bundle>
 </body>
 </html>

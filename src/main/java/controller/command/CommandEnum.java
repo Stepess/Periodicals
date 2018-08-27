@@ -68,6 +68,16 @@ public enum CommandEnum {
         {
             this.command = new DeleteCommand();
         }
+    },
+    PROFILE {
+        {
+            this.command = new ProfileCommand();
+        }
+    },
+    REPLENISH {
+        {
+            this.command = new ReplenishCommand();
+        }
     };
 
     Command command;

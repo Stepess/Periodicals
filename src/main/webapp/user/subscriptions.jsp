@@ -20,6 +20,8 @@
 ${fail}
 ${success}
 <fmt:bundle basename="pagecontent" prefix="field.">
+
+
 <table border="1" cellpadding="5">
     <caption><h2>Subscription List</h2></caption>
     <tr>

@@ -21,6 +21,9 @@
     </a>|
     <a href="${pageContext.request.contextPath}/app/payments">
         <fmt:message key="payment"/>
+    </a>|
+    <a href="${pageContext.request.contextPath}/app/profile">
+        <fmt:message key="profile"/>
     </a>
 
 </fmt:bundle>
