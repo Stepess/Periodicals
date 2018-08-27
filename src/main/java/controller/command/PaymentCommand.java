@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 public class PaymentCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
-        String login = (String) request.getSession().getAttribute("login");
-        request.setAttribute("subscriptions", new SubscriptionService().getAllUserSubscription(login));
+        request.setAttribute("subscriptions", new SubscriptionService().getAllUserSubscription(
+                (String) request.getSession().getAttribute("login")));
         return new PagePathManager().getProperty("path.page.payment");
     }
 }

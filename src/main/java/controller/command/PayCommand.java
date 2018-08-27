@@ -10,16 +10,13 @@ import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.ResourceManager;
 
-
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Locale;
 
 public class PayCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         int subId = Integer.parseInt(request.getParameter("subId"));
-        //List<Subscription> subscriptionList = (List<Subscription>) request.getAttribute("subscriptions");
         Subscription subscription = new SubscriptionService().getById(subId);
 
         ResourceManager manager = new MessageManager((Locale)request.getSession().getAttribute("locale"));

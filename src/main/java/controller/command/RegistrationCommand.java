@@ -73,7 +73,7 @@ public class RegistrationCommand implements Command {
                 .buildAddress(sb.toString())
                 .buildAccount(BigDecimal.ZERO)
                 .build();
-        //System.out.println(user);
+
         new UserService().setInDb(user);
 
         request.getSession().setAttribute("login", user.getLogin());

@@ -6,14 +6,6 @@ public class CommandFactory {
     public Command getCommandFromRequest(HttpServletRequest request) {
         Command command = new DefaultCommand();
 
-        /*String path = request
-       .getRequestURI();
-        String temp[] = path.split("/");
-        String commandName = null;
-        if (temp.length>1){
-            commandName = temp[temp.length-1];
-        }*/
-
         String commandName = request.getRequestURI();
         commandName = commandName.replaceAll(".*/app/", "");
 
@@ -25,7 +17,7 @@ public class CommandFactory {
             command = commandEnum.getCommand();
         }
         catch (IllegalArgumentException ex) {//TODO add logger
-            request.setAttribute("wrongAction", commandName);
+            //request.setAttribute("wrongAction", commandName);
         }
         return command;
     }

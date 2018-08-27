@@ -20,11 +20,11 @@ import java.util.Locale;
 public class AddPublicationCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
-        Locale locale = (Locale)request.getSession().getAttribute("locale");
+        Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceManager regexManager = new RegexpManager(locale);
         DataValidationUtil validationUtil = new DataValidationUtil(locale);
 
-        try{
+        try {
             new PublicationService().checkDataUnique(request.getParameter("title_en"),
                     request.getParameter("title_ua"));
         } catch (NotUniqueTitleEnException ex) {
@@ -53,28 +53,20 @@ public class AddPublicationCommand implements Command {
         }
 
         Publication publication = new PublicationBuilder()
-                .buildTitle(
-                        request.getParameter("title_en") +
-                                "/en" +
-                                request.getParameter("title_ua") +
-                                "/ua")
+                .buildTitle(request.getParameter("title_en") + "/en" +
+                        request.getParameter("title_ua") + "/ua")
                 .buildAuthor(request.getParameter("author"))
-                .buildGenre(request.getParameter("genre_en") +
-                        "/en" +
-                        request.getParameter("genre_ua") +
-                        "/ua")
+                .buildGenre(request.getParameter("genre_en") + "/en" +
+                        request.getParameter("genre_ua") + "/ua")
                 .buildPrice(BigDecimal.valueOf(Double.parseDouble(request.getParameter("price"))))
-                .buildDescription(request.getParameter("description_en") +
-                        "/en" +
-                        request.getParameter("description_ua") +
-                        "/ua")
+                .buildDescription(request.getParameter("description_en") + "/en" +
+                        request.getParameter("description_ua") + "/ua")
                 .build();
 
         new PublicationService().setInDb(publication);
         request.setAttribute("publications", new PublicationService().getAllMultiLanguagePublication());
         return new PagePathManager().getProperty("path.page.admin.catalog");
     }
-
 }
 
 

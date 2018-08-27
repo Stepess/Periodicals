@@ -6,9 +6,6 @@ import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

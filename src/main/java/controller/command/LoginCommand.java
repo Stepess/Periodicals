@@ -6,15 +6,13 @@ import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.ResourceManager;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
-import java.util.Map;
 
 public class LoginCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) {//TODO change logic separetly check login and password
         ResourceManager manager = new PagePathManager();
 
         String login = request.getParameter("login");
@@ -34,7 +32,6 @@ public class LoginCommand implements Command {
             if (request.getSession().getServletContext().getAttribute(login) != null){
                 ((HttpSession) request.getSession().getServletContext().getAttribute(login)).invalidate();
             }
-            //loginUser(request, login);
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
             request.getSession().getServletContext().setAttribute(login, request.getSession());
@@ -48,20 +45,4 @@ public class LoginCommand implements Command {
         return manager.getProperty("path.page.index");
     }
 }
-
-/*private void loginUser(HttpServletRequest request, String login) {
-        Map<String, Object> loginedUsers = (Map<String, Object>) request.getSession().getServletContext().getAttribute("loginedUsers");
-
-        if (loginedUsers == null) {
-            loginedUsers = new ConcurrentHashMap<>();
-            loginedUsers.put(login, request.getSession());
-            request.getSession().getServletContext().setAttribute("loginedUsers", loginedUsers);
-        } else {
-        if (loginedUsers.get(login) != null){
-                ((HttpSession)loginedUsers.get(login)).invalidate();
-            }
-            loginedUsers.put(login, request.getSession());
-
-        }
-    }*/
 
