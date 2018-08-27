@@ -15,7 +15,10 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
-<jsp:include page="/WEB-INF/component/mainBody.jsp"/>
+<c:if test="${sessionScope.role == 'user'}">
+    <jsp:include page="/WEB-INF/component/userMenu.jsp"/>
+</c:if>
+
 <fmt:bundle basename="pagecontent" prefix="field.">
     ${fail}
     <table border="1" cellpadding="5">
@@ -40,6 +43,11 @@
 
         </th>
         </tr>
+
+
+
+
+
         <c:forEach items="${requestScope.publications}" var="publication">
             <tr>
                 <td><c:out value="${publication.title}"/></td>
@@ -62,22 +70,7 @@
                         </form>
                     </td>
                 </c:if>
-                <c:if test="${sessionScope.role == 'admin'}">
-                    <td>
-                        <form method="POST" action="${pageContext.request.contextPath}/app/editPublication">
-                            <input type="hidden" name="pubId" value="${publication.id}">
-                            <input type="hidden" name="title" value="${publication.title}">
-                            <input type="hidden" name=""
-                            <input type="submit" value="<fmt:message key="edit"/>">
-                        </form>
-                    </td>
-                    <td>
-                        <form method="POST" action="${pageContext.request.contextPath}/app/showReport">
-                            <input type="hidden" name="pubId" value="${publication.id}">
-                            <input type="submit" value="<fmt:message key="edit"/>">
-                        </form>
-                    </td>
-                </c:if>
+
                     <%--<td>
                         <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>
                     </td>

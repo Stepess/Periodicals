@@ -9,7 +9,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
-<jsp:include page="/WEB-INF/component/mainBody.jsp"/>
+<jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
 
 
 <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/editPublication">

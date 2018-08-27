@@ -15,12 +15,6 @@ import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Servlet extends HttpServlet {
-
-    @Override
-    public void init() throws ServletException {
-        //getServletContext().setAttribute("loginedUsers", new ConcurrentHashMap<>());
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);

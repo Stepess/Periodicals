@@ -16,7 +16,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
-<jsp:include page="/WEB-INF/component/mainBody.jsp"/>
+<jsp:include page="/WEB-INF/component/userMenu.jsp"/>
 ${fail}
 ${success}
 <fmt:bundle basename="pagecontent" prefix="field.">

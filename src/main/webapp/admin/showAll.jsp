@@ -15,7 +15,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
-<jsp:include page="/WEB-INF/component/mainBody.jsp"/>
+<jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
 <fmt:bundle basename="pagecontent" prefix="label.">
     ${fail}
     <table border="1" cellpadding="5">
