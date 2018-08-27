@@ -23,7 +23,7 @@ public class SubscriptCommand implements Command{
     public String execute(HttpServletRequest request) {
         LocalDate from = LocalDate.parse(request.getParameter("from"));
         int months = Integer.parseInt(request.getParameter("months"));
-        ResourceManager manager = new MessageManager(new Locale("en"));
+        ResourceManager manager = new MessageManager((Locale)request.getSession().getAttribute("locale"));
 /*
         BigDecimal bill = BigDecimal.valueOf(months).multiply(BigDecimal.valueOf(Double.parseDouble(request.getParameter("price"))));
         Payment payment = new PaymentBuilder()

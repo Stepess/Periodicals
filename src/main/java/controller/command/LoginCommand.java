@@ -30,9 +30,7 @@ public class LoginCommand implements Command {
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.page.main");
         }
-
         if (loginService.checkLoginPassword(login, password)) {
-            //TODO if session already invalidated by time what to do - exception
             if (request.getSession().getServletContext().getAttribute(login) != null){
                 ((HttpSession) request.getSession().getServletContext().getAttribute(login)).invalidate();
             }
@@ -43,27 +41,12 @@ public class LoginCommand implements Command {
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.page.main");
         } else {
-
-
-
             request.setAttribute("errorLoginPassMessage",
-                    //
-                    new MessageManager(new Locale(((String) request.getSession().getAttribute("language")).substring(0,2),
-                            ((String) request.getSession().getAttribute("language")).substring(3,5)))
-                    .getProperty("message.wrong.login.password"));
+                    new MessageManager((Locale)request.getSession().getAttribute("locale"))
+                            .getProperty("message.wrong.login.password"));
         }
         return manager.getProperty("path.page.index");
     }
-
-    private void loginUser(HttpServletRequest request, String login) {
-        /*Map<String, Object> loginedUsers = (Map<String, Object>) request.getSession().getServletContext().getAttribute("loginedUsers");
-        if (loginedUsers.get(login) != null){
-            ((HttpSession)loginedUsers.get(login)).invalidate();
-        }
-        loginedUsers.put(login, request.getSession());*/
-    }
-
-
 }
 
 /*private void loginUser(HttpServletRequest request, String login) {

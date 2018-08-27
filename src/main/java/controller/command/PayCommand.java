@@ -22,7 +22,7 @@ public class PayCommand implements Command {
         //List<Subscription> subscriptionList = (List<Subscription>) request.getAttribute("subscriptions");
         Subscription subscription = new SubscriptionService().getById(subId);
 
-        ResourceManager manager = new MessageManager(new Locale("en"));
+        ResourceManager manager = new MessageManager((Locale)request.getSession().getAttribute("locale"));
 
         if (subscription.isPaid()) {
             request.setAttribute("fail", manager.getProperty("message.already.paid"));

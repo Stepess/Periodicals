@@ -22,12 +22,10 @@ import java.util.List;
 public class JdbcUserDao implements UserDao {
     private DataSource source;
     private ResourceManager manager;
-    //private LocaleHolder localeHolder;
 
     public JdbcUserDao(DataSource source) {
         this.source = source;
         this.manager = new DataBaseManager();
-        //this.localeHolder = localeHolderl;
     }
 
     @Override

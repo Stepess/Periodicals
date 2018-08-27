@@ -1,11 +1,9 @@
 package model.entity;
 
-import model.service.LocaleHolder;
 import model.service.builders.SubscriptionBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 public class Subscription {
     private int id;

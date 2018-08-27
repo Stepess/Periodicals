@@ -24,10 +24,9 @@ public class EditPublicationCommand implements Command {
         //Publication publication = new PublicationService().getById(Integer.parseInt(request.getParameter("pubId")));
         //request.setAttribute("publication", publication);
         //return new PagePathManager().getProperty("")
-        DataValidationUtil validationUtil = new DataValidationUtil(new Locale("en", "US"));
-        ResourceManager regexManager = new RegexpManager(new Locale("en", "US"));
-
-        System.out.println(request.getParameter("title_en"));
+        Locale locale = (Locale)request.getSession().getAttribute("locale");
+        DataValidationUtil validationUtil = new DataValidationUtil(locale);
+        ResourceManager regexManager = new RegexpManager(locale);
 
         /*try{
             new PublicationService().checkDataUnique(request.getParameter("title_en"),

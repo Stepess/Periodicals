@@ -20,19 +20,19 @@ public class RegistrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        Locale locale = (Locale)request.getSession().getAttribute("locale");
+        ResourceManager regexManager = new RegexpManager(locale);
 
-        ResourceManager regexManager = new RegexpManager(new Locale("en", "US"));
-
-        DataValidationUtil validationUtil = new DataValidationUtil(new Locale("en", "US"));
+        DataValidationUtil validationUtil = new DataValidationUtil(locale);
 
         try{
             new UserService().checkDataUnique(request.getParameter("login"),
                     request.getParameter("email"));
         } catch (NotUniqueLoginException ex) {
-            request.setAttribute("wronglogin", new MessageManager(new Locale("en", "US"))
+            request.setAttribute("wronglogin", new MessageManager(locale)
                     .getProperty("message.not.unique.login"));
         } catch (NotUniqueEmailException ex) {
-            request.setAttribute("wrongemail", new MessageManager(new Locale("en", "US"))
+            request.setAttribute("wrongemail", new MessageManager(locale)
             .getProperty("message.not.unique.email"));
         }
 

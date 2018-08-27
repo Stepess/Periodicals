@@ -41,7 +41,7 @@ public class JdbcPublicationDao implements PublicationDao {
 
             statement.setString(1,getEnString(entity.getTitle()));
             statement.setString(2,getUaString(entity.getTitle()));
-            statement.setString(3,"author");
+            statement.setString(3,entity.getAuthor());
             statement.setString(4,getEnString(entity.getGenre()));
             statement.setString(5,getUaString(entity.getGenre()));
             statement.setFloat(6,entity.getPrice().floatValue());//TODO guess what to do with money
