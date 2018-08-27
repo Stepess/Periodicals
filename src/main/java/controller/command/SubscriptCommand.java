@@ -1,5 +1,6 @@
 package controller.command;
 
+import model.entity.DTO.PublicationDto;
 import model.entity.Publication;
 import model.entity.Subscription;
 import model.service.PublicationService;
@@ -21,13 +22,13 @@ public class SubscriptCommand implements Command{
         LocalDate from = LocalDate.parse(request.getParameter("from"));
         int months = Integer.parseInt(request.getParameter("months"));
         ResourceManager manager = new MessageManager((Locale)request.getSession().getAttribute("locale"));
-        Publication publication = new PublicationService().getById(Integer.parseInt(request.getParameter("pubId")));
+        PublicationDto dto = new PublicationService().getById(Integer.parseInt(request.getParameter("pubId")));
         String login = (String) request.getSession().getAttribute("login");
 
         Subscription subscription = new SubscriptionBuilder()
                 .buildStartDate(from)
-                .buildTotal(publication.getPrice().multiply(BigDecimal.valueOf(months)))
-                .buildPublication(publication)
+                .buildTotal(dto.getPrice().multiply(BigDecimal.valueOf(months)))
+                .buildPublication(dto.convertToInternationalizedEntity((Locale)request.getSession().getAttribute("locale")))
                 .buildEndDate(from.plusMonths(months))
                 .buildState(Subscription.StateEnum.UNPAID)
                 .buildOwnerId(new UserService().getUserId(login))

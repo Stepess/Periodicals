@@ -2,7 +2,7 @@ package model.service;
 
 import model.dao.DaoFactory;
 import model.dao.PublicationDao;
-import model.entity.DTO.PublicationDTO;
+import model.entity.DTO.PublicationDto;
 import model.entity.Publication;
 import model.entity.User;
 
@@ -17,15 +17,15 @@ public class PublicationService {
         publicationDao = daoFactory.createPublicationDao();
     }
     
-    public List<Publication> getAll() {
+    public List<PublicationDto> getAll() {
         return publicationDao.getAll();
     }
 
-    public Publication getById(int id) {
+    public PublicationDto getById(int id) {
         return publicationDao.getById(id);
     }
 
-    public void setInDb(Publication publication){
+    public void setInDb(PublicationDto publication){
         publicationDao.setInDb(publication);
     }
 
@@ -41,11 +41,11 @@ public class PublicationService {
         publicationDao.checkDataUnique(titleEn, titleUa);
     }
 
-    public List<PublicationDTO> getAllMultiLanguagePublication() {
+    public List<PublicationDto> getAllMultiLanguagePublication() {
         return publicationDao.getAllMultiLanguagePublication();
     }
 
-    public void setPublicationDto(PublicationDTO dto) {
+    public void setPublicationDto(PublicationDto dto) {
         publicationDao.insertPublicationDto(dto);
     }
 
@@ -53,7 +53,7 @@ public class PublicationService {
         publicationDao.delete(id);
     }
 
-    public List<Publication> search(Map<String, String> searchParameters) {
+    public List<PublicationDto> search(Map<String, String> searchParameters) {
         return publicationDao.search(searchParameters);
     }
 }

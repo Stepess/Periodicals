@@ -4,7 +4,7 @@ import model.dao.PublicationDao;
 import model.dao.mappers.PublicationDTOMapper;
 import model.dao.mappers.PublicationMapper;
 import model.dao.mappers.UserMapper;
-import model.entity.DTO.PublicationDTO;
+import model.entity.DTO.PublicationDto;
 import model.entity.Publication;
 import model.entity.User;
 import model.exception.NotUniqueTitleEnException;
@@ -30,7 +30,7 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     @Override
-    public boolean setInDb(Publication entity) {
+    public boolean setInDb(PublicationDto entity) {
         int result=0;
         try (
                 Connection connection = source.getConnection();
@@ -40,7 +40,7 @@ public class JdbcPublicationDao implements PublicationDao {
 
 
 
-            statement.setString(1,getEnString(entity.getTitle()));
+            /*tatement.setString(1,getEnString(entity.getTitle()));
             statement.setString(2,getUaString(entity.getTitle()));
             statement.setString(3,entity.getAuthor());
             statement.setString(4,getEnString(entity.getGenre()));
@@ -49,6 +49,18 @@ public class JdbcPublicationDao implements PublicationDao {
             statement.setString(7,getEnString(entity.getDescription()));//TODO guess how put right name
             statement.setString(8,getUaString(entity.getDescription()));
             statement.setBlob(9, connection.createBlob());//TODO guess how put right name
+            result = statement.executeUpdate();*/
+
+            statement.setString(1,entity.getTitleEn());
+            statement.setString(2,entity.getTitleUa());
+            statement.setString(3,entity.getAuthor());
+            statement.setString(4,entity.getGenreEn());
+            statement.setString(5,entity.getGenreUa());
+            statement.setFloat(6,entity.getPrice().floatValue());
+            statement.setString(7,entity.getDescriptionEn());
+            statement.setString(8,entity.getDescriptionUa());
+            statement.setBlob(9, connection.createBlob());
+
             result = statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -69,9 +81,9 @@ public class JdbcPublicationDao implements PublicationDao {
 
 
     @Override
-    public Publication getById(int id) {
-        PublicationMapper mapper = new PublicationMapper();
-        Publication publication = null;
+    public PublicationDto getById(int id) {
+        PublicationDTOMapper mapper = new PublicationDTOMapper();
+        PublicationDto publicationDto = null;
         try (
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.get.by.id"))
@@ -79,7 +91,7 @@ public class JdbcPublicationDao implements PublicationDao {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    publication = mapper.extractFromResultSet(resultSet);
+                    publicationDto = mapper.extractFromResultSet(resultSet);
                 }
 
             } catch (SQLException e) {
@@ -89,21 +101,21 @@ public class JdbcPublicationDao implements PublicationDao {
             e.printStackTrace();
 
         }
-        return publication;
+        return publicationDto;
     }
 
     @Override
-    public List<Publication> getAll() {
-        List<Publication> publications = new ArrayList<>();
-        PublicationMapper mapper = new PublicationMapper();
+    public List<PublicationDto> getAll() {
+        List<PublicationDto> publications = new ArrayList<>();
+        PublicationDTOMapper mapper = new PublicationDTOMapper();
         try (
                 Connection connection = source.getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(manager.getProperty("db.publication.query.get.all"))
         ) {
             while (resultSet.next()) {
-                Publication publication = mapper.extractFromResultSet(resultSet);
-                publications.add(publication);
+                PublicationDto publicationDto = mapper.extractFromResultSet(resultSet);
+                publications.add(publicationDto);
             }
 
         } catch (SQLException e) {
@@ -114,21 +126,21 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     @Override
-    public boolean update(Publication entity) {
+    public boolean update(PublicationDto entity) {
         int result=0;
         try (
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.update"))
         ) {
-            statement.setString(1,entity.getTitle());
-            statement.setString(2,entity.getNationalField("title"));
+            statement.setString(1,entity.getTitleEn());
+            statement.setString(2,entity.getTitleUa());
             statement.setString(3,entity.getAuthor());
-            statement.setString(4,entity.getGenre());
-            statement.setString(5,entity.getNationalField("genre"));
-            statement.setFloat(6,entity.getPrice().floatValue());//TODO guess what to do with money
-            statement.setString(7,entity.getDescription());//TODO guess how put right name
-            statement.setString(8,entity.getNationalField("description"));
-            statement.setBlob(9, connection.createBlob());//TODO guess how put right name
+            statement.setString(4,entity.getGenreEn());
+            statement.setString(5,entity.getGenreUa());
+            statement.setFloat(6,entity.getPrice().floatValue());
+            statement.setString(7,entity.getDescriptionEn());
+            statement.setString(8,entity.getDescriptionUa());
+            statement.setBlob(9, connection.createBlob());
             statement.setInt(10,entity.getId());
             result = statement.executeUpdate();
 
@@ -227,8 +239,8 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     @Override
-    public List<PublicationDTO> getAllMultiLanguagePublication() {
-        List<PublicationDTO> publicationsDto = new ArrayList<>();
+    public List<PublicationDto> getAllMultiLanguagePublication() {
+        List<PublicationDto> publicationsDto = new ArrayList<>();
         PublicationDTOMapper mapper = new PublicationDTOMapper();
         try (
                 Connection connection = source.getConnection();
@@ -236,7 +248,7 @@ public class JdbcPublicationDao implements PublicationDao {
                 ResultSet resultSet = statement.executeQuery(manager.getProperty("db.publication.query.get.all"))
         ) {
             while (resultSet.next()) {
-                PublicationDTO publicationDTO = mapper.extractFromResultSet(resultSet);
+                PublicationDto publicationDTO = mapper.extractFromResultSet(resultSet);
                 publicationsDto.add(publicationDTO);
             }
 
@@ -248,7 +260,7 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     @Override
-    public void insertPublicationDto(PublicationDTO dto) {
+    public void insertPublicationDto(PublicationDto dto) {
         int result=0;
         try (
                 Connection connection = source.getConnection();
@@ -273,9 +285,9 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     @Override
-    public List<Publication> search(Map<String, String> searchParameters) {
-        List<Publication> publications = new ArrayList<>();
-        PublicationMapper mapper = new PublicationMapper();
+    public List<PublicationDto> search(Map<String, String> searchParameters) {
+        List<PublicationDto> publications = new ArrayList<>();
+        PublicationDTOMapper mapper = new PublicationDTOMapper();
         try (
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.search"));
@@ -307,13 +319,10 @@ public class JdbcPublicationDao implements PublicationDao {
 
             try(ResultSet resultSet= statement.executeQuery()){
                 while (resultSet.next()) {
-                    Publication publication = mapper.extractFromResultSet(resultSet);
-                    publications.add(publication);
+                    PublicationDto publicationDto = mapper.extractFromResultSet(resultSet);
+                    publications.add(publicationDto);
                 }
             }
-
-
-
 
         } catch (SQLException e) {
             e.printStackTrace();

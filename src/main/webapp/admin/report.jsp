@@ -7,6 +7,7 @@
     <title>Payments</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/component/header.jsp"/>
 <jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
 <fmt:bundle basename="pagecontent" prefix="field.">
     <table border="1" cellpadding="5">

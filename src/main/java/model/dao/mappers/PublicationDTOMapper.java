@@ -1,15 +1,15 @@
 package model.dao.mappers;
 
-import model.entity.DTO.PublicationDTO;
+import model.entity.DTO.PublicationDto;
 import model.service.builders.PublicationDtoBuilder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PublicationDTOMapper implements ObjectMapper<PublicationDTO> {
+public class PublicationDTOMapper implements ObjectMapper<PublicationDto> {
 
     @Override
-    public PublicationDTO extractFromResultSet(ResultSet resultSet) throws SQLException {
+    public PublicationDto extractFromResultSet(ResultSet resultSet) throws SQLException {
         PublicationDtoBuilder builder = new PublicationDtoBuilder(resultSet.getInt("publication.id"))
                 .buildTitleEn(resultSet.getString("title_en"))
                 .buildTitleUa(resultSet.getString("title_ua"))

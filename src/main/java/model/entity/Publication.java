@@ -1,7 +1,5 @@
 package model.entity;
 
-import com.mysql.cj.jdbc.Blob;
-import model.entity.DTO.PublicationDTO;
 import model.service.builders.PublicationBuilder;
 
 import java.awt.*;

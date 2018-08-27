@@ -1,8 +1,7 @@
 package model.service.builders;
 
-import model.entity.DTO.PublicationDTO;
+import model.entity.DTO.PublicationDto;
 
-import java.awt.*;
 import java.math.BigDecimal;
 
 public class PublicationDtoBuilder {
@@ -64,8 +63,8 @@ public class PublicationDtoBuilder {
 
 
 
-    public PublicationDTO build() {
-        return new PublicationDTO(this);
+    public PublicationDto build() {
+        return new PublicationDto(this);
     }
 
     public int getId() {

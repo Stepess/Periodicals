@@ -1,11 +1,13 @@
 package controller.command;
 
 import controller.utils.DataValidationUtil;
+import model.entity.DTO.PublicationDto;
 import model.entity.Publication;
 import model.exception.NotUniqueTitleEnException;
 import model.exception.NotUniqueTitleUaException;
 import model.service.PublicationService;
 import model.service.builders.PublicationBuilder;
+import model.service.builders.PublicationDtoBuilder;
 import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.RegexpManager;
@@ -52,7 +54,7 @@ public class AddPublicationCommand implements Command {
             }
         }
 
-        Publication publication = new PublicationBuilder()
+       /* Publication publication = new PublicationBuilder()
                 .buildTitle(request.getParameter("title_en") + "/en" +
                         request.getParameter("title_ua") + "/ua")
                 .buildAuthor(request.getParameter("author"))
@@ -61,9 +63,20 @@ public class AddPublicationCommand implements Command {
                 .buildPrice(BigDecimal.valueOf(Double.parseDouble(request.getParameter("price"))))
                 .buildDescription(request.getParameter("description_en") + "/en" +
                         request.getParameter("description_ua") + "/ua")
+                .build();*/
+
+        PublicationDto dto = new PublicationDtoBuilder()
+                .buildTitleEn(request.getParameter("title_en"))
+                .buildTitleUa(request.getParameter("title_ua"))
+                .buildAuthor(request.getParameter("author"))
+                .buildGenreEn(request.getParameter("genre_en"))
+                .buildGenreUa(request.getParameter("genre_ua"))
+                .buildPrice(BigDecimal.valueOf(Double.parseDouble(request.getParameter("price"))))
+                .buildDescriptionEn(request.getParameter("description_en"))
+                .buildDescriptionUa(request.getParameter("description_ua"))
                 .build();
 
-        new PublicationService().setInDb(publication);
+        new PublicationService().setInDb(dto);
         request.setAttribute("publications", new PublicationService().getAllMultiLanguagePublication());
         return new PagePathManager().getProperty("path.page.admin.catalog");
     }

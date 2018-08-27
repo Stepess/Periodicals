@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 
-public class PublicationDTO {
+public class PublicationDto {
     private String ukrainian = "uk";
 
     private int id;
@@ -23,7 +23,7 @@ public class PublicationDTO {
     private String descriptionUa;
     private Image image; //TODO figure out about work with image
 
-    public PublicationDTO(PublicationDtoBuilder builder) {
+    public PublicationDto(PublicationDtoBuilder builder) {
         this.id = builder.getId();
         this.titleEn = builder.getTitleEn();
         this.titleUa = builder.getTitleUa();
@@ -127,7 +127,7 @@ public class PublicationDTO {
 
     @Override
     public String toString() {
-        return "PublicationDTO{" +
+        return "PublicationDto{" +
                 "id=" + id +
                 ", titleEn='" + titleEn + '\'' +
                 ", titleUa='" + titleUa + '\'' +
