@@ -21,7 +21,26 @@
 
 <fmt:bundle basename="pagecontent" prefix="field.">
     <form method="get" action="${pageContext.request.contextPath}/app/search">
-        <fmt:message
+        <fmt:message key="search"/>
+        <br/>
+        <fmt:message key="title"/>
+        <br/>
+        <input type="text" name="title">
+        <br/>
+        <fmt:message key="genre"/>
+        <br/>
+        <input type="text" name="genre">
+        <br/>
+        <fmt:message key="price"/>
+        <br/>
+        <input type="number" name="leftPriceBoundary">
+        <br/>
+        <input type="number" name="rightPriceBoundary">
+
+        <input type="submit" value="<fmt:message key="search"/>"/>
+        <br/>
+        ${fail}
+    </form>
     </form>
     ${fail}
     <table border="1" cellpadding="5">

@@ -52,4 +52,8 @@ public class PublicationService {
     public void delete(int id) {
         publicationDao.delete(id);
     }
+
+    public List<Publication> search(Map<String, String> searchParameters) {
+        return publicationDao.search(searchParameters);
+    }
 }

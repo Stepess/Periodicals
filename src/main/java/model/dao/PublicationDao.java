@@ -13,4 +13,5 @@ public interface PublicationDao extends GenericDao<Publication>{
     void checkDataUnique(String titleEn, String titleUa);
     List<PublicationDTO> getAllMultiLanguagePublication();
     void insertPublicationDto(PublicationDTO dto);
+    List<Publication> search(Map<String, String> searchParameters);
 }

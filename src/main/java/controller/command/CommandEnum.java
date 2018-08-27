@@ -78,6 +78,11 @@ public enum CommandEnum {
         {
             this.command = new ReplenishCommand();
         }
+    },
+    SEARCH {
+        {
+            this.command = new SearchCommand();
+        }
     };
 
     Command command;
