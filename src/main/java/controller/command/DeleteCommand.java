@@ -9,7 +9,7 @@ public class DeleteCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         new PublicationService().delete(Integer.parseInt(request.getParameter("pubId")));
-        request.setAttribute("publications", new PublicationService().getAllMultiLanguagePublication());
+        request.setAttribute("publications", new PublicationService().getAll());
         return new PagePathManager().getProperty("path.page.admin.catalog");
     }
 }

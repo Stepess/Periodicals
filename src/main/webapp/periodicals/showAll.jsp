@@ -41,8 +41,7 @@
         <br/>
         ${fail}
     </form>
-    </form>
-    ${fail}
+
     <table border="1" cellpadding="5">
         <caption><h2>Periodicals List</h2></caption>
         <tr>

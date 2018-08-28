@@ -1,14 +1,14 @@
 package controller.command;
 
+import model.entity.DTO.PublicationDto;
+import model.entity.Publication;
 import model.exception.NothingFoundException;
 import model.service.PublicationService;
 import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class SearchCommand implements Command {
     @Override
@@ -36,8 +36,22 @@ public class SearchCommand implements Command {
             }
         }
 
+
+
         try {
-            request.setAttribute("publications", new PublicationService().search(searchParameters));
+            if ("admin".equals(request.getSession().getAttribute("role"))) {
+                request.setAttribute("publications",  new PublicationService().search(searchParameters));
+                return new PagePathManager().getProperty("path.page.admin.catalog");
+            } else {
+                List<PublicationDto> list = new PublicationService().search(searchParameters);
+                List<Publication> list1 = new ArrayList<>();
+                Locale locale = (Locale)request.getSession().getAttribute("locale");
+                for (PublicationDto dto: list){
+                    list1.add(dto.convertToInternationalizedEntity(locale));
+                }
+                request.setAttribute("publications", list1);
+                return new PagePathManager().getProperty("path.page.periodicals");
+            }
         } catch (NothingFoundException e){
             request.setAttribute("fail", new MessageManager((Locale)request.getSession().getAttribute("locale")).getProperty("message.nothing.found"));
         }

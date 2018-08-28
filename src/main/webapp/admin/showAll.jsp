@@ -16,8 +16,30 @@
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
 <jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
+<fmt:bundle basename="pagecontent" prefix="field.">
+    <form method="get" action="${pageContext.request.contextPath}/app/search">
+        <fmt:message key="search"/>
+        <br/>
+        <fmt:message key="title"/>
+        <br/>
+        <input type="text" name="title">
+        <br/>
+        <fmt:message key="genre"/>
+        <br/>
+        <input type="text" name="genre">
+        <br/>
+        <fmt:message key="price"/>
+        <br/>
+        <input type="number" name="leftPriceBoundary">
+        <br/>
+        <input type="number" name="rightPriceBoundary">
+
+        <input type="submit" value="<fmt:message key="search"/>"/>
+        <br/>
+            ${fail}
+    </form>
+</fmt:bundle>
 <fmt:bundle basename="pagecontent" prefix="label.">
-    ${fail}
     <table border="1" cellpadding="5">
         <caption><h2>Periodicals List</h2></caption>
         <tr>

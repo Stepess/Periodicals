@@ -77,7 +77,7 @@ public class AddPublicationCommand implements Command {
                 .build();
 
         new PublicationService().setInDb(dto);
-        request.setAttribute("publications", new PublicationService().getAllMultiLanguagePublication());
+        request.setAttribute("publications", new PublicationService().getAll());
         return new PagePathManager().getProperty("path.page.admin.catalog");
     }
 }

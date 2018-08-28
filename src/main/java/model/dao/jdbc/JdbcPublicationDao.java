@@ -238,7 +238,7 @@ public class JdbcPublicationDao implements PublicationDao {
         }
     }
 
-    @Override
+    /*@Override
     public List<PublicationDto> getAllMultiLanguagePublication() {
         List<PublicationDto> publicationsDto = new ArrayList<>();
         PublicationDTOMapper mapper = new PublicationDTOMapper();
@@ -257,9 +257,9 @@ public class JdbcPublicationDao implements PublicationDao {
 
         }
         return publicationsDto;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void insertPublicationDto(PublicationDto dto) {
         int result=0;
         try (
@@ -282,7 +282,7 @@ public class JdbcPublicationDao implements PublicationDao {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     @Override
     public List<PublicationDto> search(Map<String, String> searchParameters) {

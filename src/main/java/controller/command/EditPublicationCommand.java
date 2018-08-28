@@ -51,8 +51,8 @@ public class EditPublicationCommand implements Command {
         System.out.println(publicationDTO);
 
 
-        new PublicationService().setPublicationDto(publicationDTO);
-        request.setAttribute("publications", new PublicationService().getAllMultiLanguagePublication());
+        new PublicationService().setInDb(publicationDTO);
+        request.setAttribute("publications", new PublicationService().getAll());
         return new PagePathManager().getProperty("path.page.admin.catalog");
     }
 }

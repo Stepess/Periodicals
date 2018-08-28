@@ -41,13 +41,13 @@ public class PublicationService {
         publicationDao.checkDataUnique(titleEn, titleUa);
     }
 
-    public List<PublicationDto> getAllMultiLanguagePublication() {
-        return publicationDao.getAllMultiLanguagePublication();
+    /*public List<PublicationDto> getAllMultiLanguagePublication() {
+        return publicationDao.getAll();
     }
 
     public void setPublicationDto(PublicationDto dto) {
-        publicationDao.insertPublicationDto(dto);
-    }
+        publicationDao.setInDb(dto);
+    }*/
 
     public void delete(int id) {
         publicationDao.delete(id);
