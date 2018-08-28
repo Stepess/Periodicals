@@ -1,38 +1,60 @@
 package model.service;
 
 import model.dao.DaoFactory;
+import model.dao.PublicationDao;
 import model.dao.UserDao;
 import model.entity.User;
 
 import java.math.BigDecimal;
 
 public class UserService {
-    private UserDao userDao;
-
+    private DaoFactory daoFactory = DaoFactory.getInstance();
     public UserService() {
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        userDao = daoFactory.createUserDao();
+        /*DaoFactory daoFactory = DaoFactory.getInstance();
+        try(UserDao dao = daoFactory.createUserDao()){
+            userDao = dao;
+        }*/
     }
 
     public boolean checkLoginPassword(String login, String password) {
-        return userDao.isUserExist(login, password);
+        try(UserDao dao = daoFactory.createUserDao()) {
+            return dao.isUserExist(login, password);
+        }
     }
 
     public User.RoleEnum getUserRole(String login) {
-        return userDao.getByLogin(login).getRole();
+        try(UserDao dao = daoFactory.createUserDao()) {
+            return dao.getByLogin(login).getRole();
+        }
     }
 
-    public int getUserId(String login) {return userDao.getByLogin(login).getId();}
+    public int getUserId(String login) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.getByLogin(login).getId();
+        }
+    }
 
     public void setInDb(User user) {
-        userDao.setInDb(user);
+        try (UserDao dao = daoFactory.createUserDao()) {
+            dao.setInDb(user);
+        }
     }
 
     public void checkDataUnique(String login, String email) {
-        userDao.checkDataUnique(login, email);
+        try (UserDao dao = daoFactory.createUserDao()) {
+            dao.checkDataUnique(login, email);
+        }
     }
 
-    public User getUserByLogin(String login){return userDao.getByLogin(login);}
+    public User getUserByLogin(String login){
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.getByLogin(login);
+        }
+    }
 
-    public void replenishAccount(String login, BigDecimal sum) {userDao.addMoneyToUser(login, sum);}
+    public void replenishAccount(String login, BigDecimal sum) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            dao.addMoneyToUser(login, sum);
+        }
+    }
 }

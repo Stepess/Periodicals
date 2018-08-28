@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcPaymentDao implements PaymentDao {
-    private DataSource source;
+    private Connection connection;
     private ResourceManager manager;
 
-    public JdbcPaymentDao(DataSource source) {
-        this.source = source;
+    public JdbcPaymentDao(Connection connection) {
+        this.connection = connection;
         this.manager = new DataBaseManager();
     }
 
@@ -27,10 +27,8 @@ public class JdbcPaymentDao implements PaymentDao {
     public List<Payment> getByUserLogin(String login) {
         PaymentMapper paymentMapper = new PaymentMapper();
         List<Payment> subscriptions = new ArrayList<>();
-        try (
-                Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))
-        ) {
+        try (PreparedStatement statement
+                     = connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))) {
             statement.setString(1, login);
             try (
                     ResultSet resultSet = statement.executeQuery()
@@ -100,6 +98,10 @@ public class JdbcPaymentDao implements PaymentDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

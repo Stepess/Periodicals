@@ -21,7 +21,7 @@
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language: pageContext.request.locale}" scope="session"/>
 <fmt:setLocale value="${language}" scope="session" />
 
-<form>
+<form onsubmit="location.reload(true)">
     <select id="language" name="language" onchange="submit()">
         <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
         <option value="uk_UA" ${language == 'uk_UA' ? 'selected' : ''}>Ukrainian</option>

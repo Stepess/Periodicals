@@ -38,8 +38,14 @@ public class SubscriptCommand implements Command{
                 .build();
 
         if (! new SubscriptionService().isUserSubscriptionUnique(login, Integer.parseInt(request.getParameter("pubId")))) {
+            List<PublicationDto> list = new PublicationService().getAll();
+            List<Publication> list1 = new ArrayList<>();
+            Locale locale = (Locale)request.getSession().getAttribute("locale");
+            for (PublicationDto dto1: list){
+                list1.add(dto1.convertToInternationalizedEntity(locale));
+            }
+            request.setAttribute("publications", list1);
             request.setAttribute("fail", manager.getProperty("message.already.subscribed"));
-            request.setAttribute("publications", new PublicationService().getAll());
             return new PagePathManager().getProperty("path.page.periodicals");
         }
 

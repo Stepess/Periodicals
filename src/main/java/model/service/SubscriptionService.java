@@ -12,33 +12,45 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class SubscriptionService {
-    private SubscriptionDao dao;
+    private DaoFactory daoFactory = DaoFactory.getInstance();
 
     public SubscriptionService() {
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        dao = daoFactory.createSubscriptionDao();
+        /*DaoFactory daoFactory = DaoFactory.getInstance();
+        try(SubscriptionDao dao1 = daoFactory.createSubscriptionDao()){
+            dao = dao1;
+        }*/
     }
 
     public List<SubscriptionDto> getAllUserSubscription(String login) {
-        return dao.getByUserLogin(login);
+        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+            return dao.getByUserLogin(login);
+        }
     }
 
     public Subscription getById(int id) {
-        return dao.getById(id);
+        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+            return dao.getById(id);
+        }
     }
 
     public void pay(String login, Subscription subscription) throws SQLException {
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        dao.pay(daoFactory.createUserDao().getByLogin(login),
-                subscription);
+
+        try(SubscriptionDao dao = daoFactory.createSubscriptionDao();
+        UserDao userDao = daoFactory.createUserDao()){
+            dao.pay(userDao.getByLogin(login), subscription);
+        }
     }
 
     public void set(Subscription subscription) {
-        dao.setInDb(subscription);
+        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+            dao.setInDb(subscription);
+        }
     }
 
     public boolean isUserSubscriptionUnique(String login, int publicationId) {
-        return dao.isUserSubscriptionUnique(login, publicationId);
+        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+            return dao.isUserSubscriptionUnique(login, publicationId);
+        }
     }
 
 

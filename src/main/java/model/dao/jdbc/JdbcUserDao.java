@@ -21,21 +21,18 @@ import java.util.List;
 //TODO maybe send to the dao DTO
 
 public class JdbcUserDao implements UserDao {
-    private DataSource source;
+    private Connection connection;
     private ResourceManager manager;
 
-    public JdbcUserDao(DataSource source) {
-        this.source = source;
+    public JdbcUserDao(Connection connection) {
+        this.connection = connection;
         this.manager = new DataBaseManager();
     }
 
     @Override
     public boolean setInDb(User entity) {
         int result=0;
-        try (
-                Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.set"))
-        ) {
+        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.set"))) {
 
 
             statement.setString(1,entity.getLogin());
@@ -61,10 +58,7 @@ public class JdbcUserDao implements UserDao {
     public User getById(int id) {
         UserMapper userMapper = new UserMapper();
         User user = null;
-        try (
-                Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.id"))
-        ) {
+        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.id"))) {
             statement.setInt(1, id);
             try (
                     ResultSet resultSet = statement.executeQuery()
@@ -90,7 +84,6 @@ public class JdbcUserDao implements UserDao {
         UserMapper userMapper = new UserMapper();
 
         try (
-                Connection connection = source.getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(manager.getProperty("db.user.query.get.all"))
         ) {
@@ -156,10 +149,7 @@ public class JdbcUserDao implements UserDao {
     public User getByLogin(String login) {
         UserMapper userMapper = new UserMapper();
         User user = null;
-        try (
-                Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.login"))
-        ) {
+        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.login"))) {
             statement.setString(1, login);
             try (
                     ResultSet resultSet = statement.executeQuery()
@@ -181,7 +171,6 @@ public class JdbcUserDao implements UserDao {
     @Override
     public void checkDataUnique(String login, String email) {
         try (
-                Connection connection = source.getConnection();
                 PreparedStatement loginStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.login"));
                 PreparedStatement emailStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.email"))
         ) {
@@ -206,10 +195,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public boolean update(User entity) {
         int result=0;
-        try (
-                Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.update"))
-        ) {
+        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.update"))) {
             statement.setString(1,entity.getLogin());
             statement.setString(2,entity.getPassword());
             statement.setString(3,entity.getEmail());
@@ -233,10 +219,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public boolean delete(int id) {
         int result=0;
-        try (
-                Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.delete"))
-        ) {
+        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.delete"))) {
             statement.setInt(1,id);
             result = statement.executeUpdate();
 
@@ -249,10 +232,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public boolean addMoneyToUser(String login, BigDecimal money) {
         int result=0;
-        try (
-                Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.add.money"))
-        ) {
+        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.add.money"))) {
 
             statement.setString(2, login);
             statement.setFloat(1, money.floatValue());
@@ -266,7 +246,11 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

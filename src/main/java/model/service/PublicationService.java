@@ -10,35 +10,47 @@ import java.util.List;
 import java.util.Map;
 
 public class PublicationService {
-    private PublicationDao publicationDao;
+    private DaoFactory daoFactory = DaoFactory.getInstance();
 
     public PublicationService() {
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        publicationDao = daoFactory.createPublicationDao();
+        /*DaoFactory daoFactory = DaoFactory.getInstance();
+        PublicationDao dpublicationDao = daoFactory.createPublicationDao();*/
     }
     
     public List<PublicationDto> getAll() {
-        return publicationDao.getAll();
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+           return dao.getAll();
+        }
     }
 
     public PublicationDto getById(int id) {
-        return publicationDao.getById(id);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.getById(id);
+        }
     }
 
     public void setInDb(PublicationDto publication){
-        publicationDao.setInDb(publication);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            dao.setInDb(publication);
+        }
     }
 
     public Map<String, Integer> getStatistics() {
-        return publicationDao.getStatistics();
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.getStatistics();
+        }
     }
 
     public List<User> getReport(int publicationId) {
-        return publicationDao.getReport(publicationId);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.getReport(publicationId);
+        }
     }
 
     public void checkDataUnique(String titleEn, String titleUa) {
-        publicationDao.checkDataUnique(titleEn, titleUa);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            dao.checkDataUnique(titleEn, titleUa);
+        }
     }
 
     /*public List<PublicationDto> getAllMultiLanguagePublication() {
@@ -50,26 +62,37 @@ public class PublicationService {
     }*/
 
     public void delete(int id) {
-        publicationDao.delete(id);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            dao.delete(id);
+        }
     }
 
     public List<PublicationDto> search(Map<String, String> searchParameters) {
-        return publicationDao.search(searchParameters);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.search(searchParameters);
+        }
     }
-
     public int getNumberOfPublication(){
-        return publicationDao.getNumberOfPublications();
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.getNumberOfPublications();
+        }
     }
 
     public List<PublicationDto> getPaginatedList(int start, int recordsPerPage) {
-        return publicationDao.getPaginatedList(start, recordsPerPage);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.getPaginatedList(start, recordsPerPage);
+        }
     }
 
     public int getNumberOfSearchedPublication(Map<String, String> searchParameters) {
-        return publicationDao.getNumberOfSearchedPublications(searchParameters);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.getNumberOfSearchedPublications(searchParameters);
+        }
     }
 
     public List<PublicationDto> getPaginatedSearchList(Map<String, String> searchParameters, int start, int recordsPerPage){
-        return publicationDao.getPaginatedSearchList(searchParameters, start, recordsPerPage);
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.getPaginatedSearchList(searchParameters, start, recordsPerPage);
+        }
     }
 }

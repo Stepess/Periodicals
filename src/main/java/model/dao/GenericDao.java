@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-public interface GenericDao<T> {
+public interface GenericDao<T> extends AutoCloseable {
     boolean setInDb(T entity);
     T getById(int id);
     List<T> getAll();
