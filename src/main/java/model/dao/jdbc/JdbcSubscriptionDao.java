@@ -2,7 +2,9 @@ package model.dao.jdbc;
 
 import controller.exception.NotEnoughMoney;
 import model.dao.SubscriptionDao;
+import model.dao.mappers.SubscriptionDtoMapper;
 import model.dao.mappers.SubscriptionMapper;
+import model.entity.DTO.SubscriptionDto;
 import model.entity.Payment;
 import model.entity.Subscription;
 import model.entity.User;
@@ -185,10 +187,36 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
     }
 
-    @Override
+   /* @Override
     public List<Subscription> getByUserLogin(String login) {
         SubscriptionMapper subscriptionMapper = new SubscriptionMapper();
         List<Subscription> subscriptions = new ArrayList<>();
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))
+        ) {
+            statement.setString(1, login);
+            try (
+                    ResultSet resultSet = statement.executeQuery()
+            ) {
+                while (resultSet.next()) {
+                    subscriptions.add(subscriptionMapper.extractFromResultSet(resultSet));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return subscriptions;
+    }*/
+
+    @Override
+    public List<SubscriptionDto> getByUserLogin(String login) {
+        SubscriptionDtoMapper subscriptionMapper = new SubscriptionDtoMapper();
+        List<SubscriptionDto> subscriptions = new ArrayList<>();
         try (
                 Connection connection = source.getConnection();
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))

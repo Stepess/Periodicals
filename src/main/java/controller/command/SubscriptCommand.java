@@ -1,6 +1,7 @@
 package controller.command;
 
 import model.entity.DTO.PublicationDto;
+import model.entity.DTO.SubscriptionDto;
 import model.entity.Publication;
 import model.entity.Subscription;
 import model.service.PublicationService;
@@ -14,6 +15,8 @@ import model.service.resource.manager.ResourceManager;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class SubscriptCommand implements Command{
@@ -41,7 +44,12 @@ public class SubscriptCommand implements Command{
         }
 
         new SubscriptionService().set(subscription);
-        request.setAttribute("subscriptions", new SubscriptionService().getAllUserSubscription(login));
+        List<SubscriptionDto> list1 = new SubscriptionService().getAllUserSubscription((String)request.getSession().getAttribute("login"));
+        List<Subscription> list = new ArrayList<>();
+        for (SubscriptionDto dto1: list1){
+            list.add(dto1.convertToInternationalizedEntity((Locale)request.getSession().getAttribute("locale")));
+        }
+        request.setAttribute("subscriptions", list);
         return new PagePathManager().getProperty("path.page.subscription");
     }
 }

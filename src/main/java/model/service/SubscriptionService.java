@@ -5,6 +5,7 @@ import model.dao.PublicationDao;
 import model.dao.SubscriptionDao;
 import model.dao.UserDao;
 import model.dao.jdbc.JdbcUserDao;
+import model.entity.DTO.SubscriptionDto;
 import model.entity.Subscription;
 
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ public class SubscriptionService {
         dao = daoFactory.createSubscriptionDao();
     }
 
-    public List<Subscription> getAllUserSubscription(String login) {
+    public List<SubscriptionDto> getAllUserSubscription(String login) {
         return dao.getByUserLogin(login);
     }
 

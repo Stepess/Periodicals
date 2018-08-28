@@ -19,6 +19,10 @@ public class Publication {
     //private Blob blob;
     private Map<String, String> nationalFields;
 
+    public Publication(String title) {
+        this.title = title;
+    }
+
     public Publication(PublicationBuilder builder) {
         this.id = builder.getId();
         this.title = builder.getTitle();
