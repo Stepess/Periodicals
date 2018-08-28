@@ -56,4 +56,12 @@ public class PublicationService {
     public List<PublicationDto> search(Map<String, String> searchParameters) {
         return publicationDao.search(searchParameters);
     }
+
+    public int getNumberOfPublication(){
+        return publicationDao.getNumberOfPublications();
+    }
+
+    public List<PublicationDto> getPaginatedList(int start, int recordsPerPage) {
+        return publicationDao.getPaginatedList(start, recordsPerPage);
+    }
 }

@@ -14,7 +14,37 @@ public class CatalogCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         if ("admin".equals(request.getSession().getAttribute("role"))) {
-            request.setAttribute("publications", new PublicationService().getAll());
+            PublicationService publicationService = new PublicationService();
+            int currentPage;
+            if (request.getParameter("currentPage")!=null) {
+                currentPage = Integer.valueOf(request.getParameter("currentPage"));
+            } else {
+                currentPage=1;
+            }
+
+            int recordsPerPage;
+            if (request.getParameter("recordsPerPage") != null) {
+                recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
+            } else {
+                recordsPerPage = 5;
+            }
+
+            int rows = publicationService.getNumberOfPublication();
+
+            int nOfPages = rows / recordsPerPage;
+
+            if (nOfPages % recordsPerPage > 0) {
+                nOfPages++;
+            }
+
+
+            int start = currentPage * recordsPerPage - recordsPerPage;
+
+
+            request.setAttribute("noOfPages", nOfPages);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("recordsPerPage", recordsPerPage);
+            request.setAttribute("publications", publicationService.getPaginatedList(start, recordsPerPage));
             return new PagePathManager().getProperty("path.page.admin.catalog");
         } else {
             List<PublicationDto> list = new PublicationService().getAll();

@@ -39,6 +39,62 @@
             ${fail}
     </form>
 </fmt:bundle>
+<br/>
+<br/>
+
+<form action="${pageContext.request.contextPath}/app/catalog">
+
+    <input type="hidden" name="currentPage" value="1">
+
+
+
+        <label for="records">Select records per page:</label>
+
+        <select class="form-control" id="records" name="recordsPerPage">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+        </select>
+
+
+
+    <button type="submit">Submit</button>
+
+</form>
+
+<br>
+
+    <ul class="pagination">
+        <c:if test="${currentPage != 1}">
+            <li class="page-item"><a class="page-link"
+                                     href="/app/catalog?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+            </li>
+        </c:if>
+
+        <c:forEach begin="1" end="${noOfPages}" var="i">
+            <c:choose>
+                <c:when test="${currentPage eq i}">
+                    <li class="page-item active"><a class="page-link">
+                            ${i} <span class="sr-only">(current)</span></a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item"><a class="page-link"
+                                             href="/app/catalog?recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+
+        <c:if test="${currentPage lt noOfPages}">
+            <li class="page-item"><a class="page-link"
+                                     href="/app/catalog?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+            </li>
+        </c:if>
+    </ul>
+
+
+
 <fmt:bundle basename="pagecontent" prefix="label.">
     <table border="1" cellpadding="5">
         <caption><h2>Periodicals List</h2></caption>
@@ -123,5 +179,11 @@
         </c:forEach>
     </table>
 </fmt:bundle>
+
+
+
 </body>
+
+
+
 </html>

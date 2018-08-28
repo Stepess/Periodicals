@@ -335,6 +335,51 @@ public class JdbcPublicationDao implements PublicationDao {
         return publications;
     }
 
+
+    @Override
+    public int getNumberOfPublications() {
+        int number=0;
+        try (
+                Connection connection = source.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(manager.getProperty("db.publication.query.get.count"))
+        ) {
+            resultSet.next();
+            number = resultSet.getInt("count(id)");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return number;
+    }
+
+    @Override
+    public List<PublicationDto> getPaginatedList(int start, int recordsPerPage) {
+        List<PublicationDto> publications = new ArrayList<>();
+        PublicationDTOMapper mapper = new PublicationDTOMapper();
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.get.limit"));
+
+        ) {
+            statement.setInt(1, start);
+            statement.setInt(2, recordsPerPage);
+
+            try(ResultSet resultSet= statement.executeQuery()){
+                while (resultSet.next()) {
+                    PublicationDto publicationDto = mapper.extractFromResultSet(resultSet);
+                    publications.add(publicationDto);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return publications;
+    }
+
     @Override
     public void close() {
 
