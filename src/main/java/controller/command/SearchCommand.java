@@ -33,6 +33,7 @@ public class SearchCommand implements Command {
         for (String s: requestParameterMap.keySet()) {
             if (requestParameterMap.get(s)[0]!=null && !requestParameterMap.get(s)[0].isEmpty()){
                 searchParameters.put(s,requestParameterMap.get(s)[0]);
+                request.setAttribute(s, requestParameterMap.get(s)[0]);
             }
         }
 
@@ -40,8 +41,42 @@ public class SearchCommand implements Command {
 
         try {
             if ("admin".equals(request.getSession().getAttribute("role"))) {
-                request.setAttribute("publications",  new PublicationService().search(searchParameters));
-                return new PagePathManager().getProperty("path.page.admin.catalog");
+                PublicationService publicationService = new PublicationService();
+                int currentPage;
+                if (request.getParameter("currentPage")!=null) {
+                    currentPage = Integer.valueOf(request.getParameter("currentPage"));
+                } else {
+                    currentPage=1;
+                }
+
+                int recordsPerPage;
+                if (request.getParameter("recordsPerPage") != null) {
+                    recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
+                } else {
+                    recordsPerPage = 5;
+                }
+
+                int rows = publicationService.getNumberOfSearchedPublication(searchParameters);
+
+                int nOfPages = rows / recordsPerPage;
+
+                if (nOfPages % recordsPerPage > 0) {
+                    nOfPages++;
+                }
+                System.out.println(rows);
+
+
+                int start = currentPage * recordsPerPage - recordsPerPage;
+
+                System.out.println(start);
+
+                System.out.println(new PublicationService().getPaginatedSearchList(searchParameters, start, recordsPerPage));
+                request.setAttribute("noOfPages", nOfPages);
+                request.setAttribute("currentPage", currentPage);
+                request.setAttribute("recordsPerPage", recordsPerPage);
+
+                request.setAttribute("publications",  new PublicationService().getPaginatedSearchList(searchParameters, start, recordsPerPage));
+                return new PagePathManager().getProperty("path.page.admin.search");
             } else {
                 List<PublicationDto> list = new PublicationService().search(searchParameters);
                 List<Publication> list1 = new ArrayList<>();
@@ -50,7 +85,7 @@ public class SearchCommand implements Command {
                     list1.add(dto.convertToInternationalizedEntity(locale));
                 }
                 request.setAttribute("publications", list1);
-                return new PagePathManager().getProperty("path.page.periodicals");
+                return new PagePathManager().getProperty("path.page.admin.search");
             }
         } catch (NothingFoundException e){
             request.setAttribute("fail", new MessageManager((Locale)request.getSession().getAttribute("locale")).getProperty("message.nothing.found"));
@@ -59,6 +94,6 @@ public class SearchCommand implements Command {
 
 
 
-        return new PagePathManager().getProperty("path.page.periodicals");
+        return new PagePathManager().getProperty("path.page.admin.search");
     }
 }

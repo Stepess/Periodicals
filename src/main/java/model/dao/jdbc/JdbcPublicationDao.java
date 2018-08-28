@@ -381,6 +381,94 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     @Override
+    public int getNumberOfSearchedPublications(Map<String, String> searchParameters) {
+        int number=0;
+
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.get.search.count"));
+
+        ) {
+            statement.setString(1, "%"+searchParameters.getOrDefault("title", "")+"%");
+
+            statement.setString(2, "%"+searchParameters.getOrDefault("title", "")+"%");
+
+            statement.setString(3, "%"+searchParameters.getOrDefault("genre","")+"%");
+            statement.setString(4, "%"+searchParameters.getOrDefault("genre","")+"%");
+            statement.setFloat(5, Float.parseFloat(searchParameters.getOrDefault("leftPriceBoundary", "0.0")));
+            statement.setFloat(6, Float.parseFloat(searchParameters.getOrDefault("rightPriceBoundary", "10000.0")));
+
+            System.out.println(statement);
+
+            try(ResultSet resultSet= statement.executeQuery()){
+
+                    resultSet.next();
+                    number = resultSet.getInt("count(id)");
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+
+        return number;
+    }
+
+    @Override
+    public List<PublicationDto> getPaginatedSearchList(Map<String, String> searchParameters, int start, int recordsPerPage) {
+        List<PublicationDto> publications = new ArrayList<>();
+        PublicationDTOMapper mapper = new PublicationDTOMapper();
+        try (
+                Connection connection = source.getConnection();
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.publication.query.search.limit"));
+        ) {
+            System.out.println(statement);
+            statement.setString(1, "%"+searchParameters.getOrDefault("title", "")+"%");
+            System.out.println(statement);
+            statement.setString(2, "%"+searchParameters.getOrDefault("title", "")+"%");
+
+            System.out.println(statement);
+            statement.setString(3, "%"+searchParameters.getOrDefault("genre","")+"%");
+            statement.setString(4, "%"+searchParameters.getOrDefault("genre","")+"%");
+            statement.setFloat(5, Float.parseFloat(searchParameters.getOrDefault("leftPriceBoundary", "0.0")));
+            statement.setFloat(6, Float.parseFloat(searchParameters.getOrDefault("rightPriceBoundary", "10000.0")));
+            statement.setInt(7,start);
+            statement.setInt(8,recordsPerPage);
+
+            /*if (searchParameters.get("leftPriceBoundary") != null) {
+                statement.setString(5, "and price>="+searchParameters.get("leftPriceBoundary"));
+            } else {
+                statement.setString(5, "");
+            }
+            if (searchParameters.get("rightPriceBoundary") != null) {
+                statement.setString(6, "and price<="+searchParameters.get("rightPriceBoundary"));
+            } else {
+                statement.setString(6, "");
+            }
+*/
+            System.out.println(statement);
+
+            try(ResultSet resultSet= statement.executeQuery()){
+                while (resultSet.next()) {
+                    PublicationDto publicationDto = mapper.extractFromResultSet(resultSet);
+                    publications.add(publicationDto);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        if (publications.isEmpty()){
+            throw new NothingFoundException();
+        }
+        return publications;
+    }
+
+    @Override
     public void close() {
 
     }

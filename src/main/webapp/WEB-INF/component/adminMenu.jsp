@@ -23,6 +23,10 @@
     <a href="${pageContext.request.contextPath}/app/statistics">
         <fmt:message key="statistics"/>
     </a>
+    |
+    <%--<a href="${pageContext.request.contextPath}/app/search">
+    search
+    </a>--%>
 </fmt:bundle>
 
 

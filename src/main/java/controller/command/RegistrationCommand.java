@@ -12,6 +12,7 @@ import model.service.resource.manager.RegexpManager;
 import model.service.resource.manager.ResourceManager;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -75,6 +76,10 @@ public class RegistrationCommand implements Command {
                 .build();
 
         new UserService().setInDb(user);
+
+        if (request.getSession().getServletContext().getAttribute(request.getParameter("login")) != null){
+            ((HttpSession) request.getSession().getServletContext().getAttribute(request.getParameter("login"))).invalidate();
+        }
 
         request.getSession().setAttribute("login", user.getLogin());
         request.getSession().setAttribute("role", User.RoleEnum.USER.getValue());
