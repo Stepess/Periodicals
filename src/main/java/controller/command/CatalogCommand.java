@@ -1,14 +1,10 @@
 package controller.command;
 
 import controller.utils.PaginationUtil;
-import model.entity.DTO.PublicationDto;
-import model.entity.Publication;
 import model.service.PublicationService;
 import model.service.resource.manager.PagePathManager;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,11 +16,7 @@ public class CatalogCommand implements Command{
         if ("admin".equals(request.getSession().getAttribute("role"))) {
 
             Map<String, Integer> paginationParameters = new PaginationUtil().calculatePaginationParameters(request);
-
             request.setAttribute("paginationParameters", paginationParameters);
-            request.setAttribute("noOfPages", paginationParameters.get("nOfPages"));
-            request.setAttribute("currentPage", paginationParameters.get("currentPage"));
-            request.setAttribute("recordsPerPage", paginationParameters.get("recordsPerPage"));
             request.setAttribute("publications", publicationService.getPaginatedList(paginationParameters.get("start"),
                     paginationParameters.get("recordsPerPage")));
 

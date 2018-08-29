@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: Senpai
@@ -65,38 +66,38 @@
 
 <br>
 
-${currentPage}
+<%--${currentPage}
 ${recordsPerPage}
-${noOfPages}
+${numberOfPages}
 
 ${paginationParameters.currentPage}
 ${paginationParameters.recordsPerPage}
-${paginationParameters.noOfPages}
+${paginationParameters.numberOfPages}--%>
     <ul class="pagination">
-        <c:if test="${currentPage != 1}">
+        <c:if test="${paginationParameters.currentPage != 1}">
             <li class="page-item"><a class="page-link"
-                                     href="/app/catalog?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                     href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}">Previous</a>
             </li>
         </c:if>
 
-        <c:forEach begin="1" end="${noOfPages}" var="i">
+        <c:forEach begin="1" end="${paginationParameters.numberOfPages}" var="i">
             <c:choose>
-                <c:when test="${currentPage eq i}">
+                <c:when test="${paginationParameters.currentPage eq i}">
                     <li class="page-item active"><a class="page-link">
                             ${i} <span class="sr-only">(current)</span></a>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <li class="page-item"><a class="page-link"
-                                             href="/app/catalog?recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                             href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
                     </li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
 
-        <c:if test="${currentPage lt noOfPages}">
+        <c:if test="${paginationParameters.currentPage lt paginationParameters.numberOfPages}">
             <li class="page-item"><a class="page-link"
-                                     href="/app/catalog?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                     href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">Next</a>
             </li>
         </c:if>
     </ul>
