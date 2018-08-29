@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class App {
 
@@ -98,6 +99,18 @@ public class App {
         list.forEach(System.out::println);*/
 
 
+        String query = "?param1=4&param2=5&";
+        String query2=  "param1=4&";
+        String paramName = "param2";
+        String paramValue = "0";
+
+
+        String str1 = paramName+"=.*&";
+        String str2 = paramName+"="+paramValue+"&";
+
+        query=query.replaceAll(str1, str2);
+        query=query.substring(0,query.length()-1);
+        System.out.println(query);
 
 
     }

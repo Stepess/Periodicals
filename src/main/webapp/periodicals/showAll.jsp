@@ -65,7 +65,55 @@
         </th>
         </tr>
 
+        <ul class="pagination">
+            <c:if test="${paginationParameters.currentPage != 1}">
+                <%--<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>--%>
 
+                <%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
+                <my:setParam name='currentPage' value='${paginationParameters.currentPage-1}' />
+                <li class="page-item"><a class="page-link"
+                                         href="/app/catalog?${pageContext.request.queryString}">Previous</a>
+                </li>--%>
+                <li class="page-item"><a class="page-link"
+                                         href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}">Previous</a>
+                </li>
+            </c:if>
+
+            <c:forEach begin="1" end="${paginationParameters.numberOfPages}" var="i">
+
+                <%--     ${pageContext.request.requestURL}
+                     ${pageContext.request.queryString}--%>
+                <c:choose>
+                    <c:when test="${paginationParameters.currentPage eq i}">
+                        <li class="page-item active"><a class="page-link">
+                                ${i} <span class="sr-only">(current)</span></a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
+                        <my:setParam name='currentPage' value='${i}' />
+                        <li class="page-item"><a class="page-link"
+                                                 href="/app/catalog?${pageContext.request.queryString}">${i}</a>
+                        </li>--%>
+                        <li class="page-item"><a class="page-link"
+                                                 href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+
+            <c:if test="${paginationParameters.currentPage lt paginationParameters.numberOfPages}">
+                <%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
+                <my:setParam name='currentPage' value='${paginationParameters.currentPage+1}' />
+                <li class="page-item"><a class="page-link"
+                                         href="/app/catalog?${pageContext.request.queryString}">Next</a>
+                </li>--%>
+
+                <li class="page-item"><a class="page-link"
+                                         href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">Next</a>
+                </li>
+            </c:if>
+        </ul>
 
 
 

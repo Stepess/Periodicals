@@ -16,19 +16,22 @@ public class PaginationUtil {
 
         int rows = new PublicationService().getNumberOfPublication();
 
-        int nOfPages = rows / recordsPerPage;
+        int numberOfPages = rows / recordsPerPage;
 
         if (rows % recordsPerPage > 0) {
-            nOfPages++;
+            numberOfPages++;
         }
-        System.out.println(nOfPages);
+
+        if (currentPage > numberOfPages) {
+            currentPage = numberOfPages;
+        }
 
         int start = currentPage * recordsPerPage - recordsPerPage;
 
         Map<String, Integer> parameters = new HashMap<>();
         parameters.put("currentPage", currentPage);
         parameters.put("recordsPerPage", recordsPerPage);
-        parameters.put("numberOfPages", nOfPages);
+        parameters.put("numberOfPages", numberOfPages);
         parameters.put("start", start);
 
         return parameters;

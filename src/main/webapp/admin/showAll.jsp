@@ -10,6 +10,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix = "ex" uri = "/WEB-INF/tagLib.tld"%>
 <html>
 <head>
     <title>Catalog</title>
@@ -43,6 +44,10 @@
 <br/>
 <br/>
 
+
+
+
+
 <form action="${pageContext.request.contextPath}/app/catalog">
 
     <input type="hidden" name="currentPage" value="1">
@@ -64,8 +69,50 @@
 </form>
 <br/>
 
-<br>
+<%--<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>--%>
 
+<%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
+<my:setParam name='currentPage' value='${paginationParameters.currentPage-1}' />--%>
+${pageContext.request.queryString}
+
+<%--
+<ex:setParamInQuery paramName="kek" paramValue="${paginationParameters.currentPage}" query="${pageContext.request.queryString}"/>
+<ex:setParamInQuery paramName="lol" paramValue="${paginationParameters.currentPage}" query="${pageContext.request.queryString}"/>
+--%>
+
+<%--<h1>Before</h1>
+<br>
+${pageContext.request.requestURL}
+<br>
+${pageContext.request.queryString}
+
+
+
+
+<h1>After</h1>
+<br>
+${pageContext.request.requestURL}
+<br>
+${pageContext.request.queryString}
+
+
+
+
+<my:setParam name='language' value='en' />
+
+
+<h1>After12</h1>
+<br>
+${pageContext.request.requestURL}
+<br>
+${pageContext.request.queryString}
+
+
+<h1>After1223</h1>
+<br>
+${pageContext.request.requestURL}
+<br>
+${pageContext.request.queryString}--%>
 <%--${currentPage}
 ${recordsPerPage}
 ${numberOfPages}
@@ -75,12 +122,22 @@ ${paginationParameters.recordsPerPage}
 ${paginationParameters.numberOfPages}--%>
     <ul class="pagination">
         <c:if test="${paginationParameters.currentPage != 1}">
+            <%--<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>--%>
+
+            <%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
+            <my:setParam name='currentPage' value='${paginationParameters.currentPage-1}' />
+            <li class="page-item"><a class="page-link"
+                                     href="/app/catalog?${pageContext.request.queryString}">Previous</a>
+            </li>--%>
             <li class="page-item"><a class="page-link"
                                      href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}">Previous</a>
             </li>
         </c:if>
 
         <c:forEach begin="1" end="${paginationParameters.numberOfPages}" var="i">
+
+       <%--     ${pageContext.request.requestURL}
+            ${pageContext.request.queryString}--%>
             <c:choose>
                 <c:when test="${paginationParameters.currentPage eq i}">
                     <li class="page-item active"><a class="page-link">
@@ -88,6 +145,11 @@ ${paginationParameters.numberOfPages}--%>
                     </li>
                 </c:when>
                 <c:otherwise>
+                    <%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
+                    <my:setParam name='currentPage' value='${i}' />
+                    <li class="page-item"><a class="page-link"
+                                             href="/app/catalog?${pageContext.request.queryString}">${i}</a>
+                    </li>--%>
                     <li class="page-item"><a class="page-link"
                                              href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
                     </li>
@@ -96,6 +158,12 @@ ${paginationParameters.numberOfPages}--%>
         </c:forEach>
 
         <c:if test="${paginationParameters.currentPage lt paginationParameters.numberOfPages}">
+            <%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
+            <my:setParam name='currentPage' value='${paginationParameters.currentPage+1}' />
+            <li class="page-item"><a class="page-link"
+                                     href="/app/catalog?${pageContext.request.queryString}">Next</a>
+            </li>--%>
+
             <li class="page-item"><a class="page-link"
                                      href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">Next</a>
             </li>
@@ -189,7 +257,11 @@ ${paginationParameters.numberOfPages}--%>
     </table>
 </fmt:bundle>
 
-
+<%--${pageContext.request.requestURL}
+<br>
+${pageContext.request.requestURI}
+<br>
+${pageContext.request.queryString}--%>
 
 </body>
 
