@@ -77,11 +77,11 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         return subscription;
     }
 
+    //TODO perhaps never used
     @Override
     public List<Subscription> getAll() {
         SubscriptionMapper subscriptionMapper = new SubscriptionMapper();
         List<Subscription> subscriptions = new ArrayList<>();
-
         try (
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(manager.getProperty("db.subscription.query.get.all"))
@@ -96,7 +96,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         }
         return subscriptions;
     }
-
+    //TODO never used
     @Override
     public boolean update(Subscription entity) {
         int result=0;

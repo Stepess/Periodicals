@@ -27,7 +27,7 @@ public class SubscriptionDtoMapper implements ObjectMapper<SubscriptionDto> {
                 .buildPaymentDateTime(resultSet.getTimestamp("date_time_of_payment") == null ?
                         null :
                         resultSet.getTimestamp("date_time_of_payment").toLocalDateTime())
-                .buildPublicationDto(publicationDTOMapper.extractFromResultSet(resultSet))
+                //.buildPublicationDto(publicationDTOMapper.extractFromResultSet(resultSet))
                 .buildOwnerId(resultSet.getInt("user_id"));
         return builder.build();
     }

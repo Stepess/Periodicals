@@ -65,6 +65,13 @@
 
 <br>
 
+${currentPage}
+${recordsPerPage}
+${noOfPages}
+
+${paginationParameters.currentPage}
+${paginationParameters.recordsPerPage}
+${paginationParameters.noOfPages}
     <ul class="pagination">
         <c:if test="${currentPage != 1}">
             <li class="page-item"><a class="page-link"

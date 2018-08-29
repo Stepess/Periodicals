@@ -22,6 +22,7 @@ import java.util.Locale;
 public class SubscriptCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
+        //TODO warning NPE
         LocalDate from = LocalDate.parse(request.getParameter("from"));
         int months = Integer.parseInt(request.getParameter("months"));
         ResourceManager manager = new MessageManager((Locale)request.getSession().getAttribute("locale"));

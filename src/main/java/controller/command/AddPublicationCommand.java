@@ -2,11 +2,9 @@ package controller.command;
 
 import controller.utils.DataValidationUtil;
 import model.entity.DTO.PublicationDto;
-import model.entity.Publication;
 import model.exception.NotUniqueTitleEnException;
 import model.exception.NotUniqueTitleUaException;
 import model.service.PublicationService;
-import model.service.builders.PublicationBuilder;
 import model.service.builders.PublicationDtoBuilder;
 import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
@@ -25,9 +23,11 @@ public class AddPublicationCommand implements Command {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceManager regexManager = new RegexpManager(locale);
         DataValidationUtil validationUtil = new DataValidationUtil(locale);
+        PublicationService publicationService = new PublicationService();
+        PagePathManager pagePathManager = new PagePathManager();
 
         try {
-            new PublicationService().checkDataUnique(request.getParameter("title_en"),
+            publicationService.checkDataUnique(request.getParameter("title_en"),
                     request.getParameter("title_ua"));
         } catch (NotUniqueTitleEnException ex) {
             request.setAttribute("wrongtitle_en", new MessageManager(locale)
@@ -50,20 +50,9 @@ public class AddPublicationCommand implements Command {
         while (attributeNames.hasMoreElements()) {
             String elementName = attributeNames.nextElement();
             if (elementName.contains("wrong")) {
-                return new PagePathManager().getProperty("path.page.add.publication");
+                return pagePathManager.getProperty("path.page.add.publication");
             }
         }
-
-       /* Publication publication = new PublicationBuilder()
-                .buildTitle(request.getParameter("title_en") + "/en" +
-                        request.getParameter("title_ua") + "/ua")
-                .buildAuthor(request.getParameter("author"))
-                .buildGenre(request.getParameter("genre_en") + "/en" +
-                        request.getParameter("genre_ua") + "/ua")
-                .buildPrice(BigDecimal.valueOf(Double.parseDouble(request.getParameter("price"))))
-                .buildDescription(request.getParameter("description_en") + "/en" +
-                        request.getParameter("description_ua") + "/ua")
-                .build();*/
 
         PublicationDto dto = new PublicationDtoBuilder()
                 .buildTitleEn(request.getParameter("title_en"))
@@ -76,9 +65,9 @@ public class AddPublicationCommand implements Command {
                 .buildDescriptionUa(request.getParameter("description_ua"))
                 .build();
 
-        new PublicationService().setInDb(dto);
-        request.setAttribute("publications", new PublicationService().getAll());
-        return new PagePathManager().getProperty("path.page.admin.catalog");
+        publicationService.setInDb(dto);
+        request.setAttribute("publications", publicationService.getAll());
+        return pagePathManager.getProperty("path.page.admin.catalog");
     }
 }
 

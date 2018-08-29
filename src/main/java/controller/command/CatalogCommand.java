@@ -1,5 +1,6 @@
 package controller.command;
 
+import controller.utils.PaginationUtil;
 import model.entity.DTO.PublicationDto;
 import model.entity.Publication;
 import model.service.PublicationService;
@@ -9,52 +10,40 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CatalogCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
+        PublicationService publicationService = new PublicationService();
         if ("admin".equals(request.getSession().getAttribute("role"))) {
-            PublicationService publicationService = new PublicationService();
-            int currentPage;
-            if (request.getParameter("currentPage")!=null) {
-                currentPage = Integer.valueOf(request.getParameter("currentPage"));
-            } else {
-                currentPage=1;
-            }
 
-            int recordsPerPage;
-            if (request.getParameter("recordsPerPage") != null) {
-                recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
-            } else {
-                recordsPerPage = 5;
-            }
+            Map<String, Integer> paginationParameters = new PaginationUtil().calculatePaginationParameters(request);
 
-            int rows = publicationService.getNumberOfPublication();
+            request.setAttribute("paginationParameters", paginationParameters);
+            request.setAttribute("noOfPages", paginationParameters.get("nOfPages"));
+            request.setAttribute("currentPage", paginationParameters.get("currentPage"));
+            request.setAttribute("recordsPerPage", paginationParameters.get("recordsPerPage"));
+            request.setAttribute("publications", publicationService.getPaginatedList(paginationParameters.get("start"),
+                    paginationParameters.get("recordsPerPage")));
 
-            int nOfPages = rows / recordsPerPage;
-
-            if (nOfPages % recordsPerPage > 0) {
-                nOfPages++;
-            }
-
-
-            int start = currentPage * recordsPerPage - recordsPerPage;
-
-
-            request.setAttribute("noOfPages", nOfPages);
-            request.setAttribute("currentPage", currentPage);
-            request.setAttribute("recordsPerPage", recordsPerPage);
-            request.setAttribute("publications", publicationService.getPaginatedList(start, recordsPerPage));
             return new PagePathManager().getProperty("path.page.admin.catalog");
         } else {
-            List<PublicationDto> list = new PublicationService().getAll();
-            List<Publication> list1 = new ArrayList<>();
             Locale locale = (Locale)request.getSession().getAttribute("locale");
-            for (PublicationDto dto: list){
-                list1.add(dto.convertToInternationalizedEntity(locale));
-            }
-            request.setAttribute("publications", list1);
+            request.setAttribute("publications",
+                    publicationService.getAll().stream()
+                    .map(dto -> dto.convertToInternationalizedEntity(locale))
+                    .collect(Collectors.toList()));
             return new PagePathManager().getProperty("path.page.periodicals");
         }
     }
 }
+/* Map<String, Integer> paginationParameters = new PaginationUtil().calculatePaginationParameters(request);
+
+            System.out.println(paginationParameters);
+            request.setAttribute("noOfPages", paginationParameters.get("noOfPages"));
+            request.setAttribute("currentPage", paginationParameters.get("currentPage"));
+            request.setAttribute("recordsPerPage", paginationParameters.get("recordsPerPage"));
+            request.setAttribute("publications", publicationService.getPaginatedList(paginationParameters.get("start"),
+                    paginationParameters.get("recordsPerPage")));*/

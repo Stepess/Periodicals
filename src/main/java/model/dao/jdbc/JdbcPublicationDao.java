@@ -11,14 +11,12 @@ import model.exception.NothingFoundException;
 import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//TODO delete close?
 
 public class JdbcPublicationDao implements PublicationDao {
     private Connection connection;
@@ -76,7 +74,6 @@ public class JdbcPublicationDao implements PublicationDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
         return publicationDto;
     }
