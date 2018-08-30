@@ -42,9 +42,9 @@ public class UserService {
         }
     }
 
-    public void setInDb(User user) {
+    public boolean setInDb(User user) {
         try (UserDao dao = daoFactory.createUserDao()) {
-            dao.setInDb(user);
+            return dao.setInDb(user);
         }
     }
 

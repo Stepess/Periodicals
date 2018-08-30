@@ -75,7 +75,9 @@ public class RegistrationCommand implements Command {
                 .buildAccount(BigDecimal.ZERO)
                 .build();
 
-        new UserService().setInDb(user);
+        if (! new UserService().setInDb(user)){
+            throw new RuntimeException(new MessageManager(locale).getProperty("message.registration.fail"));
+        }
 
         if (request.getSession().getServletContext().getAttribute(request.getParameter("login")) != null){
             ((HttpSession) request.getSession().getServletContext().getAttribute(request.getParameter("login"))).invalidate();
