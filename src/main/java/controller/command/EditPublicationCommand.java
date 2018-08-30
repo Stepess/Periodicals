@@ -52,6 +52,7 @@ public class EditPublicationCommand implements Command {
         if (! new PublicationService().update(publicationDTO)){
             throw new RuntimeException(new MessageManager(locale).getProperty("message.changes.not.accepted"));
         }
+
         request.setAttribute("status", new MessageManager(locale).getProperty("message.publication.changed"));
         return new PagePathManager().getProperty("path.command.admin.catalog");
     }

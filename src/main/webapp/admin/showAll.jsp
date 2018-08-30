@@ -237,7 +237,7 @@ ${paginationParameters.numberOfPages}--%>
                         </form>
                     </td>
                 <td>
-                    <form method="POST" action="${pageContext.request.contextPath}/app/delete">
+                    <form method="POST" action="${pageContext.request.contextPath}/app/deletePublication">
                         <%--<input type="hidden" name="pubId" value="${publication.id}">--%>
                         <input type="hidden" name="pubId" value="${publication.id}">
                         <input type="hidden" name="command" value="/app/catalog">

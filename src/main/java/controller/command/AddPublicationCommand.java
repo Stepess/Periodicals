@@ -24,7 +24,6 @@ public class AddPublicationCommand implements Command {
         ResourceManager regexManager = new RegexpManager(locale);
         DataValidationUtil validationUtil = new DataValidationUtil(locale);
         PublicationService publicationService = new PublicationService();
-        PagePathManager pagePathManager = new PagePathManager();
 
         try {
             publicationService.checkDataUnique(request.getParameter("title_en"),
@@ -50,11 +49,11 @@ public class AddPublicationCommand implements Command {
         while (attributeNames.hasMoreElements()) {
             String elementName = attributeNames.nextElement();
             if (elementName.contains("wrong")) {
-                return pagePathManager.getProperty("path.page.add.publication");
+                return new PagePathManager().getProperty("path.page.add.publication");
             }
         }
 
-        PublicationDto dto = new PublicationDtoBuilder()
+        PublicationDto publicationDto = new PublicationDtoBuilder()
                 .buildTitleEn(request.getParameter("title_en"))
                 .buildTitleUa(request.getParameter("title_ua"))
                 .buildAuthor(request.getParameter("author"))
@@ -65,11 +64,12 @@ public class AddPublicationCommand implements Command {
                 .buildDescriptionUa(request.getParameter("description_ua"))
                 .build();
 
-        if (! new PublicationService().setInDb(dto)){
+        if (! publicationService.setInDb(publicationDto)){
             throw new RuntimeException(new MessageManager(locale).getProperty("message.changes.not.accepted"));
         }
+
         request.setAttribute("status", new MessageManager(locale).getProperty("message.publication.added"));
-        return pagePathManager.getProperty("path.command.admin.catalog");
+        return new PagePathManager().getProperty("path.command.admin.catalog");
     }
 }
 

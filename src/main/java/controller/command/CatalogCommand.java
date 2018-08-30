@@ -26,17 +26,9 @@ public class CatalogCommand implements Command{
                     publicationService.getPaginatedList(paginationParameters.get("start"),
                             paginationParameters.get("recordsPerPage"))
                             .stream()
-                    .map(dto -> dto.convertToInternationalizedEntity(locale))
-                    .collect(Collectors.toList()));
+                            .map(dto -> dto.convertToInternationalizedEntity(locale))
+                            .collect(Collectors.toList()));
             return new PagePathManager().getProperty("path.page.periodicals");
         }
     }
 }
-/* Map<String, Integer> paginationParameters = new PaginationUtil().calculatePaginationParameters(request);
-
-            System.out.println(paginationParameters);
-            request.setAttribute("noOfPages", paginationParameters.get("noOfPages"));
-            request.setAttribute("currentPage", paginationParameters.get("currentPage"));
-            request.setAttribute("recordsPerPage", paginationParameters.get("recordsPerPage"));
-            request.setAttribute("publications", publicationService.getPaginatedList(paginationParameters.get("start"),
-                    paginationParameters.get("recordsPerPage")));*/

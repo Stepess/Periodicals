@@ -64,9 +64,9 @@ public enum CommandEnum {
             this.command = new ShowReportCommand();
         }
     },
-    DELETE {
+    DELETEPUBLICATION {
         {
-            this.command = new DeleteCommand();
+            this.command = new DeletePublicationCommand();
         }
     },
     PROFILE {

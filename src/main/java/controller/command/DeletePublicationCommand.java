@@ -7,7 +7,7 @@ import model.service.resource.manager.PagePathManager;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
-public class DeleteCommand implements Command {
+public class DeletePublicationCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         if(! new PublicationService().delete(Integer.parseInt(request.getParameter("pubId")))){
