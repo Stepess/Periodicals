@@ -11,6 +11,7 @@
 <jsp:include page="/WEB-INF/component/header.jsp"/>
 <jsp:include page="/WEB-INF/component/userMenu.jsp"/>
 <fmt:bundle basename="pagecontent" prefix="label.">
+ <%@ taglib prefix = "ex" uri = "/WEB-INF/tagLib.tld"%>
     <br/><fmt:message key="login"/><br/>
 <c:out value="${user.login}"/>
 <br/>
@@ -30,7 +31,7 @@
 <c:out value="${user.address}"/>
 <br/>
 <fmt:message key="account"/><br/>
-    <c:out value="${user.account}"/>
+    <fmt:formatNumber value="${user.account}"  type="currency"/>
     <br/>
     <form method="POST" action="app/replenish">
         <input type="number" name="money">

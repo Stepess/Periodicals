@@ -209,7 +209,7 @@ ${paginationParameters.numberOfPages}--%>
                 <td><c:out value="${publication.author}"/></td>
                 <td><c:out value="${publication.genreEn}"/></td>
                 <td><c:out value="${publication.genreUa}"/></td>
-                <td><c:out value="${publication.price}"/></td>
+                <td><fmt:formatNumber value="${publication.price}"  type="currency"/></td>
                 <td><c:out value="${publication.descriptionEn}"/></td>
                 <td><c:out value="${publication.descriptionUa}"/></td>
 

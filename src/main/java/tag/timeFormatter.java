@@ -6,15 +6,16 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class dateFormatter extends SimpleTagSupport {
-    private LocalDate localDate;
+public class timeFormatter extends SimpleTagSupport {
+    private LocalTime localTime;
     private Locale locale;
 
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
+    public void setLocalTime(LocalTime localTime) {
+        this.localTime = localTime;
     }
 
     public void setLocale(Locale locale) {
@@ -24,8 +25,8 @@ public class dateFormatter extends SimpleTagSupport {
     @Override
     public void doTag() throws JspException, IOException {
         LocalePatternManager manager = new LocalePatternManager(locale);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(manager.getProperty("pattern.date"), locale);
-        System.out.println(localDate.format(formatter));
-        getJspContext().getOut().write(localDate.format(formatter));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(manager.getProperty("pattern.time"), locale);
+        System.out.println(localTime.format(formatter));
+        getJspContext().getOut().write(localTime.format(formatter));
     }
 }

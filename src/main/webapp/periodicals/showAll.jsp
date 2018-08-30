@@ -122,7 +122,7 @@
                 <td><c:out value="${publication.title}"/></td>
                 <td><c:out value="${publication.author}"/></td>
                 <td><c:out value="${publication.genre}"/></td>
-                <td><c:out value="${publication.price}"/></td>
+                <td><fmt:formatNumber value="${publication.price}"  type="currency"/></td>
                 <td><c:out value="${publication.description}"/></td>
                 <c:if test="${sessionScope.role == 'user'}">
                     <td>

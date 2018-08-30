@@ -45,16 +45,38 @@
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        <!--<attribute>
-            <name>paramName</name>
+    </tag>
+
+    <tag>
+        <name>formatTime</name>
+        <tag-class>tag.timeFormatter</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>localTime</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>paramValue</name>
+            <name>locale</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
-        </attribute>-->
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>formatDateTime</name>
+        <tag-class>tag.dateTimeFormatter</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>localDateTime</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>locale</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
 
 </taglib>

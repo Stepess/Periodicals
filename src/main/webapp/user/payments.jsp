@@ -2,6 +2,8 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<%@ taglib prefix = "ex" uri = "/WEB-INF/tagLib.tld"%>
 <html>
 <head>
     <title>Payments</title>
@@ -29,8 +31,9 @@
             <c:if test="${not empty subscription.payment.paymentDateTime}">
             <tr>
                 <td><c:out value="${subscription.publication.title}"/></td>
-                <td><c:out value="${subscription.payment.bill}"/></td>
-                <td><c:out value="${subscription.payment.paymentDateTime}"/></td>
+                <td><fmt:formatNumber value="${subscription.payment.bill}"  type="currency"/></td>
+               <%-- <td><c:out value="${subscription.payment.paymentDateTime}"/></td>--%>
+                <td><ex:formatDateTime localDateTime="${subscription.payment.paymentDateTime}" locale="${sessionScope.locale}"/></td>
 
                     <%--<td>
                         <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>

@@ -9,11 +9,16 @@ import model.entity.User;
 import model.service.builders.PublicationBuilder;
 import model.service.builders.SubscriptionBuilder;
 import model.service.builders.UserBuilder;
+import model.service.resource.manager.LocalePatternManager;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -99,7 +104,7 @@ public class App {
         list.forEach(System.out::println);*/
 
 
-        String query = "?param1=4&param2=5&";
+        /*String query = "?param1=4&param2=5&";
         String query2=  "param1=4&";
         String paramName = "param2";
         String paramValue = "0";
@@ -110,8 +115,19 @@ public class App {
 
         query=query.replaceAll(str1, str2);
         query=query.substring(0,query.length()-1);
-        System.out.println(query);
+        System.out.println(query);*/
 
+        /*LocalTime time = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        System.out.println(time.format(formatter));*/
+       /* LocalDateTime localDateTime = LocalDateTime.now();
+        Locale locale = new Locale("en", "US");
+        LocalePatternManager manager = new LocalePatternManager(locale);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(manager.getProperty("pattern.time"), locale);
+        System.out.println(manager.getProperty("pattern.date"));
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(manager.getProperty("pattern.date"), locale);
+        System.out.println((localDateTime.toLocalDate().format(dateFormatter) + " " +
+                localDateTime.toLocalTime().format(timeFormatter)));*/
 
     }
 }
