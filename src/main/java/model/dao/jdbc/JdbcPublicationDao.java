@@ -281,7 +281,9 @@ public class JdbcPublicationDao implements PublicationDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
+        }
+        if (number == 0) {
+            throw new NothingFoundException();
         }
         return number;
     }
@@ -309,9 +311,9 @@ public class JdbcPublicationDao implements PublicationDao {
                     publications.add(publicationDto);
                 }
             }
-            if (publications.isEmpty()){
+            /*if (publications.isEmpty()){
                 throw new NothingFoundException();
-            }
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }

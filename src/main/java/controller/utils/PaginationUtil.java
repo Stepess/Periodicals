@@ -7,14 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PaginationUtil {
-    public Map<String, Integer> calculatePaginationParameters(HttpServletRequest request) {
+    public Map<String, Integer> calculatePaginationParameters(HttpServletRequest request, int rows) {
         int currentPage =
                 Integer.parseInt(getRequestParameterOrDefault(request, "currentPage", "1"));
 
         int recordsPerPage =
                 Integer.parseInt(getRequestParameterOrDefault(request, "recordsPerPage", "5"));
-
-        int rows = new PublicationService().getNumberOfPublication();
 
         int numberOfPages = rows / recordsPerPage;
 

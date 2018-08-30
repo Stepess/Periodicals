@@ -13,7 +13,8 @@ public class CatalogCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         PublicationService publicationService = new PublicationService();
-        Map<String, Integer> paginationParameters = new PaginationUtil().calculatePaginationParameters(request);
+        Map<String, Integer> paginationParameters = new PaginationUtil().calculatePaginationParameters(request,
+                publicationService.getNumberOfPublication());
         request.setAttribute("paginationParameters", paginationParameters);
         request.setAttribute("publications", publicationService.getPaginatedList(paginationParameters.get("start"),
                 paginationParameters.get("recordsPerPage")));

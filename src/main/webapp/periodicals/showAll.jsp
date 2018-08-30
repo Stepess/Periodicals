@@ -65,6 +65,27 @@
         </th>
         </tr>
 
+        <form action="${pageContext.request.contextPath}/app/catalog">
+
+            <input type="hidden" name="currentPage" value="1">
+
+
+
+            <label for="records">Select records per page:</label>
+
+            <select class="form-control" id="records" name="recordsPerPage">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+            </select>
+
+
+
+            <button type="submit">Submit</button>
+
+        </form>
+        <br/>
+
         <ul class="pagination">
             <c:if test="${paginationParameters.currentPage != 1}">
                 <%--<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>--%>
