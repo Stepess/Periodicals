@@ -10,8 +10,18 @@
 <head>
     <title>Title</title>
 </head>
-<body>
+
 <h1>ERROR!!!</h1>
-${exception.message}//TODO find out
+<body>
+Request from ${pageContext.errorData.requestURI} is failed
+<br/>
+Servlet name: ${pageContext.errorData.servletName}
+<br/>
+Status code: ${pageContext.errorData.statusCode}
+<br/>
+Exception: ${pageContext.exception}
+<br/>
+Message from exception: ${pageContext.exception.message}
 </body>
+
 </html>

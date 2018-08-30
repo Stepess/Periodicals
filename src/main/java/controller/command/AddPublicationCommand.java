@@ -65,9 +65,11 @@ public class AddPublicationCommand implements Command {
                 .buildDescriptionUa(request.getParameter("description_ua"))
                 .build();
 
-        publicationService.setInDb(dto);
-        request.setAttribute("publications", publicationService.getAll());
-        return pagePathManager.getProperty("path.page.admin.catalog");
+        if (! new PublicationService().setInDb(dto)){
+            throw new RuntimeException(new MessageManager(locale).getProperty("message.changes.not.accepted"));
+        }
+        request.setAttribute("status", new MessageManager(locale).getProperty("message.publication.added"));
+        return pagePathManager.getProperty("path.command.admin.catalog");
     }
 }
 

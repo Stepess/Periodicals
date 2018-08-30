@@ -47,7 +47,7 @@
 
 
 
-
+${status}
 <form action="${pageContext.request.contextPath}/app/catalog">
 
     <input type="hidden" name="currentPage" value="1">

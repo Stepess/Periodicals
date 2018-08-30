@@ -4,6 +4,7 @@ import controller.utils.DataValidationUtil;
 import model.entity.DTO.PublicationDto;
 import model.service.PublicationService;
 import model.service.builders.PublicationDtoBuilder;
+import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.RegexpManager;
 import model.service.resource.manager.ResourceManager;
@@ -48,11 +49,10 @@ public class EditPublicationCommand implements Command {
                 .buildDescriptionUa(request.getParameter("description_ua"))
                 .build();
 
-        System.out.println(publicationDTO);
-
-
-        new PublicationService().setInDb(publicationDTO);
-        request.setAttribute("publications", new PublicationService().getAll());
-        return new PagePathManager().getProperty("path.page.admin.catalog");
+        if (! new PublicationService().update(publicationDTO)){
+            throw new RuntimeException(new MessageManager(locale).getProperty("message.changes.not.accepted"));
+        }
+        request.setAttribute("status", new MessageManager(locale).getProperty("message.publication.changed"));
+        return new PagePathManager().getProperty("path.command.admin.catalog");
     }
 }

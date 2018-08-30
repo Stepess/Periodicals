@@ -3,10 +3,11 @@ package model.service;
 import model.dao.DaoFactory;
 import model.dao.PublicationDao;
 import model.entity.DTO.PublicationDto;
-import model.entity.Publication;
 import model.entity.User;
+import model.service.resource.manager.MessageManager;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class PublicationService {
@@ -29,9 +30,15 @@ public class PublicationService {
         }
     }
 
-    public void setInDb(PublicationDto publication){
+    public boolean setInDb(PublicationDto publication){
         try(PublicationDao dao = daoFactory.createPublicationDao()){
-            dao.setInDb(publication);
+            return dao.setInDb(publication);
+        }
+    }
+
+    public boolean update(PublicationDto publication){
+        try(PublicationDao dao = daoFactory.createPublicationDao()){
+            return dao.update(publication);
         }
     }
 
@@ -61,12 +68,9 @@ public class PublicationService {
         publicationDao.setInDb(dto);
     }*/
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         try(PublicationDao dao = daoFactory.createPublicationDao()){
-            boolean success = dao.delete(id);
-            if (!success) {
-                throw new RuntimeException("delete");
-            }
+            return dao.delete(id);
         }
     }
 
