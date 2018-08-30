@@ -53,7 +53,8 @@
     <br/>
 
 
-
+    <input type="hidden" name="command" value="${param.command}">
+    <input type="hidden" name="query" value="${param.query}">
 
 
     <br/>

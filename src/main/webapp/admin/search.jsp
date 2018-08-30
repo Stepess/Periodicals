@@ -91,6 +91,9 @@
                     <input type="hidden" name="description_en" value="${publication.descriptionEn}">
                     <input type="hidden" name="description_ua" value="${publication.descriptionUa}">
 
+                    <input type="hidden" name="command" value="/app/search">
+                    <input type="hidden" name="query" value="${pageContext.request.queryString}">
+
                     <input type="submit" value="<fmt:message key="edit"/>">
                 </form>
             </td>

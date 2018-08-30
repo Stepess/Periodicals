@@ -54,6 +54,8 @@ public class EditPublicationCommand implements Command {
         }
 
         request.setAttribute("status", new MessageManager(locale).getProperty("message.publication.changed"));
-        return new PagePathManager().getProperty("path.command.admin.catalog");
+        //return new PagePathManager().getProperty("path.command.admin.catalog");
+        System.out.println(request.getParameter("command")+"?"+request.getParameter("query"));
+        return request.getParameter("command")+"?"+request.getParameter("query");
     }
 }
