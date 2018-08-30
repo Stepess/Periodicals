@@ -49,7 +49,7 @@ public class EditPublicationCommand implements Command {
                 .buildDescriptionUa(request.getParameter("description_ua"))
                 .build();
 
-        if (! new PublicationService().update(publicationDTO)){
+        if (! new PublicationService().editPublication(publicationDTO)){
             throw new RuntimeException(new MessageManager(locale).getProperty("message.changes.not.accepted"));
         }
 

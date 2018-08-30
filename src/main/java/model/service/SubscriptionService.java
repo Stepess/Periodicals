@@ -15,10 +15,6 @@ public class SubscriptionService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     public SubscriptionService() {
-        /*DaoFactory daoFactory = DaoFactory.getInstance();
-        try(SubscriptionDao dao1 = daoFactory.createSubscriptionDao()){
-            dao = dao1;
-        }*/
     }
 
     public List<SubscriptionDto> getAllUserSubscription(String login) {
@@ -33,15 +29,14 @@ public class SubscriptionService {
         }
     }
 
-    public void pay(String login, Subscription subscription) throws SQLException {
-
+    public void paySubscription(String login, Subscription subscription) throws SQLException {
         try(SubscriptionDao dao = daoFactory.createSubscriptionDao();
         UserDao userDao = daoFactory.createUserDao()){
             dao.pay(userDao.getByLogin(login), subscription);
         }
     }
 
-    public void set(Subscription subscription) {
+    public void addSubscription(Subscription subscription) {
         try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
             dao.setInDb(subscription);
         }

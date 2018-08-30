@@ -114,7 +114,7 @@
 
 
                 <%--<td>
-                    <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>
+                    <a href="/deletePublication?name=<c:out value='${image.name}' />">Delete</a>
                 </td>
                 <td>
                     <input type="checkbox" name="${image.name}" >

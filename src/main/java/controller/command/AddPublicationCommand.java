@@ -26,7 +26,7 @@ public class AddPublicationCommand implements Command {
         PublicationService publicationService = new PublicationService();
 
         try {
-            publicationService.checkDataUnique(request.getParameter("title_en"),
+            publicationService.checkTitlesUnique(request.getParameter("title_en"),
                     request.getParameter("title_ua"));
         } catch (NotUniqueTitleEnException ex) {
             request.setAttribute("wrongtitle_en", new MessageManager(locale)
@@ -64,7 +64,7 @@ public class AddPublicationCommand implements Command {
                 .buildDescriptionUa(request.getParameter("description_ua"))
                 .build();
 
-        if (! publicationService.setInDb(publicationDto)){
+        if (! publicationService.addPublication(publicationDto)){
             throw new RuntimeException(new MessageManager(locale).getProperty("message.changes.not.accepted"));
         }
 

@@ -36,7 +36,7 @@
                 <td><ex:formatDateTime localDateTime="${subscription.payment.paymentDateTime}" locale="${sessionScope.locale}"/></td>
 
                     <%--<td>
-                        <a href="/delete?name=<c:out value='${image.name}' />">Delete</a>
+                        <a href="/deletePublication?name=<c:out value='${image.name}' />">Delete</a>
                     </td>
                     <td>
                         <input type="checkbox" name="${image.name}" >

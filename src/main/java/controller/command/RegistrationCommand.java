@@ -75,7 +75,7 @@ public class RegistrationCommand implements Command {
                 .buildAccount(BigDecimal.ZERO)
                 .build();
 
-        if (! new UserService().setInDb(user)){
+        if (! new UserService().registerUser(user)){
             throw new RuntimeException(new MessageManager(locale).getProperty("message.registration.fail"));
         }
 

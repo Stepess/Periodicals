@@ -11,11 +11,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class UserService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
+
     public UserService() {
-        /*DaoFactory daoFactory = DaoFactory.getInstance();
-        try(UserDao dao = daoFactory.createUserDao()){
-            userDao = dao;
-        }*/
     }
 
     public boolean isUserExist(String login) {
@@ -42,7 +39,7 @@ public class UserService {
         }
     }
 
-    public boolean setInDb(User user) {
+    public boolean registerUser(User user) {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.setInDb(user);
         }
@@ -67,8 +64,6 @@ public class UserService {
     }
 
     public String MD5(String in)  {
-
-
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");

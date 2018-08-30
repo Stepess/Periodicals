@@ -9,7 +9,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%--<c:set var="language" value="${not empty param.language ? param.language : 'en_US'}" scope="session"/>--%>
+<%--<c:addSubscription var="language" value="${not empty param.language ? param.language : 'en_US'}" scope="session"/>--%>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -27,7 +27,7 @@
         <option value="uk_UA" ${language == 'uk_UA' ? 'selected' : ''}>Ukrainian</option>
     </select>
 </form>
-<%--<c:set var="language" value="${not empty param.language ? param.language : 'en_US'}" scope="session"/>--%>
+<%--<c:addSubscription var="language" value="${not empty param.language ? param.language : 'en_US'}" scope="session"/>--%>
 <fmt:bundle basename="pagecontent" prefix="label.">
 <c:if test="${sessionScope.role == 'guest'}">
 

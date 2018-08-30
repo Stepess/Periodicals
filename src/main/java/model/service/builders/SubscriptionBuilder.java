@@ -16,7 +16,7 @@ public class SubscriptionBuilder {
     private LocalDate startDate;
     private LocalDate endDate;
     private Subscription.StateEnum state;
-    private BigDecimal sum;//TODO maybe delete
+    private BigDecimal sum;//TODO maybe deletePublication
     private Publication publication;
     private Payment payment;
     private int ownerId;

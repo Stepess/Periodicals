@@ -30,7 +30,7 @@ public class UserMapper implements ObjectMapper<User> {
                 .buildAccount(resultSet.getBigDecimal("account"));
         return builder.build();
 
-        //TODO delete code
+        //TODO deletePublication code
         /*User user = new User();
         user.setId(resultSet.getInt("id"));
         user.setLogin(resultSet.getString("login"));

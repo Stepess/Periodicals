@@ -50,7 +50,7 @@ public class SubscriptCommand implements Command{
             return new PagePathManager().getProperty("path.page.periodicals");
         }
 
-        new SubscriptionService().set(subscription);
+        new SubscriptionService().addSubscription(subscription);
         List<SubscriptionDto> list1 = new SubscriptionService().getAllUserSubscription((String)request.getSession().getAttribute("login"));
         List<Subscription> list = new ArrayList<>();
         for (SubscriptionDto dto1: list1){

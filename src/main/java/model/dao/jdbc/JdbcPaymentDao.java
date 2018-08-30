@@ -67,7 +67,7 @@ public class JdbcPaymentDao implements PaymentDao {
         /*int result=0;
         try (
                 Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.payment.query.addSubscription"))
         ) {
 
 

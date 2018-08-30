@@ -231,13 +231,13 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
 
             /*moneyStatement.setString(1, user.getLogin());
-            ResultSet set = moneyStatement.executeQuery();
-            set.next();
-            BigDecimal account = set.getBigDecimal("account");
+            ResultSet addSubscription = moneyStatement.executeQuery();
+            addSubscription.next();
+            BigDecimal account = addSubscription.getBigDecimal("account");
             billStatement.setString(1, user.getLogin());*/
-            /*set = moneyStatement.executeQuery();
-            set.next();
-            BigDecimal bill = set.getBigDecimal("bill");*/
+            /*addSubscription = moneyStatement.executeQuery();
+            addSubscription.next();
+            BigDecimal bill = addSubscription.getBigDecimal("bill");*/
 
                 BigDecimal account = user.getAccount();
 

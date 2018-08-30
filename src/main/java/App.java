@@ -47,14 +47,14 @@ public class App {
         user.setPassword("may0the0force");
 
 
-        System.out.println(dao.setInDb(user));
+        System.out.println(dao.addPublication(user));
         System.out.println(dao.getAll());
 
         user.setNationalField("address", "Дуже далека-далека галактика");
 
-        System.out.println(dao.update(user));
+        System.out.println(dao.editPublication(user));
         System.out.println(dao.getAll());
-        System.out.println(dao.delete(user));
+        System.out.println(dao.deletePublication(user));
         System.out.println(dao.getAll());*/
 
        /* PublicationDao dao = factory.createPublicationDao();
@@ -69,7 +69,7 @@ public class App {
                 .buildPrice(BigDecimal.valueOf(6554.25))
                 .build();
 
-        System.out.println(dao.setInDb(publication));
+        System.out.println(dao.addPublication(publication));
 
         System.out.println(dao.getAll());
 */
@@ -91,13 +91,13 @@ public class App {
                 .buildPayment(null)
                 .build();
 
-        System.out.println(dao.setInDb(subscription));
+        System.out.println(dao.addPublication(subscription));
 
         list = dao.getAll();
 
         list.forEach(System.out::println);
 
-        System.out.println(dao.delete(subscription));
+        System.out.println(dao.deletePublication(subscription));
 
         list = dao.getAll();
 

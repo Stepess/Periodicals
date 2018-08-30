@@ -36,7 +36,7 @@ public class PayCommand implements Command {
         }
 
         try {
-            new SubscriptionService().pay((String)request.getSession().getAttribute("login"),
+            new SubscriptionService().paySubscription((String)request.getSession().getAttribute("login"),
                     subscription);
         }
         catch (NotEnoughMoney e) {
