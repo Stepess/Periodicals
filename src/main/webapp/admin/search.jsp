@@ -103,6 +103,8 @@
             <td>
                 <form method="POST" action="${pageContext.request.contextPath}/app/delete">
                     <input type="hidden" name="pubId" value="${publication.id}">
+                    <input type="hidden" name="command" value="/app/search">
+                    <input type="hidden" name="query" value="${pageContext.request.queryString}">
                     <input type="submit" value="<fmt:message key="delete"/>">
                 </form>
             </td>

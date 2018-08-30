@@ -12,5 +12,6 @@
 </head>
 <body>
 <h1>ERROR!!!</h1>
+${exception.message}//TODO find out
 </body>
 </html>

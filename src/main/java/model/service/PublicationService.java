@@ -63,7 +63,10 @@ public class PublicationService {
 
     public void delete(int id) {
         try(PublicationDao dao = daoFactory.createPublicationDao()){
-            dao.delete(id);
+            boolean success = dao.delete(id);
+            if (!success) {
+                throw new RuntimeException("delete");
+            }
         }
     }
 
