@@ -8,8 +8,6 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 public class setParamInQueryStringTag extends SimpleTagSupport {
 
     private String query;
-    private String paramName;
-    private String paramValue;
 
     public setParamInQueryStringTag() {
     }
@@ -18,15 +16,34 @@ public class setParamInQueryStringTag extends SimpleTagSupport {
         this.query = query;
     }
 
-    public void setParamName(String paramName) {
-        this.paramName = paramName;
-    }
 
-    public void setParamValue(String paramValue) {
-        this.paramValue = paramValue;
-    }
+    //TODO refactor
 
     @Override
+    public void doTag() throws JspException, IOException {
+        try {
+            if (query==null || query.isEmpty()) {
+                query = "?";
+            } else {
+                query = query.replaceAll("recordsPerPage=.*&", "");
+                query = query.replaceAll("currentPage=.*&", "");
+                query = query.replaceAll("&currentPage=.*", "");
+                query = query.replaceAll("currentPage=.*", "");
+                query = query.replaceAll("&recordsPerPage=.*", "");
+                query = query + "&";
+            }
+            System.out.println(query);
+            getJspContext().getOut().write(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+}
+
+
+
+/*@Override
     public void doTag() throws JspException, IOException {
         try {
             if (query==null) {
@@ -47,15 +64,8 @@ public class setParamInQueryStringTag extends SimpleTagSupport {
             getJspContext().getOut().write(query);
         } catch (Exception e) {
             e.printStackTrace();
-            // stop page from loading further by throwing SkipPageException
-            /*throw new SkipPageException("Exception in formatting " + number
-                    + " with format " + format);*/
+
         }
-    }
-}
-
-
-
-
+                }*/
 
 

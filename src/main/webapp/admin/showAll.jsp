@@ -73,12 +73,10 @@
 
 <%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
 <my:setParam name='currentPage' value='${paginationParameters.currentPage-1}' />--%>
-${pageContext.request.queryString}
+<%--${pageContext.request.queryString}
 
-<%--
-<ex:setParamInQuery paramName="kek" paramValue="${paginationParameters.currentPage}" query="${pageContext.request.queryString}"/>
-<ex:setParamInQuery paramName="lol" paramValue="${paginationParameters.currentPage}" query="${pageContext.request.queryString}"/>
---%>
+<ex:setParamInQuery  query="${pageContext.request.queryString}"/>--%>
+
 
 <%--<h1>Before</h1>
 <br>

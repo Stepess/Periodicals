@@ -10,6 +10,9 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<%@ taglib prefix = "ex" uri = "/WEB-INF/tagLib.tld"%>
+
 <html>
 <head>
     <title>Subscriptions</title>
@@ -48,8 +51,9 @@ ${success}
         <tr>
             <td><c:out value="${subscription.publication.title}"/></td>
             <td><c:out value="${subscription.state}"/></td>
-            <td><c:out value="${subscription.startDate}"/></td>
-            <td><c:out value="${subscription.endDate}"/></td>
+            <%--<td><c:out value="${subscription.startDate}"/></td>--%>
+            <td><ex:formatDate localDate="${subscription.startDate}" locale="${sessionScope.locale}"/></td>
+            <td><ex:formatDate localDate="${subscription.endDate}" locale="${sessionScope.locale}"/></td>
             <td><c:out value="${subscription.total}"/> </td>
             <td>
                 <form method="POST" action="${pageContext.request.contextPath}/app/pay">

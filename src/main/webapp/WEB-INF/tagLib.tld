@@ -19,7 +19,7 @@
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        <attribute>
+        <!--<attribute>
             <name>paramName</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
@@ -28,7 +28,33 @@
             <name>paramValue</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+        </attribute>-->
+    </tag>
+
+    <tag>
+        <name>formatDate</name>
+        <tag-class>tag.dateFormatter</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>localDate</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <name>locale</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--<attribute>
+            <name>paramName</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>paramValue</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>-->
     </tag>
 
 </taglib>
