@@ -35,10 +35,12 @@
             <fmt:message key="login"/><br/>
             <input type="text" name="login" value=""/>
             <br/>
+            ${wrongLogin}
+            <br/>
             <fmt:message key="password"/><br/>
             <input type="password" name="password" value=""/>
             <br/>
-                ${errorLoginPassMessage}
+                ${wrongPassword}
             <br/>
             <input type="submit" value="Log in"/>
         </form>

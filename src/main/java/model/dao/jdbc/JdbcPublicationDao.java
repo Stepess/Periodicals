@@ -98,6 +98,8 @@ public class JdbcPublicationDao implements PublicationDao {
         return publications;
     }
 
+    //TODO think about changing title
+
     @Override
     public boolean update(PublicationDto entity) {
         int result=0;

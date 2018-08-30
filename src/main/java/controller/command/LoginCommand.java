@@ -28,7 +28,15 @@ public class LoginCommand implements Command {
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.page.main");
         }
-        if (loginService.checkLoginPassword(login, password)) {
+
+        if (! loginService.isUserExist(login)) {
+            request.setAttribute("wrongLogin",
+                    new MessageManager((Locale)request.getSession().getAttribute("locale"))
+                            .getProperty("message.auth.wrong.login"));
+            return manager.getProperty("path.page.index");
+        }
+
+        if (loginService.checkUserPassword(login, loginService.MD5(password))) {
             if (request.getSession().getServletContext().getAttribute(login) != null){
                 ((HttpSession) request.getSession().getServletContext().getAttribute(login)).invalidate();
             }
@@ -38,9 +46,9 @@ public class LoginCommand implements Command {
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.page.main");
         } else {
-            request.setAttribute("errorLoginPassMessage",
+            request.setAttribute("wrongPassword",
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))
-                            .getProperty("message.wrong.login.password"));
+                            .getProperty("message.auth.wrong.password"));
         }
         return manager.getProperty("path.page.index");
     }

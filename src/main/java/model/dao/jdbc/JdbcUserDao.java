@@ -100,7 +100,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     //TODO todo
-    @Override
+    /*@Override
     public boolean isUserExist(String login, String password) {
         User user = getByLogin(login);
         if (user == null) {
@@ -118,32 +118,20 @@ public class JdbcUserDao implements UserDao {
         return hashedPassword.equals(user.getPassword());
 
 
+    }*/
+    @Override
+    public boolean isUserExist(String login) {
+        User user = getByLogin(login);
+        return user!=null;
     }
 
-    private String MD5(String in) throws NoSuchAlgorithmException {
-
-
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(in.getBytes());
-
-        byte byteData[] = md.digest();
-
-        //convert the byte to hex format method 1
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < byteData.length; i++) {
-            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-        }
-
-
-        //convert the byte to hex format method 2
-        StringBuffer hexString = new StringBuffer();
-        for (int i=0;i<byteData.length;i++) {
-            String hex=Integer.toHexString(0xff & byteData[i]);
-            if(hex.length()==1) hexString.append('0');
-            hexString.append(hex);
-        }
-        return hexString.toString();
+    @Override
+    public boolean checkUserPassword(String login, String password) {
+        User user = getByLogin(login);
+        return user.getPassword().equals(password);
     }
+
+
 
     @Override
     public User getByLogin(String login) {
