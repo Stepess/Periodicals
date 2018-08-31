@@ -25,7 +25,6 @@ public class dateFormatter extends SimpleTagSupport {
     public void doTag() throws JspException, IOException {
         LocalePatternManager manager = new LocalePatternManager(locale);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(manager.getProperty("pattern.date"), locale);
-        System.out.println(localDate.format(formatter));
         getJspContext().getOut().write(localDate.format(formatter));
     }
 }
