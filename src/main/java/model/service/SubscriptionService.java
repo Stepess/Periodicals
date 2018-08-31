@@ -1,5 +1,6 @@
 package model.service;
 
+import controller.exception.NotEnoughMoney;
 import model.dao.DaoFactory;
 import model.dao.PublicationDao;
 import model.dao.SubscriptionDao;
@@ -7,6 +8,8 @@ import model.dao.UserDao;
 import model.dao.jdbc.JdbcUserDao;
 import model.entity.DTO.SubscriptionDto;
 import model.entity.Subscription;
+import model.entity.User;
+import model.service.resource.manager.PagePathManager;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -29,10 +32,12 @@ public class SubscriptionService {
         }
     }
 
-    public void paySubscription(String login, Subscription subscription) throws SQLException {
-        try(SubscriptionDao dao = daoFactory.createSubscriptionDao();
-        UserDao userDao = daoFactory.createUserDao()){
-            dao.pay(userDao.getByLogin(login), subscription);
+    public void paySubscription(User user, Subscription subscription) throws SQLException {
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
+            if (user.getAccount().compareTo(subscription.getPayment().getBill()) < 0) {
+                throw new NotEnoughMoney();
+            }
+            dao.pay(user, subscription);
         }
     }
 

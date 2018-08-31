@@ -18,7 +18,7 @@ public class SubscriptionDtoMapper implements ObjectMapper<SubscriptionDto> {
     public SubscriptionDto extractFromResultSet(ResultSet resultSet) throws SQLException {
         PublicationDTOMapper publicationDTOMapper = new PublicationDTOMapper();
         SubscriptionDtoBuilder builder = new SubscriptionDtoBuilder(resultSet.getInt("subscription.id"))
-                .buildTotal(resultSet.getBigDecimal("total"))
+                .buildTotal(resultSet.getBigDecimal("bill"))
                 .buildState(Subscription.StateEnum.valueOf(resultSet.getString("state").toUpperCase()))
                 .buildStartDate(resultSet.getDate("start_date").toLocalDate())
                 .buildEndDate(resultSet.getDate("end_date").toLocalDate())

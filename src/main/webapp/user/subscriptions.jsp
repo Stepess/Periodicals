@@ -54,7 +54,7 @@ ${success}
             <%--<td><c:out value="${subscription.startDate}"/></td>--%>
             <td><ex:formatDate localDate="${subscription.startDate}" locale="${sessionScope.locale}"/></td>
             <td><ex:formatDate localDate="${subscription.endDate}" locale="${sessionScope.locale}"/></td>
-            <td><fmt:formatNumber value="${subscription.total}"  type="currency"/> </td>
+            <td><fmt:formatNumber value="${subscription.payment.bill}"  type="currency"/> </td>
             <td>
                 <form method="POST" action="${pageContext.request.contextPath}/app/pay">
                     <input type="hidden" name="subId" value="${subscription.id}">

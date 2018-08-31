@@ -232,76 +232,62 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     }
 
     @Override
-    public boolean pay(User user,Subscription subscription) throws SQLException {
-        boolean success;
+    public void pay(User user, Subscription subscription) throws SQLException {
+        try (
+                PreparedStatement getUserMoneyStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.money"));
+                PreparedStatement getBillStatement = connection.prepareStatement(manager.getProperty("db.payment.query.get.bill"));
+                PreparedStatement setPaidPubStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.pub"));
+                PreparedStatement updateSubscriptionStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.sub.paid"));
+                PreparedStatement updateAccountStatement = connection.prepareStatement(manager.getProperty("db.user.query.update.account"));
+                PreparedStatement updatePaymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.update.date.time"));
+        ) {
+            connection.setAutoCommit(false);
 
-        try{
-            try (
-                    PreparedStatement moneyStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.money"));
-                    PreparedStatement billStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.bill"));
-                    PreparedStatement setPaidPubStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.pub"));
-                    PreparedStatement updateSubStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.sub.paid"));
-                    PreparedStatement updateAccountStatement = connection.prepareStatement(manager.getProperty("db.user.query.update.account"));
-                    PreparedStatement updatePayment = connection.prepareStatement(manager.getProperty("db.user.query.update.payment"));
-                    PreparedStatement setPayment = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
-            )
-            {
-
-
-            /*moneyStatement.setString(1, user.getLogin());
-            ResultSet addSubscription = moneyStatement.executeQuery();
-            addSubscription.next();
-            BigDecimal account = addSubscription.getBigDecimal("account");
-            billStatement.setString(1, user.getLogin());*/
-            /*addSubscription = moneyStatement.executeQuery();
-            addSubscription.next();
-            BigDecimal bill = addSubscription.getBigDecimal("bill");*/
-
-                BigDecimal account = user.getAccount();
-
-                //BigDecimal bill = subscription.getPayment().getBill();
-                BigDecimal bill = subscription.getTotal();
-                System.out.println(BigDecimal.ZERO);
-                System.out.println(account);
-                System.out.println(bill);
-                if (account.compareTo(bill) < 0) {
-                    throw new NotEnoughMoney();
-                }
-                connection.setAutoCommit(false);
-                updateAccountStatement.setBigDecimal(1,account.subtract(bill));
-                updateAccountStatement.setString(2,user.getLogin());
-                updateAccountStatement.executeUpdate();
-                updateSubStatement.setInt(1, subscription.getId());
-                updateSubStatement.executeUpdate();
-                setPaidPubStatement.setInt(1, user.getId());
-                setPaidPubStatement.setInt(2, subscription.getPublication().getId());
-                setPaidPubStatement.executeUpdate();
-                /*updatePayment.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-                updatePayment.setInt(2, subscription.getPayment().getId());
-                updatePayment.executeUpdate();*/
-                setPayment.setFloat(1, bill.floatValue());
-                setPayment.setTimestamp(2,Timestamp.valueOf(LocalDateTime.now()));
-                setPayment.setInt(3, subscription.getId());
-                setPayment.setInt(4, user.getId());
-                setPayment.executeUpdate();
-                connection.commit();
-
-
-
-
-            } catch (SQLException ex) {
-                connection.rollback();
-                ex.printStackTrace();
-                throw ex;
+            BigDecimal account;
+            getUserMoneyStatement.setString(1, user.getLogin());
+            try (ResultSet resultSet = getUserMoneyStatement.executeQuery()) {
+                resultSet.next();
+                account = resultSet.getBigDecimal("account");
             }
-        }catch (SQLException ex) {
+
+            BigDecimal bill;
+            getBillStatement.setInt(1, subscription.getPayment().getId());
+            try (ResultSet resultSet = getBillStatement.executeQuery()) {
+                resultSet.next();
+                bill = resultSet.getBigDecimal("bill");
+            }
+
+            if (account.compareTo(bill) < 0) {
+                throw new NotEnoughMoney();
+            }
+
+            updateAccountStatement.setBigDecimal(1, account.subtract(bill));
+            updateAccountStatement.setString(2, user.getLogin());
+            updateAccountStatement.executeUpdate();
+
+            updateSubscriptionStatement.setInt(1, subscription.getId());
+            updateSubscriptionStatement.executeUpdate();
+
+            setPaidPubStatement.setInt(1, user.getId());
+            setPaidPubStatement.setInt(2, subscription.getPublication().getId());
+            setPaidPubStatement.executeUpdate();
+
+            updatePaymentStatement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            updatePaymentStatement.setInt(2, subscription.getPayment().getId());
+            updatePaymentStatement.executeUpdate();
+
+            connection.commit();
+
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            }
             ex.printStackTrace();
             throw ex;
-
         }
-
-
-        return true;
     }
 
     @Override
