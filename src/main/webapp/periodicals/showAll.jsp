@@ -150,12 +150,12 @@
                         <form method="POST" action="${pageContext.request.contextPath}/app/subscript">
                             <input type="hidden" name="pubId" value="${publication.id}">
                             <input type="hidden" name="price" value="${publication.price}">
-                            <fmt:message key="from"/><br>
-                            <input type="date" name="from" min="1"><br>
+                            <%--<fmt:message key="from"/><br>
+                            <input type="date" name="from" min="1"><br>--%>
                             <fmt:message key="to"/><br>
                             <input type="number" name="months">
                             <br>
-                            <input type="hidden" name="subId" value="${publication.id}">
+                            <%--<input type="hidden" name="subId" value="${publication.id}">--%>
                             <input type="submit" value="<fmt:message key="subscript"/>">
                         </form>
                     </td>

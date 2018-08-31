@@ -32,15 +32,33 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         int result=0;
         try {
             connection.setAutoCommit(false);
-            try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.set"))) {
+            try (PreparedStatement setSubscriptionStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.set"));
+                 PreparedStatement getLastIdStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.last.id"));
+                 PreparedStatement setPaymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
+            ) {
                 try{
-                    statement.setString(1, entity.getState().toString().toLowerCase());
-                    statement.setFloat(2, entity.getTotal().floatValue());
-                    statement.setDate(3, Date.valueOf(entity.getStartDate()));
-                    statement.setDate(4, Date.valueOf(entity.getEndDate()));
-                    statement.setInt(5, entity.getOwnerId());
-                    statement.setInt(6, entity.getPublication().getId());
-                    result = statement.executeUpdate();
+                    setSubscriptionStatement.setString(1, entity.getState().toString().toLowerCase());
+                    //setSubscriptionStatement.setFloat(2, entity.getPayment().getBill().floatValue());
+                    setSubscriptionStatement.setDate(2, Date.valueOf(entity.getStartDate()));
+                    setSubscriptionStatement.setDate(3, Date.valueOf(entity.getEndDate()));
+                    setSubscriptionStatement.setInt(4, entity.getOwnerId());
+                    setSubscriptionStatement.setInt(5, entity.getPublication().getId());
+                    result += setSubscriptionStatement.executeUpdate();
+
+                    int subscriptionId;
+                    ResultSet resultSet = getLastIdStatement.executeQuery();
+
+                    if (resultSet.next()) {
+                        subscriptionId = resultSet.getInt("subscription_id");
+                    } else {
+                        throw new SQLException();
+                    }
+
+                    setPaymentStatement.setFloat(1, entity.getPayment().getBill().floatValue());
+                    setPaymentStatement.setInt(2, subscriptionId);
+                    setPaymentStatement.setInt(3, entity.getOwnerId());
+                    result += setPaymentStatement.executeUpdate();
+
                     connection.commit();
                 } catch (SQLException e) {
                     connection.rollback();
@@ -50,7 +68,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result>0;
+        return result>1;
     }
 
     @Override

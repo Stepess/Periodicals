@@ -29,6 +29,10 @@ public class Subscription {
         this.ownerId = builder.getOwnerId();
     }
 
+    public void calculatePrice(int mounth){
+        payment.setBill(BigDecimal.valueOf(mounth).multiply(publication.getPrice()));
+    }
+
     public int getId() {
         return id;
     }

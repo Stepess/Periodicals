@@ -10,10 +10,17 @@ public class Payment {
     private BigDecimal bill;
     private LocalDateTime paymentDateTime;
 
+    public Payment() {
+    }
+
     public Payment(PaymentBuilder builder) {
         this.id = builder.getId();
         this.bill = builder.getBill();
         this.paymentDateTime = builder.getPaymentDateTime();
+    }
+
+    public void setBill(BigDecimal bill) {
+        this.bill = bill;
     }
 
     public int getId() {
