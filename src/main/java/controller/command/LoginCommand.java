@@ -19,7 +19,7 @@ public class LoginCommand implements Command {
         String password =  request.getParameter("password");
 
         if (login == null || password == null){
-            return manager.getProperty("path.page.index");
+            return manager.getProperty("path.page.login");
         }
 
         UserService loginService = new UserService();
@@ -33,7 +33,7 @@ public class LoginCommand implements Command {
             request.setAttribute("wrongLogin",
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))
                             .getProperty("message.auth.wrong.login"));
-            return manager.getProperty("path.page.index");
+            return manager.getProperty("path.page.login");
         }
 
         if (loginService.checkUserPassword(login, loginService.MD5(password))) {
@@ -50,7 +50,7 @@ public class LoginCommand implements Command {
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))
                             .getProperty("message.auth.wrong.password"));
         }
-        return manager.getProperty("path.page.index");
+        return manager.getProperty("path.page.login");
     }
 }
 
