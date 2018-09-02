@@ -19,8 +19,8 @@
     </c:otherwise>
 </c:choose>
 <fmt:bundle basename="pagecontent" prefix="label.">
-    <div class="container">
-        <div class="row vertical-offset-100 justify-content-center login">
+    <div class="container min_height">
+        <div class="row vertical-offset-100 justify-content-center">
             <div class="col-md-4 col-md-offset-4 well">
                 <div class="panel panel-default">
                     <div class="panel-heading">

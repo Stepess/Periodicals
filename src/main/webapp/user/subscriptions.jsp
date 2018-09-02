@@ -32,7 +32,7 @@
 </c:choose>
 
 <fmt:bundle basename="pagecontent" prefix="field.">
-    <div class="container">
+    <div class="container min_height">
         <div class="row vertical-tb-offset-10">
         <form method="get" action="${pageContext.request.contextPath}/app/subscriptions">
             <select class="form-control" name="state" onchange="submit()">

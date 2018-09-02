@@ -20,7 +20,7 @@
     </c:otherwise>
 </c:choose>
 <fmt:bundle basename="pagecontent" prefix="field.">
-    <div class="container vertical-tb-offset-10">
+    <div class="container vertical-tb-offset-10 min_height">
         <form method="get" action="${pageContext.request.contextPath}/app/search">
             <div class="form-row">
                 <div class="col">
@@ -53,10 +53,30 @@
             <input type="hidden" name="currentPage" value="1">
             <label for="records">Select records per page:</label>
             <select class="form-control" id="records" name="recordsPerPage">
-                <option velue="default" selected>default</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
+                <c:choose>
+                    <c:when test="${paginationParameters.recordsPerPage==5}">
+                        <option value="5" selected>5</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="5">5</option>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${paginationParameters.recordsPerPage==10}">
+                        <option value="10" selected>10</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="10">10</option>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${paginationParameters.recordsPerPage==15}">
+                        <option value="15" selected>15</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="15">15</option>
+                    </c:otherwise>
+                </c:choose>
             </select>
         </form>
     </div>

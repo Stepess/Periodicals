@@ -23,7 +23,8 @@
 <fmt:bundle basename="pagecontent" prefix="label.">
 
 
-    <div class="container">
+    <div class="container vertical-tb-offset-10 min_height">
+        <div class="row">
         <table class="table">
             <tbody>
             <tr>
@@ -76,8 +77,10 @@
             </tr>
             </tbody>
         </table>
+        </div>
 
     </div>
+    <div class="row">
 
     <div class="container vertical-tb-offset-10">
         <form method="POST" action="${pageContext.request.contextPath}/app/replenish">
@@ -88,6 +91,7 @@
                 </div>
             </div>
         </form>
+    </div>
     </div>
 
 </fmt:bundle>

@@ -248,13 +248,13 @@ h2 {
     margin-right: 10px;
 }
 
-.foot {
+/*.foot {
     background: rgba(2, 109, 16, 0.91);
     overflow: auto;
     bottom: 0;
     width: 100%;
     flex-shrink: 0;
-}
+}*/
 
 .rightsSignBlock {
     margin: 20px 15px;
@@ -273,5 +273,17 @@ h2 {
 
 .login {
     display: block;
+    min-height: 80%;
+}
+
+.foot {
+    background: rgba(2, 109, 16, 0.91);
+    overflow: auto;
+
+}
+
+
+
+.min_height {
     min-height: 80%;
 }

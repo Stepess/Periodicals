@@ -22,39 +22,35 @@
     </c:otherwise>
 </c:choose>
 <fmt:bundle basename="pagecontent" prefix="field.">
-    <table border="1" cellpadding="5">
-        <caption><h2>Payments List</h2></caption>
-        <tr>
-            <th>
-                <fmt:message key="title"/>
-            </th>
-            <th>
-                <fmt:message key="bill"/>
-            </th>
-            <th>
-                <fmt:message key="payment.date.time"/>
-            </th>
+    <div class="container vertical-tb-offset-10  min_height" >
+        <div class="row">
+            <table class="table">
+                <h2>Payments List</h2>
+                <tr>
+                    <th>
+                        <fmt:message key="title"/>
+                    </th>
+                    <th>
+                        <fmt:message key="bill"/>
+                    </th>
+                    <th>
+                        <fmt:message key="payment.date.time"/>
+                    </th>
+                </tr>
 
-        </tr>
+                <c:forEach items="${requestScope.subscriptions}" var="subscription">
+                    <%--<c:if test="${not empty subscription.payment.paymentDateTime}">--%>
+                    <tr>
+                        <td><c:out value="${subscription.publication.title}"/></td>
+                        <td><fmt:formatNumber value="${subscription.payment.bill}"  type="currency"/></td>
+                        <td><ex:formatDateTime localDateTime="${subscription.payment.paymentDateTime}" locale="${sessionScope.locale}"/></td>
+                    </tr>
+                    <%--</c:if>--%>
+                </c:forEach>
+            </table>
+        </div>
+    </div>
 
-        <c:forEach items="${requestScope.subscriptions}" var="subscription">
-            <c:if test="${not empty subscription.payment.paymentDateTime}">
-            <tr>
-                <td><c:out value="${subscription.publication.title}"/></td>
-                <td><fmt:formatNumber value="${subscription.payment.bill}"  type="currency"/></td>
-               <%-- <td><c:out value="${subscription.payment.paymentDateTime}"/></td>--%>
-                <td><ex:formatDateTime localDateTime="${subscription.payment.paymentDateTime}" locale="${sessionScope.locale}"/></td>
-
-                    <%--<td>
-                        <a href="/deletePublication?name=<c:out value='${image.name}' />">Delete</a>
-                    </td>
-                    <td>
-                        <input type="checkbox" name="${image.name}" >
-                    </td>--%>
-            </tr>
-            </c:if>
-        </c:forEach>
-    </table>
 </fmt:bundle>
 
 </body>
