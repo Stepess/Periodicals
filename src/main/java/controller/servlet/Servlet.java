@@ -1,5 +1,5 @@
 package controller.servlet;
-
+//TODO when change local on form nPE
 
 import controller.command.Command;
 import controller.command.CommandFactory;

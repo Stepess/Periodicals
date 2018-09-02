@@ -69,55 +69,7 @@ ${status}
 </form>
 <br/>
 
-<%--<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>--%>
 
-<%--<my:setParam name='recordsPerPage' value='${paginationParameters.recordsPerPage}' />
-<my:setParam name='currentPage' value='${paginationParameters.currentPage-1}' />--%>
-<%--${pageContext.request.queryString}
-
-<ex:setParamInQuery  query="${pageContext.request.queryString}"/>--%>
-
-
-<%--<h1>Before</h1>
-<br>
-${pageContext.request.requestURL}
-<br>
-${pageContext.request.queryString}
-
-
-
-
-<h1>After</h1>
-<br>
-${pageContext.request.requestURL}
-<br>
-${pageContext.request.queryString}
-
-
-
-
-<my:setParam name='language' value='en' />
-
-
-<h1>After12</h1>
-<br>
-${pageContext.request.requestURL}
-<br>
-${pageContext.request.queryString}
-
-
-<h1>After1223</h1>
-<br>
-${pageContext.request.requestURL}
-<br>
-${pageContext.request.queryString}--%>
-<%--${currentPage}
-${recordsPerPage}
-${numberOfPages}
-
-${paginationParameters.currentPage}
-${paginationParameters.recordsPerPage}
-${paginationParameters.numberOfPages}--%>
     <ul class="pagination">
         <c:if test="${paginationParameters.currentPage != 1}">
             <%--<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>--%>
@@ -217,15 +169,16 @@ ${paginationParameters.numberOfPages}--%>
                     <td>
                         <form method="POST" action="${pageContext.request.contextPath}/admin/editPublication.jsp">
                             <input type="hidden" name="pubId" value="${publication.id}">
-                            <input type="hidden" name="title_en" value="${publication.titleEn}">
-                            <input type="hidden" name="title_ua" value="${publication.titleUa}">
-                            <input type="hidden" name="author" value="${publication.author}">
-                            <input type="hidden" name="genre_en" value="${publication.genreEn}">
-                            <input type="hidden" name="genre_ua" value="${publication.genreUa}">
-                            <input type="hidden" name="price" value="${publication.price}">
+                                <%--<input type="hidden" name="title_en" value="${publication.titleEn}">
+                                <input type="hidden" name="title_ua" value="${publication.titleUa}">
+                                <input type="hidden" name="author" value="${publication.author}">
+                                <input type="hidden" name="genre_en" value="${publication.genreEn}">
+                                <input type="hidden" name="genre_ua" value="${publication.genreUa}">
+                                <input type="hidden" name="price" value="${publication.price}">
 
-                            <input type="hidden" name="description_en" value="${publication.descriptionEn}">
-                            <input type="hidden" name="description_ua" value="${publication.descriptionUa}">
+                                <input type="hidden" name="description_en" value="${publication.descriptionEn}">
+                                <input type="hidden" name="description_ua" value="${publication.descriptionUa}">--%>
+
 
                             <input type="hidden" name="command" value="/app/catalog">
                             <input type="hidden" name="query" value="${pageContext.request.queryString}">

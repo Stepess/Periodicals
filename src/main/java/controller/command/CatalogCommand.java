@@ -19,7 +19,20 @@ public class CatalogCommand implements Command{
         request.setAttribute("publications", publicationService.getPaginatedList(paginationParameters.get("start"),
                 paginationParameters.get("recordsPerPage")));
 
-        if ("admin".equals(request.getSession().getAttribute("role"))) {
+            Locale locale = (Locale)request.getSession().getAttribute("locale");
+            request.setAttribute("publications",
+                    publicationService.getPaginatedList(paginationParameters.get("start"),
+                            paginationParameters.get("recordsPerPage"))
+                            .stream()
+                            .map(dto -> dto.convertToInternationalizedEntity(locale))
+                            .collect(Collectors.toList()));
+            return new PagePathManager().getProperty("path.page.periodicals");
+
+    }
+}
+
+/*
+if ("admin".equals(request.getSession().getAttribute("role"))) {
             return new PagePathManager().getProperty("path.page.admin.catalog");
         } else {
             Locale locale = (Locale)request.getSession().getAttribute("locale");
@@ -31,5 +44,4 @@ public class CatalogCommand implements Command{
                             .collect(Collectors.toList()));
             return new PagePathManager().getProperty("path.page.periodicals");
         }
-    }
-}
+ */

@@ -98,6 +98,11 @@
                     <fmt:message key="description"/>
                 </th>
                 </th>
+                <c:if test="${sessionScope.role == 'admin' or sessionScope.role == 'user'}">
+                    <th>
+                        <fmt:message key="action"/>
+                    </th>
+                </c:if>
             </tr>
             <c:forEach items="${requestScope.publications}" var="publication">
                 <tr>
@@ -106,18 +111,86 @@
                     <td><c:out value="${publication.genre}"/></td>
                     <td><fmt:formatNumber value="${publication.price}" type="currency"/></td>
                     <td><c:out value="${publication.description}"/></td>
-                    <c:if test="${sessionScope.role == 'user'}">
+
+                    <c:choose>
+                        <c:when test="${sessionScope.role == 'admin'}">
+                    <div class="form-row">
+                            <td>
+
+
+                                <form method="POST" action="${pageContext.request.contextPath}/app/editPublication">
+
+                                        <div class="col">
+                                    <%--<input type="hidden" name="pubId" value="${publication.id}">
+                                    <input type="hidden" name="title" value="${publication.title}">
+                                    <input type="hidden" name="author" value="${publication.author}">
+                                    <input type="hidden" name="genre" value="${publication.genre}">
+                                    <input type="hidden" name="price" value="${publication.price}">
+                                    <input type="hidden" name="description" value="${publication.description}">
+                                    <input type="hidden" name="command" value="/app/catalog">
+                                    <input type="hidden" name="query" value="${pageContext.request.queryString}">--%>
+                                        <input type="hidden" name="pubId" value="${publication.id}">
+                                        <input type="hidden" name="command" value="/app/catalog">
+                                        <input type="hidden" name="query" value="${pageContext.request.queryString}">
+
+                                    <input type="submit" value="<fmt:message key="edit"/>">
+                                        </div>
+                                </form>
+
+                                <form method="POST" action="${pageContext.request.contextPath}/app/showReport">
+                                    <div class="col">
+                                    <input type="hidden" name="pubId" value="${publication.id}">
+                                    <input type="submit" value="<fmt:message key="report"/>">
+                                    </div>
+                                </form>
+
+                                <form method="POST" action="${pageContext.request.contextPath}/app/deletePublication">
+                                    <div class="col">
+
+                                    <input type="hidden" name="pubId" value="${publication.id}">
+                                    <input type="hidden" name="command" value="/app/catalog">
+                                    <input type="hidden" name="query" value="${pageContext.request.queryString}">
+                                    <input type="submit" value="<fmt:message key="delete"/>">
+                                    </div>
+                                </form>
+                            </td>
+                    </div>
+                        </c:when>
+                        <c:when test="${sessionScope.role == 'user'}">
+                            <td>
+                                <form method="POST" action="${pageContext.request.contextPath}/app/subscript">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="hidden" name="pubId" value="${publication.id}">
+                                            <input type="hidden" name="price" value="${publication.price}">
+                                            <input type="number" name="months" placeholder="<fmt:message key="months"/> ">
+                                        </div>
+                                            <div class="col">
+                                            <input type="submit" value="<fmt:message key="subscript"/>">
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </c:when>
+                    </c:choose>
+
+
+
+
+                    <%--<c:if test="${sessionScope.role == 'user'}">
                         <td>
                             <form method="POST" action="${pageContext.request.contextPath}/app/subscript">
+                                <div class="form-row">
+                                    <div class="col">
                                 <input type="hidden" name="pubId" value="${publication.id}">
                                 <input type="hidden" name="price" value="${publication.price}">
-                                <fmt:message key="to"/><br>
-                                <input type="number" name="months">
-                                <br>
+                                <input type="number" name="months" placeholder="<fmt:message key="months"/> ">
                                 <input type="submit" value="<fmt:message key="subscript"/>">
+                                    </div>
+                                </div>
                             </form>
                         </td>
-                    </c:if>
+                    </c:if>--%>
                 </tr>
             </c:forEach>
         </table>

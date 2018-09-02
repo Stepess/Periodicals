@@ -79,7 +79,7 @@
         </table>
         </div>
 
-    </div>
+
     <div class="row">
 
     <div class="container vertical-tb-offset-10">
@@ -93,7 +93,7 @@
         </form>
     </div>
     </div>
-
+    </div>
 </fmt:bundle>
 <jsp:include page="/WEB-INF/component/footer.jsp"/>
 </body>

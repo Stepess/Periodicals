@@ -21,6 +21,7 @@
 </c:choose>
 <fmt:bundle basename="pagecontent" prefix="field.">
     <div class="container vertical-tb-offset-10 min_height">
+        <div class="row">
         <form method="get" action="${pageContext.request.contextPath}/app/search">
             <div class="form-row">
                 <div class="col">
@@ -48,6 +49,8 @@
                 </p>
             </div>
         </form>
+        </div>
+        <div class="row">
         <form action="${pageContext.request.contextPath}/app/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}"
               onchange="submit()">
             <input type="hidden" name="currentPage" value="1">
@@ -79,8 +82,8 @@
                 </c:choose>
             </select>
         </form>
-    </div>
-    <div class="container">
+        </div>
+    <div class="row">
         <table class="table">
             <h2>Periodicals List</h2>
             <tr>
@@ -158,6 +161,8 @@
             </nav>
         </div>
     </div>
+    </div>
+
 </fmt:bundle>
 <jsp:include page="/WEB-INF/component/footer.jsp"/>
 </body>

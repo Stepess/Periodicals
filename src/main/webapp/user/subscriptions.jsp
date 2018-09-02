@@ -112,7 +112,7 @@
                             <fmt:message key="price"/>
                         </th>
                         <th>
-                            <fmt:message key="pay"/>
+                            <fmt:message key="action"/>
                         </th>
                     </tr>
 

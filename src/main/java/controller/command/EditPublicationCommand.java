@@ -21,6 +21,12 @@ public class EditPublicationCommand implements Command {
         DataValidationUtil validationUtil = new DataValidationUtil(locale);
         ResourceManager regexManager = new RegexpManager(locale);
 
+        if (request.getAttribute("publication") == null && !"edit".equals(request.getParameter("flag"))) {//todo think about flag
+            request.setAttribute("publication", new PublicationService().getById(
+                    Integer.valueOf(request.getParameter("pubId"))));
+            return new PagePathManager().getProperty("path.page.edit.publication");
+        }
+
         validationUtil.isDataValid(request, "title_en", regexManager.getProperty("publication.title_en"));
         validationUtil.isDataValid(request, "title_ua", regexManager.getProperty("publication.title_ua"));
         validationUtil.isDataValid(request, "author", regexManager.getProperty("publication.author"));
@@ -29,14 +35,6 @@ public class EditPublicationCommand implements Command {
         validationUtil.isDataValid(request, "price", regexManager.getProperty("publication.price"));
         validationUtil.isDataValid(request, "description_en", regexManager.getProperty("publication.description_en"));
         validationUtil.isDataValid(request, "description_ua", regexManager.getProperty("publication.description_ua"));
-
-        Enumeration<String> attributeNames = request.getAttributeNames();
-        while (attributeNames.hasMoreElements()) {
-            String elementName = attributeNames.nextElement();
-            if (elementName.contains("wrong")) {
-                return new PagePathManager().getProperty("path.page.edit.publication");
-            }
-        }
 
         PublicationDto publicationDTO = new PublicationDtoBuilder(Integer.parseInt(request.getParameter("pubId")))
                 .buildTitleEn(request.getParameter("title_en"))
@@ -48,6 +46,18 @@ public class EditPublicationCommand implements Command {
                 .buildDescriptionEn(request.getParameter("description_en"))
                 .buildDescriptionUa(request.getParameter("description_ua"))
                 .build();
+
+        Enumeration<String> attributeNames = request.getAttributeNames();
+        while (attributeNames.hasMoreElements()) {
+            String elementName = attributeNames.nextElement();
+            if (elementName.contains("wrong")) {
+                request.setAttribute("publication" , publicationDTO);
+                System.out.println(elementName);
+                return new PagePathManager().getProperty("path.page.edit.publication");
+            }
+        }
+
+
 
         if (! new PublicationService().editPublication(publicationDTO)){
             throw new RuntimeException(new MessageManager(locale).getProperty("message.changes.not.accepted"));
