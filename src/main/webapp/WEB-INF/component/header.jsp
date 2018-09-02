@@ -76,12 +76,12 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <div class="col-lg-2 ml-auto">
+                        <div class="col-lg-3 ml-auto">
                             <nav>
                                 <ul class="menu d-flex flex-row">
                                     <li class="menu__item">
                                         <p>
-                                            ${sessionScope.login}
+                                            ${sessionScope.role}    ${sessionScope.login}
                                         </p>
                                     </li>
                                     <li class="menu__item">

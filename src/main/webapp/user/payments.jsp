@@ -10,7 +10,17 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
-<jsp:include page="/WEB-INF/component/userMenu.jsp"/>
+<c:choose>
+    <c:when test="${sessionScope.role=='admin'}">
+        <jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
+    </c:when>
+    <c:when test="${sessionScope.role=='user'}">
+        <jsp:include page="/WEB-INF/component/userMenu.jsp"/>
+    </c:when>
+    <c:otherwise>
+        <jsp:include page="/WEB-INF/component/guestMenu.jsp"/>
+    </c:otherwise>
+</c:choose>
 <fmt:bundle basename="pagecontent" prefix="field.">
     <table border="1" cellpadding="5">
         <caption><h2>Payments List</h2></caption>

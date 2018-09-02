@@ -20,9 +20,9 @@ public class SubscriptionService {
     public SubscriptionService() {
     }
 
-    public List<SubscriptionDto> getAllUserSubscription(String login) {
+    public List<SubscriptionDto> getAllUserSubscription(String login, String state) {
         try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
-            return dao.getByUserLogin(login);
+            return dao.getByUserLogin(login, state);
         }
     }
 

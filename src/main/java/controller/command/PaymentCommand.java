@@ -11,7 +11,7 @@ public class PaymentCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         request.setAttribute("subscriptions",
-                new SubscriptionService().getAllUserSubscription((String)request.getSession().getAttribute("login"))
+                new SubscriptionService().getAllUserSubscription((String)request.getSession().getAttribute("login"), "PAID")
                         .stream()
                         .map(dto -> dto.convertToInternationalizedEntity((Locale)request.getSession().getAttribute("locale")))
                         .collect(Collectors.toList()));

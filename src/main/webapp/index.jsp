@@ -9,10 +9,10 @@
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
 <c:choose>
-    <c:when test="admin">
+    <c:when test="${sessionScope.role=='admin'}">
         <jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
     </c:when>
-    <c:when test="user">
+    <c:when test="${sessionScope.role=='user'}">
         <jsp:include page="/WEB-INF/component/userMenu.jsp"/>
     </c:when>
     <c:otherwise>

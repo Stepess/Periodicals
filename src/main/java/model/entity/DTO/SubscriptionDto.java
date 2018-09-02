@@ -18,25 +18,29 @@ public class SubscriptionDto {
     private int id;
     private String titleEn;
     private String titleUa;
+    private String genreEn;
+    private String genreUa;
     private BigDecimal total;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDateTime paymentDateTime;
     private Subscription.StateEnum state;
     private int ownerId;
-    private PublicationDto publicationDto;
+   // private PublicationDto publicationDto;
 
     public SubscriptionDto(SubscriptionDtoBuilder builder) {
         this.id = builder.getId();
         this.titleEn = builder.getTitleEn();
         this.titleUa = builder.getTitleUa();
+        this.genreEn = builder.getGenreEn();
+        this.genreUa = builder.getGenreUa();
         this.total = builder.getTotal();
         this.startDate = builder.getStartDate();
         this.endDate = builder.getEndDate();
         this.state = builder.getState();
         this.paymentDateTime = builder.getPaymentDateTime();
         this.ownerId = builder.getOwnerId();
-        this.publicationDto = builder.getPublicationDto();
+       // this.publicationDto = builder.getPublicationDto();
     }
 
     public Subscription convertToInternationalizedEntity(Locale locale) {
@@ -44,6 +48,7 @@ public class SubscriptionDto {
                 .buildPublication(
                         new PublicationBuilder()
                         .buildTitle(locale.getLanguage().equals(ukrainian) ? titleUa : titleEn)
+                                .buildGenre(locale.getLanguage().equals(ukrainian) ? genreUa : genreEn)
                         .build())
                 .buildTotal(total)
                 .buildPayment(

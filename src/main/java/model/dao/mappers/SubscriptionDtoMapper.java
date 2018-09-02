@@ -24,10 +24,12 @@ public class SubscriptionDtoMapper implements ObjectMapper<SubscriptionDto> {
                 .buildEndDate(resultSet.getDate("end_date").toLocalDate())
                 .buildTitleEn(resultSet.getString("title_en"))
                 .buildTitleUa(resultSet.getString("title_ua"))
+                .buildGenreEn(resultSet.getString("genre_en"))
+                .buildGenreUa(resultSet.getString("genre_ua"))
                 .buildPaymentDateTime(resultSet.getTimestamp("date_time_of_payment") == null ?
                         null :
                         resultSet.getTimestamp("date_time_of_payment").toLocalDateTime())
-                //.buildPublicationDto(publicationDTOMapper.extractFromResultSet(resultSet))
+             /*   .buildPublicationDto(publicationDTOMapper.extractFromResultSet(resultSet))*/
                 .buildOwnerId(resultSet.getInt("user_id"));
         return builder.build();
     }

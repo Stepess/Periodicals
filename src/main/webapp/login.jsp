@@ -8,10 +8,10 @@
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
 <c:choose>
-    <c:when test="admin">
+    <c:when test="${sessionScope.role=='admin'}">
         <jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
     </c:when>
-    <c:when test="user">
+    <c:when test="${sessionScope.role=='user'}">
         <jsp:include page="/WEB-INF/component/userMenu.jsp"/>
     </c:when>
     <c:otherwise>
@@ -19,8 +19,8 @@
     </c:otherwise>
 </c:choose>
 <fmt:bundle basename="pagecontent" prefix="label.">
-    <div class="container center-block">
-        <div class="row vertical-offset-100 justify-content-center">
+    <div class="container">
+        <div class="row vertical-offset-100 justify-content-center login">
             <div class="col-md-4 col-md-offset-4 well">
                 <div class="panel panel-default">
                     <div class="panel-heading">

@@ -19,59 +19,126 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
-<jsp:include page="/WEB-INF/component/userMenu.jsp"/>
-${fail}
-${success}
+<c:choose>
+    <c:when test="${sessionScope.role=='admin'}">
+        <jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
+    </c:when>
+    <c:when test="${sessionScope.role=='user'}">
+        <jsp:include page="/WEB-INF/component/userMenu.jsp"/>
+    </c:when>
+    <c:otherwise>
+        <jsp:include page="/WEB-INF/component/guestMenu.jsp"/>
+    </c:otherwise>
+</c:choose>
+
 <fmt:bundle basename="pagecontent" prefix="field.">
+    <div class="container">
+        <div class="row vertical-tb-offset-10">
+        <form method="get" action="${pageContext.request.contextPath}/app/subscriptions">
+            <select class="form-control" name="state" onchange="submit()">
+                <c:forEach var="state" items="${requestScope.states}">
+                     <c:choose>
+                         <c:when test="${chosen_state==state}">
+                             <option value="${state}" selected><fmt:message key="${state}"/></option>
+                         </c:when>
+                         <c:otherwise>
+                             <option value="${state}"><fmt:message key="${state}"/></option>
+                         </c:otherwise>
+                     </c:choose>
+                </c:forEach>
+            </select>
+        </form>
+    </div>
+        <div class="row">
+            <div class="container">
+                <p class="text-center text-success">${success}</p>
+                <p class="text-center text-danger">${fail}</p>
+            </div>
+        </div>
+        <div class="row">
+    <c:choose>
+        <c:when test="${chosen_state=='PAID'}">
+            <div class="container">
+                <table class="table">
+                    <caption><h2>Subscription List</h2></caption>
+                    <tr>
+                        <th>
+                            <fmt:message key="title"/>
+                        </th>
+                        <th>
+                            <fmt:message key="genre"/>
+                        </th>
+                        <th>
+                            <fmt:message key="start.date"/>
+                        </th>
+                        <th>
+                            <fmt:message key="end.date"/>
+                        </th>
+                        <th>
+                            <fmt:message key="price"/>
+                        </th>
+                    </tr>
+
+                    <c:forEach items="${requestScope.subscriptions}" var="subscription">
+                        <tr>
+                            <td><c:out value="${subscription.publication.title}"/></td>
+                            <td><c:out value="${subscription.publication.genre}"/></td>
+                            <td><ex:formatDate localDate="${subscription.startDate}" locale="${sessionScope.locale}"/></td>
+                            <td><ex:formatDate localDate="${subscription.endDate}" locale="${sessionScope.locale}"/></td>
+                            <td><fmt:formatNumber value="${subscription.payment.bill}" type="currency"/></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="container">
+                <table class="table">
+                    <caption><h2>Subscription List</h2></caption>
+                    <tr>
+                        <th>
+                            <fmt:message key="title"/>
+                        </th>
+                        <th>
+                            <fmt:message key="genre"/>
+                        </th>
+                        <th>
+                            <fmt:message key="start.date"/>
+                        </th>
+                        <th>
+                            <fmt:message key="end.date"/>
+                        </th>
+                        <th>
+                            <fmt:message key="price"/>
+                        </th>
+                        <th>
+                            <fmt:message key="pay"/>
+                        </th>
+                    </tr>
+
+                    <c:forEach items="${requestScope.subscriptions}" var="subscription">
+                        <tr>
+                            <td><c:out value="${subscription.publication.title}"/></td>
+                            <td><c:out value="${subscription.publication.genre}"/></td>
+                            <td><ex:formatDate localDate="${subscription.startDate}" locale="${sessionScope.locale}"/></td>
+                            <td><ex:formatDate localDate="${subscription.endDate}" locale="${sessionScope.locale}"/></td>
+                            <td><fmt:formatNumber value="${subscription.payment.bill}" type="currency"/></td>
+                            <td>
+                                <form method="POST" action="${pageContext.request.contextPath}/app/pay">
+                                    <input type="hidden" name="subId" value="${subscription.id}">
+                                    <input type="submit" value="<fmt:message key="pay"/>">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </c:otherwise>
+    </c:choose>
+        </div>
+    </div>
 
 
-<table border="1" cellpadding="5">
-    <caption><h2>Subscription List</h2></caption>
-    <tr>
-        <th>
-            <fmt:message key="title"/>
-        </th>
-        <th>
-            <fmt:message key="state"/>
-        </th>
-        <th>
-            <fmt:message key="start.date"/>
-        </th>
-        <th>
-            <fmt:message key="end.date"/>
-        </th>
-        <th>
-            <fmt:message key="price"/>
-        </th>
-
-
-    </tr>
-
-    <c:forEach items="${requestScope.subscriptions}" var="subscription">
-        <tr>
-            <td><c:out value="${subscription.publication.title}"/></td>
-            <td><c:out value="${subscription.state}"/></td>
-            <%--<td><c:out value="${subscription.startDate}"/></td>--%>
-            <td><ex:formatDate localDate="${subscription.startDate}" locale="${sessionScope.locale}"/></td>
-            <td><ex:formatDate localDate="${subscription.endDate}" locale="${sessionScope.locale}"/></td>
-            <td><fmt:formatNumber value="${subscription.payment.bill}"  type="currency"/> </td>
-            <td>
-                <form method="POST" action="${pageContext.request.contextPath}/app/pay">
-                    <input type="hidden" name="subId" value="${subscription.id}">
-                    <input type="submit" value="<fmt:message key="pay"/>">
-                </form>
-            </td>
-
-
-                <%--<td>
-                    <a href="/deletePublication?name=<c:out value='${image.name}' />">Delete</a>
-                </td>
-                <td>
-                    <input type="checkbox" name="${image.name}" >
-                </td>--%>
-        </tr>
-    </c:forEach>
-</table>
 </fmt:bundle>
 </body>
 </html>

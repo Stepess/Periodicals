@@ -8,11 +8,12 @@ import java.util.Map;
 
 public class PaginationUtil {
     public Map<String, Integer> calculatePaginationParameters(HttpServletRequest request, int rows) {
+        RequestContentUtil requestContentUtil = new RequestContentUtil();
         int currentPage =
-                Integer.parseInt(getRequestParameterOrDefault(request, "currentPage", "1"));
+                Integer.parseInt(requestContentUtil.getRequestParameterOrDefault(request, "currentPage", "1"));
 
         int recordsPerPage =
-                Integer.parseInt(getRequestParameterOrDefault(request, "recordsPerPage", "5"));
+                Integer.parseInt(requestContentUtil.getRequestParameterOrDefault(request, "recordsPerPage", "5"));
 
         int numberOfPages = rows / recordsPerPage;
 
@@ -33,14 +34,5 @@ public class PaginationUtil {
         parameters.put("start", start);
 
         return parameters;
-    }
-
-    private String getRequestParameterOrDefault(HttpServletRequest request, String parameterName, String defaultValue) {
-        String parameterValue = request.getParameter(parameterName);
-        if (parameterValue==null || parameterValue.isEmpty()) {
-            return defaultValue;
-        } else {
-            return parameterValue;
-        }
     }
 }

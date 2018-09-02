@@ -14,6 +14,8 @@ public class SubscriptionDtoBuilder {
     private int id;
     private String titleEn;
     private String titleUa;
+    private String genreEn;
+    private String genreUa;
     private BigDecimal total;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -35,6 +37,16 @@ public class SubscriptionDtoBuilder {
 
     public SubscriptionDtoBuilder buildTitleUa(String titleUa) {
         this.titleUa = titleUa;
+        return this;
+    }
+
+    public SubscriptionDtoBuilder buildGenreEn(String genreEn) {
+        this.genreEn = genreEn;
+        return this;
+    }
+
+    public SubscriptionDtoBuilder buildGenreUa(String genreUa) {
+        this.genreUa = genreUa;
         return this;
     }
 
@@ -115,5 +127,13 @@ public class SubscriptionDtoBuilder {
 
     public PublicationDto getPublicationDto() {
         return publicationDto;
+    }
+
+    public String getGenreEn() {
+        return genreEn;
+    }
+
+    public String getGenreUa() {
+        return genreUa;
     }
 }

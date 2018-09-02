@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface SubscriptionDao extends GenericDao<Subscription> {
-    List<SubscriptionDto> getByUserLogin(String login);
+    List<SubscriptionDto> getByUserLogin(String login, String state);
     void pay(User user, Subscription subscription) throws SQLException;
     boolean isUserSubscriptionUnique(String login, int publicationId);
 }

@@ -208,12 +208,13 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     }*/
 
     @Override
-    public List<SubscriptionDto> getByUserLogin(String login) {
+    public List<SubscriptionDto> getByUserLogin(String login, String state) {
         SubscriptionDtoMapper subscriptionMapper = new SubscriptionDtoMapper();
         List<SubscriptionDto> subscriptions = new ArrayList<>();
         try (PreparedStatement statement =
                      connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))) {
             statement.setString(1, login);
+            statement.setString(2, state);
             try (
                     ResultSet resultSet = statement.executeQuery()
             ) {
