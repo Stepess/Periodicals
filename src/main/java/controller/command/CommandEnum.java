@@ -83,6 +83,11 @@ public enum CommandEnum {
         {
             this.command = new SearchCommand();
         }
+    },
+    DELETESUBSCRIPTION {
+        {
+            this.command = new DeleteSubscriptionCommand();
+        }
     };
 
     Command command;

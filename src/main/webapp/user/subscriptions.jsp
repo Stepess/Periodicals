@@ -129,6 +129,12 @@
                                     <input type="submit" value="<fmt:message key="pay"/>">
                                 </form>
                             </td>
+                            <td>
+                                <form method="POST" action="${pageContext.request.contextPath}/app/deleteSubscription">
+                                    <input type="hidden" name="subId" value="${subscription.id}">
+                                    <input type="submit" value="<fmt:message key="delete"/>">
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>
