@@ -23,8 +23,11 @@ public class RegistrationCommand implements Command {
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale)request.getSession().getAttribute("locale");
         ResourceManager regexManager = new RegexpManager(locale);
-
         DataValidationUtil validationUtil = new DataValidationUtil(locale);
+
+        if (validationUtil.isEmptyRequest(request)) {
+            return new PagePathManager().getProperty("path.page.registration");
+        }
 
         try{
             new UserService().checkDataUnique(request.getParameter("login"),

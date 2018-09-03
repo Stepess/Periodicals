@@ -83,7 +83,7 @@
     <div class="row">
 
     <div class="container vertical-tb-offset-10">
-        <form method="POST" action="${pageContext.request.contextPath}/app/replenish">
+        <form method="POST" action="${pageContext.request.contextPath}/${sessionScope.role}/replenish">
             <div class="form-row">
                 <div class="col">
                     <input type="number" name="money">

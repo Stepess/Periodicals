@@ -26,14 +26,14 @@ public class LoginCommand implements Command {
 
         if (!request.getSession().getAttribute("role").equals(User.RoleEnum.GUEST.getValue())) {
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
-                    + manager.getProperty("path.page.main");
+                    + manager.getProperty("path.command.user.catalog");
         }
 
         if (! loginService.isUserExist(login)) {
             request.setAttribute("wrongLogin",
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))
                             .getProperty("message.auth.wrong.login"));
-            return manager.getProperty("path.page.login");
+            return  manager.getProperty("path.page.login");
         }
 
         if (loginService.checkUserPassword(login, loginService.MD5(password))) {
@@ -43,8 +43,9 @@ public class LoginCommand implements Command {
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
             request.getSession().getServletContext().setAttribute(login, request.getSession());
-            return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
-                    + manager.getProperty("path.page.main");
+            /*return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
+                    + manager.getProperty("path.command.user.catalog");*/
+            return manager.getProperty("path.command.user.catalog");
         } else {
             request.setAttribute("wrongPassword",
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))

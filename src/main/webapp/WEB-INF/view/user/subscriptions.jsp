@@ -34,7 +34,7 @@
 <fmt:bundle basename="pagecontent" prefix="field.">
     <div class="container min_height">
         <div class="row vertical-tb-offset-10">
-        <form method="get" action="${pageContext.request.contextPath}/app/subscriptions">
+        <form method="get" action="${pageContext.request.contextPath}/user/subscriptions">
             <select class="form-control" name="state" onchange="submit()">
                 <c:forEach var="state" items="${requestScope.states}">
                      <c:choose>
@@ -124,13 +124,13 @@
                             <td><ex:formatDate localDate="${subscription.endDate}" locale="${sessionScope.locale}"/></td>
                             <td><fmt:formatNumber value="${subscription.payment.bill}" type="currency"/></td>
                             <td>
-                                <form method="POST" action="${pageContext.request.contextPath}/app/pay">
+                                <form method="POST" action="${pageContext.request.contextPath}/user/pay">
                                     <input type="hidden" name="subId" value="${subscription.id}">
                                     <input type="submit" value="<fmt:message key="pay"/>">
                                 </form>
                             </td>
                             <td>
-                                <form method="POST" action="${pageContext.request.contextPath}/app/deleteSubscription">
+                                <form method="POST" action="${pageContext.request.contextPath}/user/deleteSubscription">
                                     <input type="hidden" name="subId" value="${subscription.id}">
                                     <input type="submit" value="<fmt:message key="delete"/>">
                                 </form>

@@ -62,12 +62,12 @@
                             <nav>
                                 <ul class="menu d-flex flex-row">
                                     <li class="menu__item">
-                                        <a href="${pageContext.request.contextPath}/login.jsp">
+                                        <a href="${pageContext.request.contextPath}/guest/login">
                                             <fmt:message key="sign.in"/>
                                         </a>
                                     </li>
                                     <li class="menu__item">
-                                        <a href="${pageContext.request.contextPath}/registration.jsp">
+                                        <a href="${pageContext.request.contextPath}/guest/registration">
                                             <fmt:message key="sign.up"/>
                                         </a>
                                     </li>
@@ -85,7 +85,7 @@
                                         </p>
                                     </li>
                                     <li class="menu__item">
-                                        <a href="${pageContext.request.contextPath}/app/logout">
+                                        <a href="${pageContext.request.contextPath}/${sessionScope.role}/logout">
                                             <fmt:message key="logout"/>
                                         </a>
                                     </li>

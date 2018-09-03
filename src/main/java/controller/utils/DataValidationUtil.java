@@ -16,9 +16,13 @@ public class DataValidationUtil {
 
     public void isDataValid(HttpServletRequest request, String parameter, String regex) {
         String data = request.getParameter(parameter);
-        if (data!= null && !data.matches(regex)) {
+        if (data== null || !data.matches(regex)) {
             request.setAttribute("wrong"+parameter,
                     manager.getProperty("message.wrong."+parameter));
         }
+    }
+
+    public boolean isEmptyRequest(HttpServletRequest request) {
+        return !request.getParameterNames().hasMoreElements();
     }
 }

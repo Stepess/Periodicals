@@ -19,25 +19,25 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/app/catalog">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/user/catalog">
                                 <fmt:message key="catalog"/>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/app/subscriptions">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/user/subscriptions">
                                 <fmt:message key="subscription"/>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/app/payments">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/user/payments">
                                 <fmt:message key="payment"/>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/app/profile">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/user/profile">
                                 <fmt:message key="profile"/>
                             </a>
                         </li>

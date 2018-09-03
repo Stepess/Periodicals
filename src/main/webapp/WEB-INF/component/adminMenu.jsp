@@ -31,17 +31,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/app/catalog">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/catalog">
                         <fmt:message key="catalog"/>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/addPublication.jsp">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/addPublication">
                         <fmt:message key="add.publication"/>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/app/statistics">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/statistics">
                         <fmt:message key="statistics"/>
                     </a>
                 </li>

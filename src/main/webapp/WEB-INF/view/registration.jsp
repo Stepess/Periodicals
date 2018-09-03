@@ -28,7 +28,7 @@
                     <h3 class="panel-title">Please sign in</h3>
                 </div>
                 <div class="panel-body">
-                    <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/registration">
+                    <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/${sessionScope.role}/registration">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="<fmt:message key="login"/>" name="login"

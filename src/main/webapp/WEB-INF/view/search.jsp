@@ -20,8 +20,9 @@
     </c:otherwise>
 </c:choose>
 <fmt:bundle basename="pagecontent" prefix="field.">
-    <div class="container vertical-tb-offset-10">
-        <form method="get" action="${pageContext.request.contextPath}/app/search">
+    <div class="container vertical-tb-offset-10 min_height">
+        <div class="row">
+        <form method="get" action="${pageContext.request.contextPath}/${sessionScope.role}/search">
             <div class="form-row">
                 <div class="col">
                     <input name="title" type="text" class="form-control" placeholder="<fmt:message key="title"/>">
@@ -40,10 +41,18 @@
                 <div class="col">
                     <input class="btn btn-success" type="submit" value="<fmt:message key="search"/>"/>
                 </div>
-                    <%--${fail}--%>
+
+            </div>
+            <div class="container">
+                <p class="text-danger">
+                        ${fail}
+                </p>
             </div>
         </form>
-        <form action="${pageContext.request.contextPath}/app/catalog" onchange="submit()">
+        </div>
+        <div class="row">
+        <form action="${pageContext.request.contextPath}/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}"
+              onchange="submit()">
             <input type="hidden" name="currentPage" value="1">
             <label for="records">Select records per page:</label>
             <select class="form-control" id="records" name="recordsPerPage">
@@ -71,14 +80,10 @@
                         <option value="15">15</option>
                     </c:otherwise>
                 </c:choose>
-                <%--<option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>--%>
             </select>
         </form>
-    </div>
-
-    <div class="container">
+        </div>
+    <div class="row">
         <table class="table">
             <h2>Periodicals List</h2>
             <tr>
@@ -98,81 +103,54 @@
                     <fmt:message key="description"/>
                 </th>
                 </th>
-                <c:if test="${sessionScope.role == 'admin' or sessionScope.role == 'user'}">
-                    <th>
-                        <fmt:message key="action"/>
-                    </th>
-                </c:if>
             </tr>
             <c:forEach items="${requestScope.publications}" var="publication">
                 <tr>
-                    <td width="15%"><c:out value="${publication.title}"/></td>
-                    <td width="10%"><c:out value="${publication.author}"/></td>
-                    <td width="10%"><c:out value="${publication.genre}"/></td>
-                    <td width="10%"><fmt:formatNumber value="${publication.price}" type="currency"/></td>
-                    <td width="30%"><c:out value="${publication.description}"/></td>
-
+                    <td><c:out value="${publication.title}"/></td>
+                    <td><c:out value="${publication.author}"/></td>
+                    <td><c:out value="${publication.genre}"/></td>
+                    <td><fmt:formatNumber value="${publication.price}" type="currency"/></td>
+                    <td><c:out value="${publication.description}"/></td>
                     <c:choose>
                         <c:when test="${sessionScope.role == 'admin'}">
-                            <td>
-                            <div class="form-row row">
+                            <div class="form-row">
+                                <td>
+                                    <form method="POST" action="${pageContext.request.contextPath}/admin/editPublication">
 
-
-                             <%--       <ul class="navbar-nav">
-                                        <li class="nav-item">
---%>
-                                <div class="col-lg-4 ml-0">
-                                    <form method="POST" action="${pageContext.request.contextPath}/app/editPublication">
-
-
+                                        <div class="col">
                                             <input type="hidden" name="pubId" value="${publication.id}">
                                             <input type="hidden" name="command" value="/app/catalog">
                                             <input type="hidden" name="query"
                                                    value="${pageContext.request.queryString}">
 
                                             <input type="submit" value="<fmt:message key="edit"/>">
-
+                                        </div>
                                     </form>
-                                </div>
-                                 <%--       </li>
---%>
-<%--
-                                    <li class="nav-item">
---%>
-                                 <div class="col-lg-4 ml-0">
 
-                                 <form method="POST" action="${pageContext.request.contextPath}/app/showReport">
-
+                                    <form method="POST" action="${pageContext.request.contextPath}/admin/showReport">
+                                        <div class="col">
                                             <input type="hidden" name="pubId" value="${publication.id}">
                                             <input type="submit" value="<fmt:message key="report"/>">
-
+                                        </div>
                                     </form>
-                                 </div>
-                              <%--      </li>
-                                    <li class="nav-item">--%>
-                                 <div class="col-lg-4 ml-0">
 
-                                 <form method="POST"
-                                          action="${pageContext.request.contextPath}/app/deletePublication">
-
+                                    <form method="POST"
+                                          action="${pageContext.request.contextPath}/admin/deletePublication">
+                                        <div class="col">
 
                                             <input type="hidden" name="pubId" value="${publication.id}">
                                             <input type="hidden" name="command" value="/app/catalog">
                                             <input type="hidden" name="query"
                                                    value="${pageContext.request.queryString}">
                                             <input type="submit" value="<fmt:message key="delete"/>">
-
+                                        </div>
                                     </form>
-                                 </div>
-                                  <%--  </li>
-                                </ul>--%>
-
+                                </td>
                             </div>
-                            </td>
                         </c:when>
                         <c:when test="${sessionScope.role == 'user'}">
                             <td>
-                                <form method="POST" action="${pageContext.request.contextPath}/app/subscript">
+                                <form method="POST" action="${pageContext.request.contextPath}/${sessionScope.role}/subscript">
                                     <div class="form-row">
                                         <div class="col">
                                             <input type="hidden" name="pubId" value="${publication.id}">
@@ -188,36 +166,22 @@
                             </td>
                         </c:when>
                     </c:choose>
-
-
-
-
-                    <%--<c:if test="${sessionScope.role == 'user'}">
-                        <td>
-                            <form method="POST" action="${pageContext.request.contextPath}/app/subscript">
-                                <div class="form-row">
-                                    <div class="col">
-                                <input type="hidden" name="pubId" value="${publication.id}">
-                                <input type="hidden" name="price" value="${publication.price}">
-                                <input type="number" name="months" placeholder="<fmt:message key="months"/> ">
-                                <input type="submit" value="<fmt:message key="subscript"/>">
-                                    </div>
-                                </div>
-                            </form>
-                        </td>
-                    </c:if>--%>
                 </tr>
             </c:forEach>
         </table>
+
+
         <div class="col-xs-1" align="center">
             <nav>
                 <ul class="pagination">
                     <c:if test="${paginationParameters.currentPage != 1}">
+
                         <li class="page-item"><a class="page-link"
-                                                 href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}">Previous</a>
+                                                 href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
                         </li>
                     </c:if>
                     <c:forEach begin="1" end="${paginationParameters.numberOfPages}" var="i">
+
                         <c:choose>
                             <c:when test="${paginationParameters.currentPage eq i}">
                                 <li class="page-item active"><a class="page-link">
@@ -226,21 +190,27 @@
                             </c:when>
                             <c:otherwise>
                                 <li class="page-item"><a class="page-link"
-                                                         href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
+                                                         href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
                                 </li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${paginationParameters.currentPage lt paginationParameters.numberOfPages}">
                         <li class="page-item"><a class="page-link"
-                                                 href="/app/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">Next</a>
+                                                 href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
                         </li>
                     </c:if>
                 </ul>
             </nav>
         </div>
     </div>
+    </div>
+
 </fmt:bundle>
 <jsp:include page="/WEB-INF/component/footer.jsp"/>
 </body>
 </html>
+
+
+
+

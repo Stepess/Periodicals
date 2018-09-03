@@ -31,11 +31,11 @@
                     </div>
                     <div class="panel-body">
                         <form accept-charset="UTF-8" role="form" name="loginForm" method="POST"
-                              action="${pageContext.request.contextPath}/app/login">
+                              action="${pageContext.request.contextPath}/${sessionScope.role}/login">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="<fmt:message key="login"/>" name="login"
-                                           type="text">
+                                           type="text" value="${param.login}">
                                     <p class="text-danger">
                                             ${wrongLogin}
                                     </p>

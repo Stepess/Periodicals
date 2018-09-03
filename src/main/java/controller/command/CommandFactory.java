@@ -1,13 +1,16 @@
 package controller.command;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.regex.Pattern;
 
 public class CommandFactory {
     public Command getCommandFromRequest(HttpServletRequest request) {
         Command command = new DefaultCommand();
 
         String commandName = request.getRequestURI();
-        commandName = commandName.replaceAll(".*/app/", "");
+        //commandName = commandName.replaceAll(".*/app/", "");
+        commandName = commandName.replaceAll(".*/user/|.*/admin/|.*/guest/", "");
+        System.out.println(commandName);
 
         if (commandName == null || commandName.isEmpty()) {
             return command;
