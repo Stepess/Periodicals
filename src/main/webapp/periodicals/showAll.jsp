@@ -106,48 +106,69 @@
             </tr>
             <c:forEach items="${requestScope.publications}" var="publication">
                 <tr>
-                    <td><c:out value="${publication.title}"/></td>
-                    <td><c:out value="${publication.author}"/></td>
-                    <td><c:out value="${publication.genre}"/></td>
-                    <td><fmt:formatNumber value="${publication.price}" type="currency"/></td>
-                    <td><c:out value="${publication.description}"/></td>
+                    <td width="15%"><c:out value="${publication.title}"/></td>
+                    <td width="10%"><c:out value="${publication.author}"/></td>
+                    <td width="10%"><c:out value="${publication.genre}"/></td>
+                    <td width="10%"><fmt:formatNumber value="${publication.price}" type="currency"/></td>
+                    <td width="30%"><c:out value="${publication.description}"/></td>
 
                     <c:choose>
                         <c:when test="${sessionScope.role == 'admin'}">
-                            <div class="form-row">
-                                <td>
+                            <td>
+                            <div class="form-row row">
+
+
+                             <%--       <ul class="navbar-nav">
+                                        <li class="nav-item">
+--%>
+                                <div class="col-lg-4 ml-0">
                                     <form method="POST" action="${pageContext.request.contextPath}/app/editPublication">
 
-                                        <div class="col">
+
                                             <input type="hidden" name="pubId" value="${publication.id}">
                                             <input type="hidden" name="command" value="/app/catalog">
                                             <input type="hidden" name="query"
                                                    value="${pageContext.request.queryString}">
 
                                             <input type="submit" value="<fmt:message key="edit"/>">
-                                        </div>
-                                    </form>
 
-                                    <form method="POST" action="${pageContext.request.contextPath}/app/showReport">
-                                        <div class="col">
+                                    </form>
+                                </div>
+                                 <%--       </li>
+--%>
+<%--
+                                    <li class="nav-item">
+--%>
+                                 <div class="col-lg-4 ml-0">
+
+                                 <form method="POST" action="${pageContext.request.contextPath}/app/showReport">
+
                                             <input type="hidden" name="pubId" value="${publication.id}">
                                             <input type="submit" value="<fmt:message key="report"/>">
-                                        </div>
-                                    </form>
 
-                                    <form method="POST"
+                                    </form>
+                                 </div>
+                              <%--      </li>
+                                    <li class="nav-item">--%>
+                                 <div class="col-lg-4 ml-0">
+
+                                 <form method="POST"
                                           action="${pageContext.request.contextPath}/app/deletePublication">
-                                        <div class="col">
+
 
                                             <input type="hidden" name="pubId" value="${publication.id}">
                                             <input type="hidden" name="command" value="/app/catalog">
                                             <input type="hidden" name="query"
                                                    value="${pageContext.request.queryString}">
                                             <input type="submit" value="<fmt:message key="delete"/>">
-                                        </div>
+
                                     </form>
-                                </td>
+                                 </div>
+                                  <%--  </li>
+                                </ul>--%>
+
                             </div>
+                            </td>
                         </c:when>
                         <c:when test="${sessionScope.role == 'user'}">
                             <td>

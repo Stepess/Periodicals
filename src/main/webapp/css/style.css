@@ -287,3 +287,12 @@ h2 {
 .min_height {
     min-height: 75%;
 }
+
+.marg {
+    margin-right: 5px;
+}
+
+.menu-href {
+    display: flex;
+    justify-content: space-between;
+}

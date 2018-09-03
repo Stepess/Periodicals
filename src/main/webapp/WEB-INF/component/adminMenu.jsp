@@ -21,7 +21,8 @@
     </a>
     |
 --%>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"><div class="container">
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -45,8 +46,9 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </div></div>
     </nav>
+
 </fmt:bundle>
 
 
