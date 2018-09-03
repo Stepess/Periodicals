@@ -32,7 +32,7 @@ public class SubscriptionService {
         }
     }
 
-    public void paySubscription(User user, Subscription subscription) throws SQLException {
+    public void paySubscription(User user, Subscription subscription) {
         try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             if (user.getAccount().compareTo(subscription.getPayment().getBill()) < 0) {
                 throw new NotEnoughMoney();

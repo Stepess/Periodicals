@@ -39,7 +39,7 @@ public class PayCommand implements Command {
             request.setAttribute("fail", manager.getProperty("message.not.enough.money"));
             return new PagePathManager().getProperty("path.command.user.subscription");
         }
-        catch (SQLException e) {
+        catch (RuntimeException e) {
             request.setAttribute("fail", manager.getProperty("message.pay.error"));
             return new PagePathManager().getProperty("path.command.user.subscription");
         }

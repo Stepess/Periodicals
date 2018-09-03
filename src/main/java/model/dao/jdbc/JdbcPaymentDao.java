@@ -49,6 +49,16 @@ public class JdbcPaymentDao implements PaymentDao {
 
     @Override
     public boolean setInDb(Payment entity) {
+        /*int result=0;
+        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))) {
+            statement.setFloat(1, entity.getBill().floatValue());
+            statement.setInt(2, entity.subscriptionId);
+            statement.setInt(3, );
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result>0;*/
         return false;
     }
 

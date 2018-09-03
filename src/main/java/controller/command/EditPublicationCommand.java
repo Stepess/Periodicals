@@ -52,7 +52,6 @@ public class EditPublicationCommand implements Command {
             String elementName = attributeNames.nextElement();
             if (elementName.contains("wrong")) {
                 request.setAttribute("publication" , publicationDTO);
-                System.out.println(elementName);
                 return new PagePathManager().getProperty("path.page.edit.publication");
             }
         }

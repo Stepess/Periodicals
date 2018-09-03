@@ -32,7 +32,6 @@ public class setParamInQueryStringTag extends SimpleTagSupport {
                 query = query.replaceAll("&recordsPerPage=.*", "");
                 query = query + "&";
             }
-            System.out.println(query);
             getJspContext().getOut().write(query);
         } catch (Exception e) {
             e.printStackTrace();

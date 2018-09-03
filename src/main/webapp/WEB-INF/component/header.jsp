@@ -94,8 +94,11 @@
                         </div>
                     </c:otherwise>
                 </c:choose>
+                <P>
+                        ${requestScope.javax.servlet.forward.request_uri}
+                </P>
                 <div class="col-lg-1 ml-auto">
-                    <form onsubmit="location.reload(true)">
+                    <form <%--onsubmit="location.reload(true)--%> action="${requestScope.javax.servlet.forward.request_uri}">
                         <select id="language" name="language" onchange="submit()">
                             <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
                             <option value="uk_UA" ${language == 'uk_UA' ? 'selected' : ''}>Ukrainian</option>

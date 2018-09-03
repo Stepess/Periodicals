@@ -233,7 +233,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     }
 
     @Override
-    public void pay(User user, Subscription subscription) throws SQLException {
+    public void pay(User user, Subscription subscription) {
         try (
                 PreparedStatement getUserMoneyStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.money"));
                 PreparedStatement getBillStatement = connection.prepareStatement(manager.getProperty("db.payment.query.get.bill"));
@@ -284,10 +284,10 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                 connection.rollback();
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw e;
+                throw new RuntimeException(e);
             }
             ex.printStackTrace();
-            throw ex;
+            throw new RuntimeException(ex);
         }
     }
 
@@ -316,7 +316,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             e.printStackTrace();
 
         }
-        System.out.println(subscription);
 
         return subscription==null;
     }

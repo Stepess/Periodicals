@@ -23,6 +23,8 @@ public class SubscriptionDtoBuilder {
     private Subscription.StateEnum state;
     private int ownerId;
     private PublicationDto publicationDto;
+    private int paymentId;
+    private int publicationId;
 
     public SubscriptionDtoBuilder(){}
 
@@ -85,6 +87,16 @@ public class SubscriptionDtoBuilder {
         return this;
     }
 
+    public SubscriptionDtoBuilder buildPaymentId(int paymentId) {
+        this.paymentId = paymentId;
+        return this;
+    }
+
+    public SubscriptionDtoBuilder buildPublicationId(int publicationId) {
+        this.publicationId = publicationId;
+        return this;
+    }
+
     public SubscriptionDto build(){
         return new SubscriptionDto(this);
     }
@@ -135,5 +147,33 @@ public class SubscriptionDtoBuilder {
 
     public String getGenreUa() {
         return genreUa;
+    }
+
+    public int getPaymentId() {
+        return paymentId;
+    }
+
+    public int getPublicationId() {
+        return publicationId;
+    }
+
+    @Override
+    public String toString() {
+        return "SubscriptionDtoBuilder{" +
+                "id=" + id +
+                ", titleEn='" + titleEn + '\'' +
+                ", titleUa='" + titleUa + '\'' +
+                ", genreEn='" + genreEn + '\'' +
+                ", genreUa='" + genreUa + '\'' +
+                ", total=" + total +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", paymentDateTime=" + paymentDateTime +
+                ", state=" + state +
+                ", ownerId=" + ownerId +
+                ", publicationDto=" + publicationDto +
+                ", paymentId=" + paymentId +
+                ", publicationId=" + publicationId +
+                '}';
     }
 }

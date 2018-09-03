@@ -26,6 +26,9 @@ public class SubscriptionDto {
     private LocalDateTime paymentDateTime;
     private Subscription.StateEnum state;
     private int ownerId;
+    private int paymentId;
+    private int publicationId;
+
    // private PublicationDto publicationDto;
 
     public SubscriptionDto(SubscriptionDtoBuilder builder) {
@@ -40,19 +43,21 @@ public class SubscriptionDto {
         this.state = builder.getState();
         this.paymentDateTime = builder.getPaymentDateTime();
         this.ownerId = builder.getOwnerId();
+        this.paymentId = builder.getPaymentId();
+        this.publicationId = builder.getPublicationId();
        // this.publicationDto = builder.getPublicationDto();
     }
 
     public Subscription convertToInternationalizedEntity(Locale locale) {
         return new SubscriptionBuilder(id)
                 .buildPublication(
-                        new PublicationBuilder()
+                        new PublicationBuilder(publicationId)
                         .buildTitle(locale.getLanguage().equals(ukrainian) ? titleUa : titleEn)
                                 .buildGenre(locale.getLanguage().equals(ukrainian) ? genreUa : genreEn)
                         .build())
                 .buildTotal(total)
                 .buildPayment(
-                        new PaymentBuilder()
+                        new PaymentBuilder(paymentId)
                         .buildBill(total)
                         .buildPaymentDateTime(paymentDateTime)
                         .build())
@@ -61,5 +66,25 @@ public class SubscriptionDto {
                 .buildState(state)
                 .buildOwnerId(ownerId)
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return "SubscriptionDto{" +
+                "ukrainian='" + ukrainian + '\'' +
+                ", id=" + id +
+                ", titleEn='" + titleEn + '\'' +
+                ", titleUa='" + titleUa + '\'' +
+                ", genreEn='" + genreEn + '\'' +
+                ", genreUa='" + genreUa + '\'' +
+                ", total=" + total +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", paymentDateTime=" + paymentDateTime +
+                ", state=" + state +
+                ", ownerId=" + ownerId +
+                ", paymentId=" + paymentId +
+                ", publicationId=" + publicationId +
+                '}';
     }
 }

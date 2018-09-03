@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface SubscriptionDao extends GenericDao<Subscription> {
     List<SubscriptionDto> getByUserLogin(String login, String state);
-    void pay(User user, Subscription subscription) throws SQLException;
+    void pay(User user, Subscription subscription);
     boolean isUserSubscriptionUnique(String login, int publicationId);
 }

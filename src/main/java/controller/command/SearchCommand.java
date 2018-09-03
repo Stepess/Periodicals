@@ -50,11 +50,30 @@ public class SearchCommand implements Command {
             request.setAttribute("paginationParameters", paginationParameters);
         } catch (NothingFoundException e) {
             request.setAttribute("fail", new MessageManager((Locale) request.getSession().getAttribute("locale")).getProperty("message.nothing.found"));
-            return new PagePathManager().getProperty("path.page." + role + ".search");
+            return new PagePathManager().getProperty("path.page.user.search");
         }
 
 
-        if ("admin".equals(role)) {
+
+            Locale locale = (Locale) request.getSession().getAttribute("locale");
+            request.setAttribute("publications",
+                    publicationService.getPaginatedSearchList(searchParameters,
+                            paginationParameters.get("start"),
+                            paginationParameters.get("recordsPerPage"))
+                            .stream()
+                            .map(dto -> dto.convertToInternationalizedEntity(locale))
+                            .collect(Collectors.toList()));
+            //return new PagePathManager().getProperty("path.page.user.search");
+
+
+        return new PagePathManager().getProperty("path.page.user.search");
+    }
+}
+
+
+
+/*
+* if ("admin".equals(role)) {
             request.setAttribute("publications", publicationService.getPaginatedSearchList(searchParameters,
                     paginationParameters.get("start"),
                     paginationParameters.get("recordsPerPage")));
@@ -69,15 +88,7 @@ public class SearchCommand implements Command {
                             .map(dto -> dto.convertToInternationalizedEntity(locale))
                             .collect(Collectors.toList()));
             //return new PagePathManager().getProperty("path.page.user.search");
-        }
-
-        return new PagePathManager().getProperty("path.page."+role+".search");
-    }
-}
-
-
-
-
+        }*/
 
 
 /*System.out.println(request.getParameter("title"));
