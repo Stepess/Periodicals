@@ -140,5 +140,6 @@
 
 
 </fmt:bundle>
+<jsp:include page="/WEB-INF/component/footer.jsp"/>
 </body>
 </html>
