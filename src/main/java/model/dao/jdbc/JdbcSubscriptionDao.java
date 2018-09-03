@@ -293,8 +293,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
     @Override
     public boolean isUserSubscriptionUnique(String login, int publicationId) {
-
-
         SubscriptionMapper mapper = new SubscriptionMapper();
         Subscription subscription= null;
         try (PreparedStatement statement =

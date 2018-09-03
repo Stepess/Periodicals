@@ -53,5 +53,11 @@ public class SubscriptionService {
         }
     }
 
+    public boolean deleteUserSubscription(int id) {
+        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+            return dao.delete(id);
+        }
+    }
+
 
 }
