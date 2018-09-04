@@ -23,7 +23,7 @@
         <jsp:include page="/WEB-INF/component/guestMenu.jsp"/>
     </c:otherwise>
 </c:choose>
-<fmt:bundle basename="pagecontent" prefix="field.">
+<fmt:bundle basename="pagecontent" prefix="label.">
     <div class="container vertical-tb-offset-10">
         <form method="get" action="${pageContext.request.contextPath}/${sessionScope.role}/search">
             <div class="form-row">

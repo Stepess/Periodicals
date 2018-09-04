@@ -25,7 +25,7 @@
     </c:otherwise>
 </c:choose>
 
-<fmt:bundle basename="pagecontent" prefix="field.">
+<fmt:bundle basename="pagecontent" prefix="label.">
     <div class="container vertical-tb-offset-10 min_height">
         <div class="row">
             <form method="get" action="${pageContext.request.contextPath}/user/subscriptions">
