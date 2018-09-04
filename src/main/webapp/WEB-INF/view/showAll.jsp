@@ -35,11 +35,11 @@
                 </div>
                 <div class="col">
                     <input name="leftPriceBoundary" type="number" class="form-control"
-                           placeholder="<fmt:message key="price"/>">
+                           placeholder="<fmt:message key="left.price.boundary"/>">
                 </div>
                 <div class="col">
                     <input name="rightPriceBoundary" type="number" class="form-control"
-                           placeholder="<fmt:message key="price"/>">
+                           placeholder="<fmt:message key="right.price.boundary"/>">
                 </div>
                 <div class="col">
                     <input class="btn btn-success" type="submit" value="<fmt:message key="search"/>"/>

@@ -4,7 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>Catalog</title>
+    <title>
+        <fmt:bundle basename="pagecontent" prefix="title.">
+            <fmt:message key="search"/>
+        </fmt:bundle>
+    </title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
@@ -32,11 +36,11 @@
                 </div>
                 <div class="col">
                     <input name="leftPriceBoundary" type="number" class="form-control"
-                           placeholder="<fmt:message key="price"/>">
+                           placeholder="<fmt:message key="left.price.boundary"/>">
                 </div>
                 <div class="col">
                     <input name="rightPriceBoundary" type="number" class="form-control"
-                           placeholder="<fmt:message key="price"/>">
+                           placeholder="<fmt:message key="right.price.boundary"/>">
                 </div>
                 <div class="col">
                     <input class="btn btn-success" type="submit" value="<fmt:message key="search"/>"/>

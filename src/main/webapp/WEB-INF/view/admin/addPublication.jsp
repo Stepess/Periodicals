@@ -6,7 +6,9 @@
 <html>
 <fmt:bundle basename="pagecontent" prefix="label.">
 <head>
-    <title><fmt:message key="add.publication"/> </title>
+    <title>
+        <fmt:message key="add.publication"/>
+    </title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>

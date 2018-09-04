@@ -3,7 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>
+        <fmt:bundle basename="pagecontent" prefix="title.">
+            <fmt:message key="login"/>
+        </fmt:bundle>
+    </title>
 </head>
 <body>
 

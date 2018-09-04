@@ -5,7 +5,11 @@
 <html>
 <fmt:bundle basename="pagecontent" prefix="label.">
 <head>
-    <title><fmt:message key="add.publication"/> </title>
+    <title>
+        <fmt:bundle basename="pagecontent" prefix="title.">
+            <fmt:message key="edit"/>
+        </fmt:bundle>
+    </title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
@@ -82,7 +86,7 @@
                             <input type="hidden" name="pubId" value="${param.pubId}">
                             <input type="hidden" name="command" value="${param.command}">
                             <input type="hidden" name="query" value="${param.query}">
-                            <input type="submit" value="<fmt:message key="add.publication"/>"/>
+                            <input type="submit" value="<fmt:message key="edit"/>"/>
                         </fieldset>
                     </form>
                 </div>
