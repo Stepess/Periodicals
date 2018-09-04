@@ -32,8 +32,8 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         int result=0;
         try {
             connection.setAutoCommit(false);
-            try (PreparedStatement setSubscriptionStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.set"));
-                 PreparedStatement getLastIdStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.last.id"));
+            try (PreparedStatement setSubscriptionStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.set"), Statement.RETURN_GENERATED_KEYS);
+                 //PreparedStatement getLastIdStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.last.id"));
                  PreparedStatement setPaymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
             ) {
                 try{
@@ -46,10 +46,19 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                     result += setSubscriptionStatement.executeUpdate();
 
                     int subscriptionId;
-                    ResultSet resultSet = getLastIdStatement.executeQuery();
+                    //ResultSet resultSet = getLastIdStatement.executeQuery();
 
-                    if (resultSet.next()) {
+
+
+                    /*if (resultSet.next()) {
                         subscriptionId = resultSet.getInt("subscription_id");
+                    } else {
+                        throw new SQLException();
+                    }*/
+
+                    ResultSet resultSet = setSubscriptionStatement.getGeneratedKeys();
+                    if (resultSet.next()) {
+                        subscriptionId = resultSet.getInt(1);
                     } else {
                         throw new SQLException();
                     }

@@ -26,7 +26,7 @@ public class AddPublicationCommand implements Command {
         PublicationService publicationService = new PublicationService();
 
         if (validationUtil.isEmptyRequest(request)) {
-            new PagePathManager().getProperty("path.page.add.publication");
+            return new PagePathManager().getProperty("path.page.add.publication");
         }
 
         try {

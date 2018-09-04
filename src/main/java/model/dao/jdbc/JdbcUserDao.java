@@ -45,7 +45,7 @@ public class JdbcUserDao implements UserDao {
             //statement.setString(8,entity.getNationalField("lastName"));//TODO guess how put right name
             statement.setString(7,entity.getAddress());
             //statement.setString(10,entity.getNationalField("address"));//TODO guess how put right name
-            statement.setFloat(8,entity.getAccount().floatValue());//TODO guess how handle money
+            statement.setFloat(8,0.0f);//TODO guess how handle money
             result = statement.executeUpdate();
 
         } catch (SQLException e) {

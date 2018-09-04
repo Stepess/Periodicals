@@ -10,7 +10,6 @@ public class CommandFactory {
         String commandName = request.getRequestURI();
         //commandName = commandName.replaceAll(".*/app/", "");
         commandName = commandName.replaceAll(".*/user/|.*/admin/|.*/guest/", "");
-        System.out.println(commandName);
 
         if (commandName == null || commandName.isEmpty()) {
             return command;

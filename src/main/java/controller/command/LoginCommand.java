@@ -9,8 +9,11 @@ import model.service.resource.manager.ResourceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
+import org.apache.log4j.*;
 
 public class LoginCommand implements Command {
+    final static Logger log = Logger.getLogger(LoginCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) {//TODO change logic separetly check login and password
         ResourceManager manager = new PagePathManager();
@@ -33,6 +36,7 @@ public class LoginCommand implements Command {
             request.setAttribute("wrongLogin",
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))
                             .getProperty("message.auth.wrong.login"));
+            log.error("Attempt to sign in in unregistered account");
             return  manager.getProperty("path.page.login");
         }
 

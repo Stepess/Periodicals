@@ -88,6 +88,11 @@ public enum CommandEnum {
         {
             this.command = new DeleteSubscriptionCommand();
         }
+    },
+    CHANGELANGUAGE {
+        {
+            this.command = new ChangeLanguageCommand();
+        }
     };
 
     Command command;

@@ -98,8 +98,12 @@
                         ${requestScope.javax.servlet.forward.request_uri}
                 </P>
                 <div class="col-lg-1 ml-auto">
-                    <form <%--onsubmit="location.reload(true)--%> action="${requestScope.javax.servlet.forward.request_uri}">
+                    <form <%--onsubmit="location.reload(true)--%> method="post" >
+                        <input type="hidden" name="command" value="${pageContext.request.requestURI}"/>
+                        <input type="hidden" name="command1" value="${pageContext.request.requestURL}"/>
+                        <input type="hidden" name="query" value="${pageContext.request.queryString}"/>
                         <select id="language" name="language" onchange="submit()">
+
                             <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
                             <option value="uk_UA" ${language == 'uk_UA' ? 'selected' : ''}>Ukrainian</option>
                         </select>

@@ -10,6 +10,6 @@ public class DeleteSubscriptionCommand implements Command {
     public String execute(HttpServletRequest request) {
         int id = Integer.valueOf(request.getParameter("subId"));
         new SubscriptionService().deleteUserSubscription(id);
-        return new PagePathManager().getProperty("path.command.user.subscription");
+        return new PagePathManager().getProperty("path.command.user.subscription")+"?state=UNPAID";
     }
 }

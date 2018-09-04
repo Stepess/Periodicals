@@ -29,7 +29,6 @@ public class Servlet extends HttpServlet {
         CommandFactory commandFactory = new CommandFactory();
         Command command = commandFactory.getCommandFromRequest(request);
         String page = command.execute(request);
-        System.out.println(page);
         if (page.contains("redirect:")) {
             response.sendRedirect(request.getContextPath() + page.replace("redirect:", ""));
         } else {

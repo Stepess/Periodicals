@@ -49,6 +49,6 @@ public class SubscriptCommand implements Command{
         }
 
         new SubscriptionService().addSubscription(subscription);
-        return new PagePathManager().getProperty("path.command.user.subscription");
+        return new PagePathManager().getProperty("path.command.user.subscription")+"?state=UNPAID";
     }
 }

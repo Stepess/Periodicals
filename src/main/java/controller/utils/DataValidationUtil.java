@@ -23,6 +23,10 @@ public class DataValidationUtil {
     }
 
     public boolean isEmptyRequest(HttpServletRequest request) {
+        if (request.getParameterMap().keySet().contains("language")) {
+            return true;
+        }
+
         return !request.getParameterNames().hasMoreElements();
     }
 }

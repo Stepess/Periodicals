@@ -13,11 +13,11 @@
 
   <error-page>
     <error-code>404</error-code>
-    <location>/WEB-INF/error.jsp</location>
+    <location>/WEB-INF/view/error.jsp</location>
   </error-page>
   <error-page>
     <exception-type>controller.exception.AccessDeniedException</exception-type>
-    <location>/WEB-INF/accessError.jsp</location>
+    <location>/WEB-INF/view/accessError.jsp</location>
   </error-page>
   <!--<error-page>
     <exception-type>java.lang.RuntimeException</exception-type>
