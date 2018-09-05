@@ -102,7 +102,7 @@
                         <input type="hidden" name="command" value="${pageContext.request.requestURI}"/>
                         <input type="hidden" name="command1" value="${pageContext.request.requestURL}"/>
                         <input type="hidden" name="query" value="${pageContext.request.queryString}"/>
-                        <select id="language" name="language" onchange="submit()">
+                        <select class="form-control" id="language" name="language" onchange="submit()">
 
                             <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
                             <option value="uk_UA" ${language == 'uk_UA' ? 'selected' : ''}>Ukrainian</option>

@@ -15,6 +15,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 
 public class EditPublicationCommand implements Command {
+    //TODO npe when change lang on the form
     @Override
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale)request.getSession().getAttribute("locale");

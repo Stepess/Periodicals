@@ -21,7 +21,7 @@
         <div class="col-md-4 col-md-offset-4 well">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Please sign in</h3>
+                    <h3 class="panel-title"><fmt:message key="edit.publication"/></h3>
                 </div>
                 <div class="panel-body">
                     <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/admin/editPublication">
@@ -86,7 +86,7 @@
                             <input type="hidden" name="pubId" value="${param.pubId}">
                             <input type="hidden" name="command" value="${param.command}">
                             <input type="hidden" name="query" value="${param.query}">
-                            <input type="submit" value="<fmt:message key="edit"/>"/>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="<fmt:message key="edit"/>"/>
                         </fieldset>
                     </form>
                 </div>

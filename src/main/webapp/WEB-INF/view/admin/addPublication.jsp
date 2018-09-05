@@ -19,7 +19,7 @@
         <div class="col-md-4 col-md-offset-4 well">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Please sign in</h3>
+                    <h3 class="panel-title"><fmt:message key="add.publication"/> </h3>
                 </div>
                 <div class="panel-body">
                     <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/admin/addPublication">
@@ -80,7 +80,7 @@
                                         ${wrongdescription_ua}
                                 </p>
                             </div>
-                            <input type="submit" value="<fmt:message key="add.publication"/>"/>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="<fmt:message key="add.publication"/>"/>
                         </fieldset>
                     </form>
                 </div>

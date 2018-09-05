@@ -30,7 +30,7 @@
         <div class="col-md-4 col-md-offset-4 well">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Please sign in</h3>
+                    <h3 class="panel-title"><fmt:message key="registration"/> </h3>
                 </div>
                 <div class="panel-body">
                     <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/${sessionScope.role}/registration">
@@ -105,7 +105,7 @@
                                         ${wrongbuilding}
                                 </p>
                             </div>
-                            <input type="submit" value="<fmt:message key="sign.up"/>"/>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="<fmt:message key="sign.up"/>"/>
                         </fieldset>
                     </form>
                 </div>
