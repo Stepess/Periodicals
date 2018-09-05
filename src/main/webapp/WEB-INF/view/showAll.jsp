@@ -169,6 +169,7 @@
 
 
                                     <input type="hidden" name="pubId" value="${publication.id}">
+                                    <input type="hidden" name="title" value="${publication.title}">
                                     <input type="hidden" name="command" value="/admin/catalog">
                                     <input type="hidden" name="query"
                                            value="${pageContext.request.queryString}">

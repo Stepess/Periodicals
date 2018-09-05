@@ -2,6 +2,7 @@ package controller.command;
 
 import controller.exception.NotEnoughMoney;
 import model.entity.DTO.SubscriptionDto;
+import model.entity.Payment;
 import model.entity.Subscription;
 import model.entity.User;
 import model.service.SubscriptionService;
@@ -12,6 +13,8 @@ import model.service.UserService;
 import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.ResourceManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,6 +22,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class PayCommand implements Command {
+    private final static Logger log = LogManager.getLogger(Payment.class);
+
     @Override
     public String execute(HttpServletRequest request) {
         int subId = Integer.parseInt(request.getParameter("subId"));
@@ -40,6 +45,7 @@ public class PayCommand implements Command {
             return new PagePathManager().getProperty("path.command.user.subscription");
         }
         catch (RuntimeException e) {
+            log.error("Attempt to pay has failed, payment id " + subscription.getPayment().getId() + "user "+ request.getSession().getAttribute("login"));
             request.setAttribute("fail", manager.getProperty("message.pay.error"));
             return new PagePathManager().getProperty("path.command.user.subscription");
         }

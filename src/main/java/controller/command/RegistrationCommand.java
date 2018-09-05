@@ -10,6 +10,8 @@ import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.RegexpManager;
 import model.service.resource.manager.ResourceManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 
 public class RegistrationCommand implements Command {
+    private final static Logger log = LogManager.getLogger(User.class);
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -79,6 +82,7 @@ public class RegistrationCommand implements Command {
                 .build();
 
         if (! new UserService().registerUser(user)){
+            log.error("Attempt to sign up user has been failed");
             throw new RuntimeException(new MessageManager(locale).getProperty("message.registration.fail"));
         }
 
@@ -86,10 +90,11 @@ public class RegistrationCommand implements Command {
             ((HttpSession) request.getSession().getServletContext().getAttribute(request.getParameter("login"))).invalidate();
         }
 
+
+        log.info("User " + request.getParameter("login") + " has signed up");
         request.getSession().setAttribute("login", user.getLogin());
         request.getSession().setAttribute("role", User.RoleEnum.USER.getValue());
         request.getSession().getServletContext().setAttribute(user.getLogin(), request.getSession());
-
         return  "redirect:/user" + new PagePathManager().getProperty("path.page.main");
     }
 

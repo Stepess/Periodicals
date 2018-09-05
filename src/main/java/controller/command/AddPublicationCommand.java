@@ -2,6 +2,8 @@ package controller.command;
 
 import controller.utils.DataValidationUtil;
 import model.entity.DTO.PublicationDto;
+import model.entity.Publication;
+import model.entity.User;
 import model.exception.NotUniqueTitleEnException;
 import model.exception.NotUniqueTitleUaException;
 import model.service.PublicationService;
@@ -10,6 +12,8 @@ import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.RegexpManager;
 import model.service.resource.manager.ResourceManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -18,6 +22,8 @@ import java.util.Locale;
 
 
 public class AddPublicationCommand implements Command {
+    private final static Logger log = LogManager.getLogger(Publication.class);
+
     @Override
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
@@ -69,9 +75,11 @@ public class AddPublicationCommand implements Command {
                 .build();
 
         if (! publicationService.addPublication(publicationDto)){
+            log.error("Attempt to set publication to database has failed");
             throw new RuntimeException(new MessageManager(locale).getProperty("message.changes.not.accepted"));
         }
 
+        log.info("Publication " + request.getParameter("title_en") + " has been added");
         request.setAttribute("status", new MessageManager(locale).getProperty("message.publication.added"));
         return new PagePathManager().getProperty("path.command.admin.catalog");
     }

@@ -5,14 +5,16 @@ import model.service.UserService;
 import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.ResourceManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
-import org.apache.log4j.*;
+
 
 public class LoginCommand implements Command {
-    final static Logger log = Logger.getLogger(LoginCommand.class);
+    private final static Logger log = LogManager.getLogger(User.class);
 
     @Override
     public String execute(HttpServletRequest request) {//TODO change logic separetly check login and password
@@ -28,6 +30,7 @@ public class LoginCommand implements Command {
         UserService loginService = new UserService();
 
         if (!request.getSession().getAttribute("role").equals(User.RoleEnum.GUEST.getValue())) {
+            log.warn("User that already logged tried to sign in");
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.command.user.catalog");
         }
@@ -36,7 +39,6 @@ public class LoginCommand implements Command {
             request.setAttribute("wrongLogin",
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))
                             .getProperty("message.auth.wrong.login"));
-            log.error("Attempt to sign in in unregistered account");
             return  manager.getProperty("path.page.login");
         }
 
@@ -47,9 +49,9 @@ public class LoginCommand implements Command {
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
             request.getSession().getServletContext().setAttribute(login, request.getSession());
+            log.info("User " + login + " has been logged");
             return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
                     + "/catalog";
-            //return manager.getProperty("path.command.user.catalog");
         } else {
             request.setAttribute("wrongPassword",
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))
