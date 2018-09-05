@@ -53,6 +53,12 @@ h2 {
     color: #ffffff;
 }
 
+.head__a {
+    font-size:22px;
+    font-weight:700;
+    color: #ffffff;
+}
+
 .menu {
     margin-top:8px;
 }
@@ -335,4 +341,43 @@ h2 {
     width: 100%;
     line-height: 1.2em;
     display: inline-block;
+}
+
+.header__container{
+    /* display: flex;*/
+    align-items: center;
+    min-height: 15vh;
+}
+.header__form {
+    /* display: flex;
+     flex-direction: row;*/
+    align-items: center;
+    /*justify-content: start;*/
+}
+
+.header__form2 {
+    /*display: flex;
+    flex-direction: row;*/
+    align-items: center;
+    margin-left: 60px;
+    /*justify-content: center;*/
+}
+.header__form3  {/*
+    display: flex;
+    flex-direction: row;*/
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 15px;
+    /*padding-left: 250px;*/
+}
+
+.menu-href {
+    display: flex;
+    justify-content: space-between;
+    /*align-items: center;*/
+}
+
+
+.page-wrap {
+    min-height: 100vh;
 }

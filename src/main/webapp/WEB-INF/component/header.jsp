@@ -47,14 +47,13 @@
 
     <header id="header" class="head">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
+            <div class="header__container align-items-center menu-href ">
+                <div class="header__form">
                     <h1 class="head__title">
                         Periodicals
                     </h1>
                 </div>
-                <div class="col-lg-2">
-                </div>
+
 
                 <c:choose>
                     <c:when test="${sessionScope.role == 'guest'}">
@@ -76,29 +75,30 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <div class="col-lg-3 ml-auto">
-                            <nav>
-                                <ul class="menu d-flex flex-row">
-                                    <li class="menu__item">
-                                        <p>
-                                            ${sessionScope.role}    ${sessionScope.login}
-                                        </p>
-                                    </li>
-                                    <li class="menu__item">
-                                        <a href="${pageContext.request.contextPath}/${sessionScope.role}/logout">
-                                            <fmt:message key="logout"/>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                <div class="header__form2" style="padding-left: 100px;">
+                    <div>
+                            <a class="head__a">
+                                    ${sessionScope.role}    ${sessionScope.login}
+                            </a>
+
+
+
+
+
+                        <a class="head__a" style="padding-left: 10px;" href="${pageContext.request.contextPath}/${sessionScope.role}/logout">
+                            <fmt:message key="logout"/>
+                        </a>
+                    </div>
+
+
+
+
                         </div>
                     </c:otherwise>
                 </c:choose>
-                <P>
-                        ${requestScope.javax.servlet.forward.request_uri}
-                </P>
-                <div class="col-lg-1 ml-auto">
-                    <form <%--onsubmit="location.reload(true)--%> method="post" >
+
+                <div class="  header__form3 ">
+                    <form <%--onsubmit="location.reload(true)--%> method="post" <%--action="${pageContext.request.contextPath}/${sessionScope.role}/changeLanguage"--%> >
                         <input type="hidden" name="command" value="${pageContext.request.requestURI}"/>
                         <input type="hidden" name="command1" value="${pageContext.request.requestURL}"/>
                         <input type="hidden" name="query" value="${pageContext.request.queryString}"/>
@@ -154,4 +154,71 @@
 </html>
 
 
+<%--<header id="header" class="head">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h1 class="head__title">
+                        Periodicals
+                    </h1>
+                </div>
+                <div class="col-lg-2">
+                </div>
+
+                <c:choose>
+                    <c:when test="${sessionScope.role == 'guest'}">
+                        <div class="col-lg-3 ml-auto">
+                            <nav>
+                                <ul class="menu d-flex flex-row">
+                                    <li class="menu__item">
+                                        <a href="${pageContext.request.contextPath}/guest/login">
+                                            <fmt:message key="sign.in"/>
+                                        </a>
+                                    </li>
+                                    <li class="menu__item">
+                                        <a href="${pageContext.request.contextPath}/guest/registration">
+                                            <fmt:message key="sign.up"/>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="col-lg-3 ml-auto">
+                            <nav>
+                                <ul class="menu d-flex flex-row">
+                                    <li class="menu__item">
+                                        <p>
+                                            ${sessionScope.role}    ${sessionScope.login}
+                                        </p>
+                                    </li>
+                                    <li class="menu__item">
+                                        <a href="${pageContext.request.contextPath}/${sessionScope.role}/logout">
+                                            <fmt:message key="logout"/>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+                <P>
+                        ${requestScope.javax.servlet.forward.request_uri}
+                </P>
+                <div class="col-lg-1 ml-auto">
+                    <form <%--onsubmit="location.reload(true)--%> <%--method="post"--%> <%--action="${pageContext.request.contextPath}/${sessionScope.role}/changeLanguage"--%><%-- >--%>
+<%--<input type="hidden" name="command" value="${pageContext.request.requestURI}"/>
+<input type="hidden" name="command1" value="${pageContext.request.requestURL}"/>
+<input type="hidden" name="query" value="${pageContext.request.queryString}"/>
+<select id="language" name="language" onchange="submit()">
+
+    <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>English</option>
+    <option value="uk_UA" ${language == 'uk_UA' ? 'selected' : ''}>Ukrainian</option>
+</select>
+</form>
+</div>
+</div>
+</div>
+</header>--%>
 

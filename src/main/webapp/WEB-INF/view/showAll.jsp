@@ -24,7 +24,8 @@
     </c:otherwise>
 </c:choose>
 <fmt:bundle basename="pagecontent" prefix="label.">
-    <div class="container vertical-tb-offset-10">
+    <div class="container vertical-tb-offset-10 min_height">
+        <div class="row">
         <form method="get" action="${pageContext.request.contextPath}/${sessionScope.role}/search">
             <div class="form-row">
                 <div class="col">
@@ -46,6 +47,7 @@
                 </div>
             </div>
         </form>
+        </div>
         <div class="row">
             <form action="${pageContext.request.contextPath}/${sessionScope.role}/catalog" onchange="submit()">
                 <input type="hidden" name="currentPage" value="1">
@@ -84,9 +86,9 @@
                 <p class="text-center text-danger">${fail}</p>
             </div>
         </div>
-    </div>
 
-    <div class="container">
+
+    <div class="row">
         <table class="table">
             <tr>
                 <th>
@@ -227,6 +229,7 @@
                 </ul>
             </nav>
         </div>
+    </div>
     </div>
 </fmt:bundle>
 <jsp:include page="/WEB-INF/component/footer.jsp"/>

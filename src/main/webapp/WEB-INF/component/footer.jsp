@@ -3,12 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <footer class="foot">
     <div class="container-fluid">
-    <div class="container">
-        <div class="rightsSignBlock">
-            <span class="rightsSign">©2018 Periodicals<br></span>
-            <span class="rightsSign">Designed by Stepan Yershov<br></span>
+        <div class="container">
+            <div class="rightsSignBlock">
+                <span class="rightsSign">©2018 Periodicals<br></span>
+                <fmt:bundle basename="pagecontent" prefix="label.">
+                    <span class="rightsSign"><fmt:message key="designed"/><br></span>
+                </fmt:bundle>
+            </div>
         </div>
-    </div>
     </div>
 </footer>
 

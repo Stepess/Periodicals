@@ -47,9 +47,9 @@ public class LoginCommand implements Command {
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
             request.getSession().getServletContext().setAttribute(login, request.getSession());
-            /*return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
-                    + manager.getProperty("path.command.user.catalog");*/
-            return manager.getProperty("path.command.user.catalog");
+            return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
+                    + "/catalog";
+            //return manager.getProperty("path.command.user.catalog");
         } else {
             request.setAttribute("wrongPassword",
                     new MessageManager((Locale)request.getSession().getAttribute("locale"))
