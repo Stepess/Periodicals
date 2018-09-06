@@ -10,6 +10,8 @@ import model.entity.Subscription;
 import model.entity.User;
 import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcSubscriptionDao implements SubscriptionDao {
+    private final static Logger log = LogManager.getLogger(JdbcSubscriptionDao.class);
     private Connection connection;
     private ResourceManager manager;
 
@@ -29,55 +32,45 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
     @Override
     public boolean setInDb(Subscription entity) {
-        int result=0;
-        try {
+        int result = 0;
+        try (PreparedStatement setSubscriptionStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.set"), Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement setPaymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
+        ) {
             connection.setAutoCommit(false);
-            try (PreparedStatement setSubscriptionStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.set"), Statement.RETURN_GENERATED_KEYS);
-                 //PreparedStatement getLastIdStatement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.last.id"));
-                 PreparedStatement setPaymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
-            ) {
-                try{
-                    setSubscriptionStatement.setString(1, entity.getState().toString().toLowerCase());
-                    //setSubscriptionStatement.setFloat(2, entity.getPayment().getBill().floatValue());
-                    setSubscriptionStatement.setDate(2, Date.valueOf(entity.getStartDate()));
-                    setSubscriptionStatement.setDate(3, Date.valueOf(entity.getEndDate()));
-                    setSubscriptionStatement.setInt(4, entity.getOwnerId());
-                    setSubscriptionStatement.setInt(5, entity.getPublication().getId());
-                    result += setSubscriptionStatement.executeUpdate();
+            setSubscriptionStatement.setString(1, entity.getState().toString().toLowerCase());
+            setSubscriptionStatement.setDate(2, Date.valueOf(entity.getStartDate()));
+            setSubscriptionStatement.setDate(3, Date.valueOf(entity.getEndDate()));
+            setSubscriptionStatement.setInt(4, entity.getOwnerId());
+            setSubscriptionStatement.setInt(5, entity.getPublication().getId());
+            result += setSubscriptionStatement.executeUpdate();
 
-                    int subscriptionId;
-                    //ResultSet resultSet = getLastIdStatement.executeQuery();
+            int subscriptionId;
 
-
-
-                    /*if (resultSet.next()) {
-                        subscriptionId = resultSet.getInt("subscription_id");
-                    } else {
-                        throw new SQLException();
-                    }*/
-
-                    ResultSet resultSet = setSubscriptionStatement.getGeneratedKeys();
-                    if (resultSet.next()) {
-                        subscriptionId = resultSet.getInt(1);
-                    } else {
-                        throw new SQLException();
-                    }
-
-                    setPaymentStatement.setFloat(1, entity.getPayment().getBill().floatValue());
-                    setPaymentStatement.setInt(2, subscriptionId);
-                    setPaymentStatement.setInt(3, entity.getOwnerId());
-                    result += setPaymentStatement.executeUpdate();
-
-                    connection.commit();
-                } catch (SQLException e) {
-                    connection.rollback();
-                    e.printStackTrace();
+            try (ResultSet resultSet = setSubscriptionStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    subscriptionId = resultSet.getInt(1);
+                } else {
+                    throw new SQLException();
                 }
             }
+
+            setPaymentStatement.setFloat(1, entity.getPayment().getBill().floatValue());
+            setPaymentStatement.setInt(2, subscriptionId);
+            setPaymentStatement.setInt(3, entity.getOwnerId());
+            result += setPaymentStatement.executeUpdate();
+
+            connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                log.error(ex);
+                throw new RuntimeException(ex);
+            }
+            log.error(e);
+            throw new RuntimeException(e);
         }
-        return result>1;
+        return result > 1;
     }
 
     @Override
@@ -118,77 +111,62 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-
+            log.error(e);
         }
         return subscriptions;
     }
+
     //TODO never used
     @Override
     public boolean update(Subscription entity) {
-        int result=0;
-        try  {
+        int result = 0;
+
+
+        try (
+                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.update"));
+                PreparedStatement paymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
+        ) {
             connection.setAutoCommit(false);
-            try (
-                    PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.update"));
-                    PreparedStatement paymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
-            ) {
+            statement.setString(1, entity.getState().toString().toLowerCase());
+            statement.setFloat(2, entity.getTotal().floatValue());
+            statement.setDate(3, Date.valueOf(entity.getStartDate()));
+            statement.setDate(4, Date.valueOf(entity.getEndDate()));
+            statement.setInt(5, entity.getOwnerId());
+            statement.setInt(6, entity.getPublication().getId());
+            Payment payment = entity.getPayment();
 
-                try{
-                    statement.setString(1, entity.getState().toString().toLowerCase());
-                    statement.setFloat(2, entity.getTotal().floatValue());
-                    statement.setDate(3, Date.valueOf(entity.getStartDate()));
-                    statement.setDate(4, Date.valueOf(entity.getEndDate()));
-                    statement.setInt(5, entity.getOwnerId());
-                    statement.setInt(6, entity.getPublication().getId());
-                    Payment payment = entity.getPayment();
-                    if (payment != null) {
-                        paymentStatement.setFloat(1, payment.getBill().floatValue());
-                        paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentDateTime()));
-                        paymentStatement.setInt(3, entity.getPublication().getId());
-                        paymentStatement.setInt(4, entity.getOwnerId());
-                        paymentStatement.setInt(5, payment.getId());
-                    }
-                    result = statement.executeUpdate();
+            paymentStatement.setFloat(1, payment.getBill().floatValue());
+            paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentDateTime()));
+            paymentStatement.setInt(3, entity.getPublication().getId());
+            paymentStatement.setInt(4, entity.getOwnerId());
+            paymentStatement.setInt(5, payment.getId());
 
-                    connection.commit();
-                } catch (SQLException e) {
-                    try {
-                        connection.rollback();
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-                    e.printStackTrace();
-                }
-            }
+            result = statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                log.error(ex);
+            }
+            log.error(e);
         }
-        return result>0;
+        return result > 0;
     }
 
     @Override
     public boolean delete(int id) {
-        int result=0;
+        int result = 0;
         try (PreparedStatement statement =
                      connection.prepareStatement(manager.getProperty("db.subscription.query.delete"))) {
-            statement.setInt(1,id);
+            statement.setInt(1, id);
             result = statement.executeUpdate();
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
-        return result>0;
+        return result > 0;
     }
 
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
    /* @Override
     public List<Subscription> getByUserLogin(String login) {
@@ -224,19 +202,13 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                      connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))) {
             statement.setString(1, login);
             statement.setString(2, state);
-            try (
-                    ResultSet resultSet = statement.executeQuery()
-            ) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     subscriptions.add(subscriptionMapper.extractFromResultSet(resultSet));
                 }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-
+            log.error(e);
         }
         return subscriptions;
     }
@@ -292,10 +264,10 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             try {
                 connection.rollback();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e);
                 throw new RuntimeException(e);
             }
-            ex.printStackTrace();
+            log.error(ex);
             throw new RuntimeException(ex);
         }
     }
@@ -303,27 +275,29 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     @Override
     public boolean isUserSubscriptionUnique(String login, int publicationId) {
         SubscriptionMapper mapper = new SubscriptionMapper();
-        Subscription subscription= null;
+        Subscription subscription = null;
         try (PreparedStatement statement =
                      connection.prepareStatement(manager.getProperty("db.subscription.query.check.unique"))) {
             statement.setString(1, login);
             statement.setInt(2, publicationId);
-            try (
-                    ResultSet resultSet = statement.executeQuery()
-
-            ) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     subscription = mapper.extractFromResultSet(resultSet);
                 }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-
+            log.error(e);
         }
+        return subscription == null;
+    }
 
-        return subscription==null;
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            log.error(e);
+            throw new RuntimeException(e);
+        }
     }
 }

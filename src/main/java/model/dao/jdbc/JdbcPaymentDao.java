@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO delete?
 public class JdbcPaymentDao implements PaymentDao {
     private Connection connection;
     private ResourceManager manager;

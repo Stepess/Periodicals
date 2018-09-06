@@ -5,12 +5,15 @@ import model.dao.PublicationDao;
 import model.dao.SubscriptionDao;
 import model.dao.UserDao;
 import model.entity.Publication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcDaoFactory extends DaoFactory {
+    private final static Logger log = LogManager.getLogger(JdbcDaoFactory.class);
 
     private DataSource dataSource = ConnectionPoolHolder.getSource();
     @Override
@@ -32,7 +35,8 @@ public class JdbcDaoFactory extends DaoFactory {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Connection was not returned ", e);
+            throw new RuntimeException();
         }
     }
 }

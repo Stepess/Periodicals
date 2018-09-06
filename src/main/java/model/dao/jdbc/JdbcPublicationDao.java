@@ -10,6 +10,8 @@ import model.exception.NotUniqueTitleUaException;
 import model.exception.NothingFoundException;
 import model.service.resource.manager.DataBaseManager;
 import model.service.resource.manager.ResourceManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import java.util.Map;
 
 
 public class JdbcPublicationDao implements PublicationDao {
+    private final static Logger log = LogManager.getLogger(JdbcSubscriptionDao.class);
+
     private Connection connection;
     private ResourceManager manager;
 
@@ -42,21 +46,10 @@ public class JdbcPublicationDao implements PublicationDao {
             statement.setBlob(9, connection.createBlob());
             result = statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result>0;
     }
-
-   /* private String getEnString(String string) {
-        int index = string.indexOf("/en");
-        return string.substring(0,index);
-    }
-
-    private String getUaString(String string) {
-        int index = string.indexOf("/en");
-        return string.substring(index+3, string.length()-3);
-    }*/
-
 
     @Override
     public PublicationDto getById(int id) {
@@ -69,15 +62,14 @@ public class JdbcPublicationDao implements PublicationDao {
                 while (resultSet.next()) {
                     publicationDto = mapper.extractFromResultSet(resultSet);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return publicationDto;
     }
 
+    //TODO do I need?
     @Override
     public List<PublicationDto> getAll() {
         List<PublicationDto> publications = new ArrayList<>();
@@ -90,9 +82,8 @@ public class JdbcPublicationDao implements PublicationDao {
                 PublicationDto publicationDto = mapper.extractFromResultSet(resultSet);
                 publications.add(publicationDto);
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
 
         }
         return publications;
@@ -117,7 +108,7 @@ public class JdbcPublicationDao implements PublicationDao {
             statement.setInt(10,entity.getId());
             result = statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result>0;
     }
@@ -130,7 +121,7 @@ public class JdbcPublicationDao implements PublicationDao {
             statement.setInt(1,id);
             result = statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result>0;
     }
@@ -139,12 +130,13 @@ public class JdbcPublicationDao implements PublicationDao {
         Map<String, Integer> result = new HashMap<>();
         try (PreparedStatement statement =
                         connection.prepareStatement(manager.getProperty("db.publication.query.statistics"))) {
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                result.put(resultSet.getString("title_en"), resultSet.getInt("count(title_en)"));
+            try(ResultSet resultSet = statement.executeQuery()){
+                while (resultSet.next()){
+                    result.put(resultSet.getString("title_en"), resultSet.getInt("count(title_en)"));
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -161,11 +153,9 @@ public class JdbcPublicationDao implements PublicationDao {
                     user = mapper.extractFromResultSet(resultSet);
                     report.add(user);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return report;
     }
@@ -180,22 +170,22 @@ public class JdbcPublicationDao implements PublicationDao {
         ) {
             titleEnStatement.setString(1, titleEn);
             try (ResultSet resultSet = titleEnStatement.executeQuery()) {
-                if (resultSet.next()){throw new NotUniqueTitleEnException();}
-            } catch (SQLException e) {
-                e.printStackTrace();
+                if (resultSet.next()){
+                    throw new NotUniqueTitleEnException();
+                }
             }
             titleUaStatement.setString(1, titleUa);
             try (ResultSet resultSet = titleUaStatement.executeQuery()) {
-                if (resultSet.next()){throw new NotUniqueTitleUaException();}
-            } catch (SQLException e) {
-                e.printStackTrace();
+                if (resultSet.next()){
+                    throw new NotUniqueTitleUaException();
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-
+            log.error(e);
         }
     }
 
+    //TODO do I need?
     @Override
     public List<PublicationDto> search(Map<String, String> searchParameters) {
         List<PublicationDto> publications = new ArrayList<>();
@@ -220,7 +210,7 @@ public class JdbcPublicationDao implements PublicationDao {
                 throw new NothingFoundException();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return publications;
     }
@@ -236,7 +226,7 @@ public class JdbcPublicationDao implements PublicationDao {
             resultSet.next();
             number = resultSet.getInt("count(id)");
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return number;
     }
@@ -256,7 +246,7 @@ public class JdbcPublicationDao implements PublicationDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return publications;
     }
@@ -311,20 +301,20 @@ public class JdbcPublicationDao implements PublicationDao {
                     publications.add(publicationDto);
                 }
             }
-            /*if (publications.isEmpty()){
-                throw new NothingFoundException();
-            }*/
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return publications;
     }
+
+    //TODO close think
 
     @Override
     public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
+            log.error(e);
             throw new RuntimeException(e);
         }
     }
