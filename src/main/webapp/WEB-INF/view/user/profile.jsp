@@ -2,6 +2,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ex" uri="/WEB-INF/tagLib.tld" %>
 <html>
 <head>
     <title>
@@ -73,7 +74,7 @@
                         <fmt:message key="account"/><br/>
                     </th>
                     <th>
-                        <fmt:formatNumber value="${user.account}" type="currency"/>
+                        <ex:formatCurrency money="${user.account}" locale="${sessionScope.locale}"/>
                     </th>
                 </tr>
                 </tbody>

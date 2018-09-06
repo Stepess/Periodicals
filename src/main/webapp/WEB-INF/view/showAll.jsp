@@ -2,6 +2,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ex" uri="/WEB-INF/tagLib.tld" %>
 <html>
 <head>
     <title>
@@ -134,7 +135,7 @@
                     <td width="15%"><c:out value="${publication.title}"/></td>
                     <td width="10%"><c:out value="${publication.author}"/></td>
                     <td width="10%"><c:out value="${publication.genre}"/></td>
-                    <td width="10%"><fmt:formatNumber value="${publication.price}" type="currency"/></td>
+                    <td width="10%"><ex:formatCurrency money="${publication.price}" locale="${sessionScope.locale}"/></td>
                     <td width="30%"><c:out value="${publication.description}"/></td>
 
                     <c:choose>

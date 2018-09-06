@@ -79,4 +79,20 @@
         </attribute>
     </tag>
 
+    <tag>
+        <name>formatCurrency</name>
+        <tag-class>tag.currencyFormatter</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>money</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>locale</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
 </taglib>
