@@ -120,8 +120,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     @Override
     public boolean update(Subscription entity) {
         int result = 0;
-
-
         try (
                 PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.update"));
                 PreparedStatement paymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
@@ -236,6 +234,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             getBillStatement.setInt(1, subscription.getPayment().getId());
             try (ResultSet resultSet = getBillStatement.executeQuery()) {
                 resultSet.next();
+                //bill = resultSet.getBigDecimal("bill");
                 bill = resultSet.getBigDecimal("bill");
             }
 
@@ -265,10 +264,10 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                 connection.rollback();
             } catch (SQLException e) {
                 log.error(e);
-                throw new RuntimeException(e);
+                throw new RuntimeException();
             }
             log.error(ex);
-            throw new RuntimeException(ex);
+            throw new RuntimeException();
         }
     }
 
@@ -297,7 +296,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             connection.close();
         } catch (SQLException e) {
             log.error(e);
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 }

@@ -19,9 +19,9 @@
     <exception-type>controller.exception.AccessDeniedException</exception-type>
     <location>/WEB-INF/view/accessError.jsp</location>
   </error-page>
-  <!--<error-page>
+<!--<error-page>
     <exception-type>java.lang.RuntimeException</exception-type>
-    <location>/WEB-INF/error.jsp</location>
+    <location>/WEB-INF/view/runtimeError.jsp</location>
   </error-page>-->
 
 

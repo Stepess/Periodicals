@@ -111,7 +111,7 @@ public class JdbcPaymentDao implements PaymentDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 }

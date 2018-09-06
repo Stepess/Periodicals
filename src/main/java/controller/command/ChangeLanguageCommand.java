@@ -1,5 +1,7 @@
 package controller.command;
 
+import model.service.resource.manager.PagePathManager;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class ChangeLanguageCommand implements Command {
@@ -8,6 +10,6 @@ public class ChangeLanguageCommand implements Command {
         /*System.out.println("change lang" + request.getParameter("command")+"?"+request.getParameter("query"));
         System.out.println(request.getRequestURI());
         System.out.println(request.getParameter("command1"));*/
-        return request.getParameter("command")+"?"+request.getParameter("query");
+        return new PagePathManager().getProperty("path.page.index");
     }
 }

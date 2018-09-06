@@ -6,13 +6,13 @@
 <html>
 <head>
     <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">--%>
-  <%--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">--%>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <%--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%--<script src="js/bootstrap.min.js"></script>--%>
-        <link href="<c:url value='/css/style.css' />" rel="stylesheet">
+    <link href="<c:url value='/css/style.css' />" rel="stylesheet">
 </head>
 <body>
 
@@ -24,26 +24,26 @@
 <%--<c:addSubscription var="language" value="${not empty param.language ? param.language : 'en_US'}" scope="session"/>--%>
 <fmt:bundle basename="pagecontent" prefix="label.">
 
-        <%--<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>--%>
+    <%--<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>--%>
 
-        <%--<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="loginmodal-container">
-                    <h1>Login to Your Account</h1><br>
-                    <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/login">
-                    <input type="text" name="login" placeholder="<fmt:message key="login"/>">
-                            ${wrongLogin}
-                        <input type="password" name="password" placeholder="<fmt:message key="password"/>">
-                            ${wrongPassword}
-                        <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-                    </form>
+    <%--<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="loginmodal-container">
+                <h1>Login to Your Account</h1><br>
+                <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/login">
+                <input type="text" name="login" placeholder="<fmt:message key="login"/>">
+                        ${wrongLogin}
+                    <input type="password" name="password" placeholder="<fmt:message key="password"/>">
+                        ${wrongPassword}
+                    <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+                </form>
 
-                    <div class="login-help">
-                        <a href="registration.jsp"><fmt:message key="sign.up"/></a>
-                    </div>
+                <div class="login-help">
+                    <a href="registration.jsp"><fmt:message key="sign.up"/></a>
                 </div>
             </div>
-        </div>--%>
+        </div>
+    </div>--%>
 
     <header id="header" class="head">
         <div class="container">
@@ -53,52 +53,37 @@
                         Periodicals
                     </h1>
                 </div>
-
-
                 <c:choose>
                     <c:when test="${sessionScope.role == 'guest'}">
-                        <div class="col-lg-3 ml-auto">
-                            <nav>
-                                <ul class="menu d-flex flex-row">
-                                    <li class="menu__item">
-                                        <a href="${pageContext.request.contextPath}/guest/login">
-                                            <fmt:message key="sign.in"/>
-                                        </a>
-                                    </li>
-                                    <li class="menu__item">
-                                        <a href="${pageContext.request.contextPath}/guest/registration">
-                                            <fmt:message key="sign.up"/>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                        <div class="header__form2" style="padding-left: 100px;">
+                            <div>
+                                <a class="head__a" href="${pageContext.request.contextPath}/guest/login">
+                                    <fmt:message key="sign.in"/>
+                                </a>
+                                <a style="padding-left: 15px;" class="head__a" href="${pageContext.request.contextPath}/guest/registration">
+                                    <fmt:message key="sign.up"/>
+                                </a>
+                            </div>
                         </div>
                     </c:when>
                     <c:otherwise>
-                <div class="header__form2" style="padding-left: 100px;">
-                    <div>
-                            <a class="head__a">
-                                    ${sessionScope.role}    ${sessionScope.login}
-                            </a>
-
-
-
-
-
-                        <a class="head__a" style="padding-left: 10px;" href="${pageContext.request.contextPath}/${sessionScope.role}/logout">
-                            <fmt:message key="logout"/>
-                        </a>
-                    </div>
-
-
-
-
+                        <div class="header__form2" style="padding-left: 100px;">
+                            <div>
+                                <p class="head__a" style="display:inline">
+                                        ${sessionScope.role}, ${sessionScope.login}
+                                </p>
+                                <a class="head__a" style="padding-left: 15px;"
+                                   href="${pageContext.request.contextPath}/${sessionScope.role}/logout">
+                                    <fmt:message key="logout"/>
+                                </a>
+                            </div>
                         </div>
                     </c:otherwise>
                 </c:choose>
 
                 <div class="  header__form3 ">
-                    <form <%--onsubmit="location.reload(true)--%> method="post" <%--action="${pageContext.request.contextPath}/${sessionScope.role}/changeLanguage"--%> >
+                    <form <%--onsubmit="location.reload(true)--%>
+                            method="post" action="${pageContext.request.contextPath}/${sessionScope.role}/changeLanguage" >
                         <input type="hidden" name="command" value="${pageContext.request.requestURI}"/>
                         <input type="hidden" name="command1" value="${pageContext.request.requestURL}"/>
                         <input type="hidden" name="query" value="${pageContext.request.queryString}"/>
@@ -114,38 +99,38 @@
     </header>
 
 
-   <%-- <c:if test="${sessionScope.role == 'guest'}">
-        <div class="container">
-            <div class="row">
+    <%-- <c:if test="${sessionScope.role == 'guest'}">
+         <div class="container">
+             <div class="row">
 
 
-                <div class="col-4">
-                    <div class="input-group">
-                        <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/login">
-                            <fmt:message key="login"/><br/>
-                            <input type="text" name="login" value=""/>
-                            <br/>
-                                ${wrongLogin}
-                            <br/>
-                            <fmt:message key="password"/><br/>
-                            <input type="password" name="password" value=""/>
-                            <br/>
-                                ${wrongPassword}
-                            <br/>
-                            <input type="submit" value="Log in"/>
-                        </form>
+                 <div class="col-4">
+                     <div class="input-group">
+                         <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/app/login">
+                             <fmt:message key="login"/><br/>
+                             <input type="text" name="login" value=""/>
+                             <br/>
+                                 ${wrongLogin}
+                             <br/>
+                             <fmt:message key="password"/><br/>
+                             <input type="password" name="password" value=""/>
+                             <br/>
+                                 ${wrongPassword}
+                             <br/>
+                             <input type="submit" value="Log in"/>
+                         </form>
 
-                        <br/>
-                        <a href="registration.jsp">
-                            <fmt:message key="sign.up"/>
-                        </a>
-                    </div>
-                </div>
+                         <br/>
+                         <a href="registration.jsp">
+                             <fmt:message key="sign.up"/>
+                         </a>
+                     </div>
+                 </div>
 
-            </div>
-        </div>
-    </c:if>
---%>
+             </div>
+         </div>
+     </c:if>
+ --%>
 
 
 </fmt:bundle>

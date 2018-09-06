@@ -126,6 +126,7 @@ public class JdbcPublicationDao implements PublicationDao {
         return result>0;
     }
 
+    //TODO MAKE IT BILANGUAL
     public Map<String, Integer> getStatistics() {
         Map<String, Integer> result = new HashMap<>();
         try (PreparedStatement statement =
@@ -315,7 +316,7 @@ public class JdbcPublicationDao implements PublicationDao {
             connection.close();
         } catch (SQLException e) {
             log.error(e);
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
     }
 }

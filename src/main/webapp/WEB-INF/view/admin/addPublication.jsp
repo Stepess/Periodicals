@@ -26,14 +26,14 @@
                         <fieldset>
                             <div class="form-group">
                                 <label for="title_en"><fmt:message key="title_en"/></label>
-                                <input class="form-control" value="${param.titleEn}" name="title_en" id="title_en" type="text" required>
+                                <input class="form-control" value="${param.title_en}" name="title_en" id="title_en" type="text" required>
                                 <p class="text-danger">
                                         ${wrongtitle_en}
                                 </p>
                             </div>
                             <div class="form-group">
                                 <label for="title_ua"><fmt:message key="title_ua"/></label>
-                                <input class="form-control" id="title_ua" value="${param.titleUa}" name="title_ua" type="text" required>
+                                <input class="form-control" id="title_ua" value="${param.title_ua}" name="title_ua" type="text" required>
                                 <p class="text-danger">
                                         ${wrongtitle_ua}
                                 </p>
@@ -47,14 +47,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="genre_en"><fmt:message key="genre_en"/></label>
-                                <input class="form-control" value="${param.genreEn}" name="genre_en" id="genre_en" type="text" required>
+                                <input class="form-control" value="${param.genre_en}" name="genre_en" id="genre_en" type="text" required>
                                 <p class="text-danger">
                                         ${wronggenre_en}
                                 </p>
                             </div>
                             <div class="form-group">
                                 <label for="genre_ua"><fmt:message key="genre_ua"/></label>
-                                <input class="form-control" value="${param.genreUa}" name="genre_ua" id="genre_ua" type="text" required>
+                                <input class="form-control" value="${param.genre_ua}" name="genre_ua" id="genre_ua" type="text" required>
                                 <p class="text-danger">
                                         ${wronggenre_ua}
                                 </p>
@@ -68,14 +68,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="description_en"><fmt:message key="description_en"/></label>
-                                <textarea class="form-control" class="form-control" rows="5" name="description_en" id="description_en" required>${param.descriptionEn}</textarea>
+                                <textarea class="form-control" class="form-control" rows="5" name="description_en" id="description_en" required>${param.description_en}</textarea>
                                 <p class="text-danger">
                                         ${wrongdescription_en}
                                 </p>
                             </div>
                             <div class="form-group">
                                 <label for="description_ua"><fmt:message key="description_ua"/></label>
-                                <textarea class="form-control" class="form-control" rows="5" name="description_ua" id="description_ua" required>${param.descriptionUa}</textarea>
+                                <textarea class="form-control" class="form-control" rows="5" name="description_ua" id="description_ua" required>${param.description_ua}</textarea>
                                 <p class="text-danger">
                                         ${wrongdescription_ua}
                                 </p>
