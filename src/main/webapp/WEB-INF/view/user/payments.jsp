@@ -48,7 +48,8 @@
                                     <c:out value="${subscription.publication.title}"/>
                                 </td>
                                 <td>
-                                    <ex:formatCurrency money="${subscription.payment.bill}" locale="${sessionScope.locale}"/>
+                                    <ex:formatCurrency money="${subscription.payment.bill}"
+                                                       locale="${sessionScope.locale}"/>
                                 </td>
                                 <td>
                                     <ex:formatDateTime localDateTime="${subscription.payment.paymentDateTime}"

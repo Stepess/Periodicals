@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-
 <html>
 <head>
     <title>404</title>
@@ -19,17 +18,18 @@
     </c:otherwise>
 </c:choose>
 <fmt:bundle basename="pagecontent" prefix="label.">
-<div class="page-wrap d-flex flex-row align-items-center min_height">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                <span class="display-1 d-block">404</span>
-                <div class="mb-4 lead"><fmt:message key="page.not.found" /></div>
-                <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-link"><fmt:message key="back.home"/></a>
+    <div class="page-wrap d-flex flex-row align-items-center min_height">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 text-center">
+                    <span class="display-1 d-block">404</span>
+                    <div class="mb-4 lead"><fmt:message key="page.not.found"/></div>
+                    <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-link"><fmt:message
+                            key="back.home"/></a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </fmt:bundle>
 <jsp:include page="/WEB-INF/component/footer.jsp"/>
 </body>

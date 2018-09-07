@@ -10,10 +10,7 @@
     </title>
 </head>
 <body>
-
 <jsp:include page="/WEB-INF/component/header.jsp"/>
-<%--<jsp:include page="/WEB-INF/component/userMenu.jsp"/>--%>
-
 <c:choose>
     <c:when test="${sessionScope.role=='admin'}">
         <jsp:include page="/WEB-INF/component/adminMenu.jsp"/>

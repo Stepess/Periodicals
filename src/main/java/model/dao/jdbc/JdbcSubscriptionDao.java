@@ -1,6 +1,6 @@
 package model.dao.jdbc;
 
-import controller.exception.NotEnoughMoney;
+import model.exception.NotEnoughMoney;
 import model.dao.SubscriptionDao;
 import model.dao.mappers.SubscriptionDtoMapper;
 import model.dao.mappers.SubscriptionMapper;
@@ -13,7 +13,6 @@ import model.service.resource.manager.ResourceManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -234,7 +233,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             getBillStatement.setInt(1, subscription.getPayment().getId());
             try (ResultSet resultSet = getBillStatement.executeQuery()) {
                 resultSet.next();
-                //bill = resultSet.getBigDecimal("bill");
                 bill = resultSet.getBigDecimal("bill");
             }
 

@@ -1,4 +1,4 @@
-import controller.exception.NotEnoughMoney;
+import model.exception.NotEnoughMoney;
 import model.dao.*;
 import model.entity.DTO.PublicationDto;
 import model.entity.DTO.SubscriptionDto;

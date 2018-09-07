@@ -6,6 +6,7 @@ import model.service.builders.PaymentBuilder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+//TODO delete
 public class PaymentMapper implements ObjectMapper<Payment> {
     @Override
     public Payment extractFromResultSet(ResultSet resultSet) throws SQLException {

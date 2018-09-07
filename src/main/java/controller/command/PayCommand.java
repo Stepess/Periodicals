@@ -1,7 +1,6 @@
 package controller.command;
 
-import controller.exception.NotEnoughMoney;
-import model.entity.DTO.SubscriptionDto;
+import model.exception.NotEnoughMoney;
 import model.entity.Payment;
 import model.entity.Subscription;
 import model.entity.User;
@@ -16,9 +15,6 @@ import model.service.resource.manager.ResourceManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class PayCommand implements Command {

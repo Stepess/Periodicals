@@ -1,5 +1,6 @@
 package controller.command;
 
+import controller.utils.DataValidationUtil;
 import model.entity.DTO.PublicationDto;
 import model.entity.DTO.SubscriptionDto;
 import model.entity.Payment;
@@ -11,6 +12,7 @@ import model.service.UserService;
 import model.service.builders.SubscriptionBuilder;
 import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
+import model.service.resource.manager.RegexpManager;
 import model.service.resource.manager.ResourceManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +22,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class SubscriptCommand implements Command{
+public class SubscribeCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
-        //TODO warning NPE
-        //LocalDate from = LocalDate.parse(request.getParameter("from"));
         LocalDate from = LocalDate.now();
+        Locale locale = (Locale)request.getSession().getAttribute("locale");
+
+        new DataValidationUtil(locale).isDataValid(request, "months",
+                new RegexpManager(locale).getProperty("subscription.months"));
+
+        if (request.getParameter("wrongmonths") == null) {
+            request.setAttribute("fail", new MessageManager(locale).getProperty("message.wrong.months"));
+            return new PagePathManager().getProperty("path.command.user.catalog");
+        }
+
         int months = Integer.parseInt(request.getParameter("months"));
         ResourceManager manager = new MessageManager((Locale)request.getSession().getAttribute("locale"));
         PublicationDto dto = new PublicationService().getById(Integer.parseInt(request.getParameter("pubId")));
@@ -33,8 +43,7 @@ public class SubscriptCommand implements Command{
 
         Subscription subscription = new SubscriptionBuilder()
                 .buildStartDate(from)
-                //.buildTotal(dto.getPrice().multiply(BigDecimal.valueOf(months)))
-                .buildPublication(dto.convertToInternationalizedEntity((Locale)request.getSession().getAttribute("locale")))
+                .buildPublication(dto.convertToInternationalizedEntity(locale))
                 .buildPayment(new Payment())
                 .buildEndDate(from.plusMonths(months))
                 .buildState(Subscription.StateEnum.UNPAID)

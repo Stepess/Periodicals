@@ -47,7 +47,6 @@
         </table>
         </div>
     </div>
-
 </fmt:bundle>
 <jsp:include page="/WEB-INF/component/footer.jsp"/>
 </body>

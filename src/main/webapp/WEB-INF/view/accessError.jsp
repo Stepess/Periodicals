@@ -28,8 +28,9 @@
             <div class="row justify-content-center">
                 <div class="col-md-12 text-center">
                     <span class="display-1 d-block"><fmt:message key="access.denied"/> </span>
-                    <div class="mb-4 lead"><fmt:message key="not.permission" /></div>
-                    <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-link"><fmt:message key="back.home"/></a>
+                    <div class="mb-4 lead"><fmt:message key="not.permission"/></div>
+                    <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-link"><fmt:message
+                            key="back.home"/></a>
                 </div>
             </div>
         </div>

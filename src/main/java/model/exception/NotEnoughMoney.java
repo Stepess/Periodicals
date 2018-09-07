@@ -1,4 +1,4 @@
-package controller.exception;
+package model.exception;
 
 public class NotEnoughMoney extends RuntimeException {
 }

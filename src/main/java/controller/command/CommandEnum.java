@@ -33,9 +33,9 @@ public enum CommandEnum {
             this.command = new PayCommand();
         }
     },
-    SUBSCRIPT {
+    SUBSCRIBE {
         {
-            this.command = new SubscriptCommand();
+            this.command = new SubscribeCommand();
         }
     },
     ADDPUBLICATION {

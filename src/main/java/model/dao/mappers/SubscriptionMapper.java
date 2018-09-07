@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-
+//TODO delete
 public class SubscriptionMapper implements ObjectMapper<Subscription> {
     @Override
     public Subscription extractFromResultSet(ResultSet resultSet) throws SQLException {

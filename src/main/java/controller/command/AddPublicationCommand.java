@@ -59,7 +59,6 @@ public class AddPublicationCommand implements Command {
         while (attributeNames.hasMoreElements()) {
             String elementName = attributeNames.nextElement();
             if (elementName.contains("wrong")) {
-                System.out.println(request.getParameterNames().toString());
                 return new PagePathManager().getProperty("path.page.add.publication");
             }
         }

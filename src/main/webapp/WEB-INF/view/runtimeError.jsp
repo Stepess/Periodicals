@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-
 <html>
 <head>
     <title>
@@ -29,7 +28,8 @@
                 <div class="col-md-12 text-center">
                     <span class="display-1 d-block"><fmt:message key="something.wrong"/> </span>
                     <div class="mb-4 lead">${pageContext.exception.message}</div>
-                    <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-link"><fmt:message key="back.home"/></a>
+                    <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-link"><fmt:message
+                            key="back.home"/></a>
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Map;
 
+//TODO delete
 public class PublicationMapper implements ObjectMapper<Publication> {
     @Override
     public Publication extractFromResultSet(ResultSet resultSet) throws SQLException {

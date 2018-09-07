@@ -1,7 +1,7 @@
 package controller.filters;
 
 
-import controller.exception.AccessDeniedException;
+import model.exception.AccessDeniedException;
 import controller.utils.SecurityUtils;
 
 import javax.servlet.*;

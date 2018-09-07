@@ -16,7 +16,7 @@
     <location>/WEB-INF/view/error.jsp</location>
   </error-page>
   <error-page>
-    <exception-type>controller.exception.AccessDeniedException</exception-type>
+    <exception-type>model.exception.AccessDeniedException</exception-type>
     <location>/WEB-INF/view/accessError.jsp</location>
   </error-page>
 <!--<error-page>

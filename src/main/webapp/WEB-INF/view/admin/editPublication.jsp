@@ -14,8 +14,6 @@
 <body>
 <jsp:include page="/WEB-INF/component/header.jsp"/>
 <jsp:include page="/WEB-INF/component/adminMenu.jsp"/>
-
-
 <div class="container center-block">
     <div class="row vertical-offset-100 justify-content-center">
         <div class="col-md-4 col-md-offset-4 well">

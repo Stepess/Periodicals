@@ -24,7 +24,6 @@
         <jsp:include page="/WEB-INF/component/guestMenu.jsp"/>
     </c:otherwise>
 </c:choose>
-
 <fmt:bundle basename="pagecontent" prefix="label.">
     <div class="container vertical-tb-offset-10 min_height">
         <div class="row">
@@ -73,7 +72,6 @@
                                     <fmt:message key="price"/>
                                 </th>
                             </tr>
-
                             <c:forEach items="${requestScope.subscriptions}" var="subscription">
                                 <tr>
                                     <td><c:out value="${subscription.publication.title}"/></td>
@@ -82,7 +80,8 @@
                                                        locale="${sessionScope.locale}"/></td>
                                     <td><ex:formatDate localDate="${subscription.endDate}"
                                                        locale="${sessionScope.locale}"/></td>
-                                    <td><ex:formatCurrency money="${subscription.payment.bill}" locale="${sessionScope.locale}"/></td>
+                                    <td><ex:formatCurrency money="${subscription.payment.bill}"
+                                                           locale="${sessionScope.locale}"/></td>
                                 </tr>
                             </c:forEach>
                         </table>
@@ -114,7 +113,6 @@
                                     <fmt:message key="delete"/>
                                 </th>
                             </tr>
-
                             <c:forEach items="${requestScope.subscriptions}" var="subscription">
                                 <tr>
                                     <td><c:out value="${subscription.publication.title}"/></td>
@@ -123,8 +121,8 @@
                                                        locale="${sessionScope.locale}"/></td>
                                     <td><ex:formatDate localDate="${subscription.endDate}"
                                                        locale="${sessionScope.locale}"/></td>
-                                  <%--  <td><fmt:formatNumber value="${subscription.payment.bill}" type="currency"/></td>--%>
-                                    <td><ex:formatCurrency money="${subscription.payment.bill}" locale="${sessionScope.locale}"/></td>
+                                    <td><ex:formatCurrency money="${subscription.payment.bill}"
+                                                           locale="${sessionScope.locale}"/></td>
                                     <td>
                                         <form method="POST" action="${pageContext.request.contextPath}/user/pay">
                                             <input type="hidden" name="subId" value="${subscription.id}">

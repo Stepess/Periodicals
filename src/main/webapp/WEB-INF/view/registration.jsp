@@ -12,7 +12,6 @@
     </title>
 </head>
 <body>
-<%--<jsp:include page="/WEB-INF/component/header.jsp"/>--%>
 <c:import url="/WEB-INF/component/header.jsp"/>
 <c:choose>
     <c:when test="${sessionScope.role=='admin'}">
@@ -30,10 +29,11 @@
         <div class="col-md-4 col-md-offset-4 well">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><fmt:message key="registration"/> </h3>
+                    <h3 class="panel-title"><fmt:message key="registration"/></h3>
                 </div>
                 <div class="panel-body">
-                    <form name="loginForm" method="POST" action="${pageContext.request.contextPath}/${sessionScope.role}/registration">
+                    <form name="loginForm" method="POST"
+                          action="${pageContext.request.contextPath}/${sessionScope.role}/registration">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="<fmt:message key="login"/>" name="login"
@@ -105,7 +105,8 @@
                                         ${wrongbuilding}
                                 </p>
                             </div>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="<fmt:message key="sign.up"/>"/>
+                            <input class="btn btn-lg btn-success btn-block" type="submit"
+                                   value="<fmt:message key="sign.up"/>"/>
                         </fieldset>
                     </form>
                 </div>
