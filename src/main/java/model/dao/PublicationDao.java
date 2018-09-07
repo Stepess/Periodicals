@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface PublicationDao extends GenericDao<PublicationDto>{
-    Map<String, Integer> getStatistics();
+    Map<PublicationDto, Integer> getStatistics();
     List<User> getReport(int id);
     void checkDataUnique(String titleEn, String titleUa);
 /*    List<PublicationDto> getAllMultiLanguagePublication();

@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class CatalogCommand implements Command{
+public class CatalogCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         PublicationService publicationService = new PublicationService();
@@ -19,15 +19,14 @@ public class CatalogCommand implements Command{
         request.setAttribute("publications", publicationService.getPaginatedList(paginationParameters.get("start"),
                 paginationParameters.get("recordsPerPage")));
 
-            Locale locale = (Locale)request.getSession().getAttribute("locale");
-            request.setAttribute("publications",
-                    publicationService.getPaginatedList(paginationParameters.get("start"),
-                            paginationParameters.get("recordsPerPage"))
-                            .stream()
-                            .map(dto -> dto.convertToInternationalizedEntity(locale))
-                            .collect(Collectors.toList()));
-            return new PagePathManager().getProperty("path.page.periodicals");
-
+        request.setAttribute("publications",
+                publicationService.getPaginatedList(paginationParameters.get("start"),
+                        paginationParameters.get("recordsPerPage"))
+                        .stream()
+                        .map(dto -> dto.convertToInternationalizedEntity(
+                                (Locale) request.getSession().getAttribute("locale")))
+                        .collect(Collectors.toList()));
+        return new PagePathManager().getProperty("path.page.periodicals");
     }
 }
 

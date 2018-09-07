@@ -2,8 +2,10 @@ package model.dao.jdbc;
 
 import model.dao.PublicationDao;
 import model.dao.mappers.PublicationDTOMapper;
+import model.dao.mappers.PublicationMapper;
 import model.dao.mappers.UserMapper;
 import model.entity.DTO.PublicationDto;
+import model.entity.Publication;
 import model.entity.User;
 import model.exception.NotUniqueTitleEnException;
 import model.exception.NotUniqueTitleUaException;
@@ -127,13 +129,14 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     //TODO MAKE IT BILANGUAL
-    public Map<String, Integer> getStatistics() {
-        Map<String, Integer> result = new HashMap<>();
+    public Map<PublicationDto, Integer> getStatistics() {
+        Map<PublicationDto, Integer> result = new HashMap<>();
+        PublicationDTOMapper mapper = new PublicationDTOMapper();
         try (PreparedStatement statement =
                         connection.prepareStatement(manager.getProperty("db.publication.query.statistics"))) {
             try(ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()){
-                    result.put(resultSet.getString("title_en"), resultSet.getInt("count(title_en)"));
+                    result.put(mapper.extractFromResultSet(resultSet), resultSet.getInt("count(id)"));
                 }
             }
         } catch (SQLException e) {

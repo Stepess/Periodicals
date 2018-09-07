@@ -48,11 +48,11 @@
                 </div>
 
             </div>
-            <div class="container">
+            <%--<div class="container">
                 <p class="text-danger">
                         ${fail}
                 </p>
-            </div>
+            </div>--%>
         </form>
         </div>
         <div class="row">
@@ -89,151 +89,162 @@
         </form>
         </div>
     <div class="row">
-        <table class="table">
-            <h2>Periodicals List</h2>
-            <tr>
-                <th>
-                    <fmt:message key="title"/>
-                </th>
-                <th>
-                    <fmt:message key="author"/>
-                </th>
-                <th>
-                    <fmt:message key="genre"/>
-                </th>
-                <th>
-                    <fmt:message key="price"/>
-                </th>
-                <th>
-                    <fmt:message key="description"/>
-                </th>
-                <c:choose>
-                    <c:when test="${sessionScope.role == 'admin'}">
+        <c:choose>
+            <c:when test="${not empty publications}">
+                <table class="table">
+                    <tr>
                         <th>
-                            <fmt:message key="edit"/>
+                            <fmt:message key="title"/>
                         </th>
                         <th>
-                            <fmt:message key="report"/>
+                            <fmt:message key="author"/>
                         </th>
                         <th>
-                            <fmt:message key="delete"/>
-                        </th>
-                    </c:when>
-                    <c:when test="${sessionScope.role == 'user'}">
-                        <th>
-                            <fmt:message key="months"/>
+                            <fmt:message key="genre"/>
                         </th>
                         <th>
-                            <fmt:message key="subscript"/>
+                            <fmt:message key="price"/>
                         </th>
-                    </c:when>
-                </c:choose>
-            </tr>
-            <c:forEach items="${requestScope.publications}" var="publication">
-                <tr>
-                    <td><c:out value="${publication.title}"/></td>
-                    <td><c:out value="${publication.author}"/></td>
-                    <td><c:out value="${publication.genre}"/></td>
-                    <td><ex:formatCurrency money="${publication.price}" locale="${sessionScope.locale}"/></td>
-                    <td><c:out value="${publication.description}"/></td>
-
-                    <c:choose>
-                        <c:when test="${sessionScope.role == 'admin'}">
-                            <td>
-
-                                <form method="POST" action="${pageContext.request.contextPath}/admin/editPublication">
-
-
-                                    <input type="hidden" name="pubId" value="${publication.id}">
-                                    <input type="hidden" name="command" value="/admin/catalog">
-                                    <input type="hidden" name="query"
-                                           value="${pageContext.request.queryString}">
-
-                                    <input type="submit" value="<fmt:message key="edit"/>">
-
-                                </form>
-
-                            </td>
-                            <td>
-                                <form method="POST" action="${pageContext.request.contextPath}/admin/showReport">
-
-                                    <input type="hidden" name="pubId" value="${publication.id}">
-                                    <input type="submit" value="<fmt:message key="report"/>">
-
-                                </form>
-                            </td>
-
-                            <td>
-                                <form method="POST"
-                                      action="${pageContext.request.contextPath}/admin/deletePublication">
-
-
-                                    <input type="hidden" name="pubId" value="${publication.id}">
-                                    <input type="hidden" name="title" value="${publication.title}">
-                                    <input type="hidden" name="command" value="/admin/catalog">
-                                    <input type="hidden" name="query"
-                                           value="${pageContext.request.queryString}">
-                                    <input type="submit" value="<fmt:message key="delete"/>">
-
-                                </form>
-                            </td>
-
-
-                        </c:when>
-                        <c:when test="${sessionScope.role == 'user'}">
-                            <form method="POST" action="${pageContext.request.contextPath}/user/subscript">
-                                <input type="hidden" name="pubId" value="${publication.id}">
-                                <input type="hidden" name="price" value="${publication.price}">
-                                <td>
-                                    <input type="number" name="months" style="width: 80px"
-                                           placeholder="<fmt:message key="months"/> ">
-                                </td>
-
-                                <td>
-                                    <input type="submit" style="width: 110px" value="<fmt:message key="subscribe"/>">
-
-                                </td>
-                            </form>
-
-                        </c:when>
-                    </c:choose>
-                </tr>
-            </c:forEach>
-        </table>
-
-
-        <div class="col-xs-1" align="center">
-            <nav>
-                <ul class="pagination">
-                    <c:if test="${paginationParameters.currentPage != 1}">
-
-                        <li class="page-item"><a class="page-link"
-                                                 href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
-                        </li>
-                    </c:if>
-                    <c:forEach begin="1" end="${paginationParameters.numberOfPages}" var="i">
-
+                        <th>
+                            <fmt:message key="description"/>
+                        </th>
                         <c:choose>
-                            <c:when test="${paginationParameters.currentPage eq i}">
-                                <li class="page-item active"><a class="page-link">
-                                        ${i} <span class="sr-only">(current)</span></a>
-                                </li>
+                            <c:when test="${sessionScope.role == 'admin'}">
+                                <th>
+                                    <fmt:message key="edit"/>
+                                </th>
+                                <th>
+                                    <fmt:message key="report"/>
+                                </th>
+                                <th>
+                                    <fmt:message key="delete"/>
+                                </th>
                             </c:when>
-                            <c:otherwise>
-                                <li class="page-item"><a class="page-link"
-                                                         href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
-                                </li>
-                            </c:otherwise>
+                            <c:when test="${sessionScope.role == 'user'}">
+                                <th>
+                                    <fmt:message key="months"/>
+                                </th>
+                                <th>
+                                    <fmt:message key="subscript"/>
+                                </th>
+                            </c:when>
                         </c:choose>
+                    </tr>
+                    <c:forEach items="${requestScope.publications}" var="publication">
+                        <tr>
+                            <td><c:out value="${publication.title}"/></td>
+                            <td><c:out value="${publication.author}"/></td>
+                            <td><c:out value="${publication.genre}"/></td>
+                            <td><ex:formatCurrency money="${publication.price}" locale="${sessionScope.locale}"/></td>
+                            <td><c:out value="${publication.description}"/></td>
+
+                            <c:choose>
+                                <c:when test="${sessionScope.role == 'admin'}">
+                                    <td>
+
+                                        <form method="POST" action="${pageContext.request.contextPath}/admin/editPublication">
+
+
+                                            <input type="hidden" name="pubId" value="${publication.id}">
+                                            <input type="hidden" name="command" value="/admin/catalog">
+                                            <input type="hidden" name="query"
+                                                   value="${pageContext.request.queryString}">
+
+                                            <input type="submit" value="<fmt:message key="edit"/>">
+
+                                        </form>
+
+                                    </td>
+                                    <td>
+                                        <form method="POST" action="${pageContext.request.contextPath}/admin/showReport">
+
+                                            <input type="hidden" name="pubId" value="${publication.id}">
+                                            <input type="submit" value="<fmt:message key="report"/>">
+
+                                        </form>
+                                    </td>
+
+                                    <td>
+                                        <form method="POST"
+                                              action="${pageContext.request.contextPath}/admin/deletePublication">
+
+
+                                            <input type="hidden" name="pubId" value="${publication.id}">
+                                            <input type="hidden" name="title" value="${publication.title}">
+                                            <input type="hidden" name="command" value="/admin/catalog">
+                                            <input type="hidden" name="query"
+                                                   value="${pageContext.request.queryString}">
+                                            <input type="submit" value="<fmt:message key="delete"/>">
+
+                                        </form>
+                                    </td>
+
+
+                                </c:when>
+                                <c:when test="${sessionScope.role == 'user'}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/user/subscript">
+                                        <input type="hidden" name="pubId" value="${publication.id}">
+                                        <input type="hidden" name="price" value="${publication.price}">
+                                        <td>
+                                            <input type="number" name="months" style="width: 80px"
+                                                   placeholder="<fmt:message key="months"/> ">
+                                        </td>
+
+                                        <td>
+                                            <input type="submit" style="width: 110px" value="<fmt:message key="subscribe"/>">
+
+                                        </td>
+                                    </form>
+
+                                </c:when>
+                            </c:choose>
+                        </tr>
                     </c:forEach>
-                    <c:if test="${paginationParameters.currentPage lt paginationParameters.numberOfPages}">
-                        <li class="page-item"><a class="page-link"
-                                                 href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
-                        </li>
-                    </c:if>
-                </ul>
-            </nav>
-        </div>
+                </table>
+
+
+                <div class="col-xs-1" align="center">
+                    <nav>
+                        <ul class="pagination">
+                            <c:if test="${paginationParameters.currentPage != 1}">
+
+                                <li class="page-item"><a class="page-link"
+                                                         href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                </li>
+                            </c:if>
+                            <c:forEach begin="1" end="${paginationParameters.numberOfPages}" var="i">
+
+                                <c:choose>
+                                    <c:when test="${paginationParameters.currentPage eq i}">
+                                        <li class="page-item active"><a class="page-link">
+                                                ${i} <span class="sr-only">(current)</span></a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <c:if test="${paginationParameters.currentPage lt paginationParameters.numberOfPages}">
+                                <li class="page-item"><a class="page-link"
+                                                         href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                </li>
+                            </c:if>
+                        </ul>
+                    </nav>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="container-fluid mt-3 font-weight-bold">
+                    <p class="text-center text-danger">
+                            ${fail}
+                    </p>
+                </div>
+            </c:otherwise>
+        </c:choose>
+
     </div>
     </div>
 

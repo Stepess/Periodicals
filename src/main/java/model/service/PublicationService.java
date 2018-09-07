@@ -3,6 +3,7 @@ package model.service;
 import model.dao.DaoFactory;
 import model.dao.PublicationDao;
 import model.entity.DTO.PublicationDto;
+import model.entity.Publication;
 import model.entity.User;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class PublicationService {
         }
     }
 
-    public Map<String, Integer> getStatistics() {
+    public Map<PublicationDto, Integer> getStatistics() {
         try(PublicationDao dao = daoFactory.createPublicationDao()){
             return dao.getStatistics();
         }
