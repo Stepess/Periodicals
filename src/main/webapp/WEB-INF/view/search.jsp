@@ -46,12 +46,11 @@
                     <div class="col">
                         <input class="btn btn-success" type="submit" value="<fmt:message key="search"/>"/>
                     </div>
-
                 </div>
             </form>
         </div>
         <div class="row">
-            <form action="${pageContext.request.contextPath}/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}"
+            <form action="${pageContext.request.contextPath}/${sessionScope.role}/search?title=${param.title}&genre=${param.genre}&leftPriceBoundary=${param.leftPriceBoundary}&rightPriceBoundary=${param.rightPriceBoundary}"
                   onchange="submit()">
                 <input type="hidden" name="currentPage" value="1">
                 <label for="records">Select records per page:</label>
@@ -139,7 +138,7 @@
                                             <form method="POST"
                                                   action="${pageContext.request.contextPath}/admin/editPublication">
                                                 <input type="hidden" name="pubId" value="${publication.id}">
-                                                <input type="hidden" name="command" value="/admin/catalog">
+                                                <input type="hidden" name="command" value="/admin/search">
                                                 <input type="hidden" name="query"
                                                        value="${pageContext.request.queryString}">
                                                 <input type="submit" value="<fmt:message key="edit"/>">
@@ -149,10 +148,8 @@
                                         <td>
                                             <form method="POST"
                                                   action="${pageContext.request.contextPath}/admin/showReport">
-
                                                 <input type="hidden" name="pubId" value="${publication.id}">
                                                 <input type="submit" value="<fmt:message key="report"/>">
-
                                             </form>
                                         </td>
                                         <td>
@@ -160,11 +157,10 @@
                                                   action="${pageContext.request.contextPath}/admin/deletePublication">
                                                 <input type="hidden" name="pubId" value="${publication.id}">
                                                 <input type="hidden" name="title" value="${publication.title}">
-                                                <input type="hidden" name="command" value="/admin/catalog">
+                                                <input type="hidden" name="command" value="/admin/search">
                                                 <input type="hidden" name="query"
                                                        value="${pageContext.request.queryString}">
                                                 <input type="submit" value="<fmt:message key="delete"/>">
-
                                             </form>
                                         </td>
                                     </c:when>
@@ -179,23 +175,21 @@
                                             <td>
                                                 <input type="submit" style="width: 110px"
                                                        value="<fmt:message key="subscribe"/>">
-
                                             </td>
                                         </form>
-
                                     </c:when>
                                 </c:choose>
                             </tr>
                         </c:forEach>
                     </table>
-
-
+                    <%--<h1> Param ${param.title}</h1>
+                    <h1> Attr ${title} </h1>--%>
                     <div class="col-xs-1" align="center">
                         <nav>
                             <ul class="pagination">
                                 <c:if test="${paginationParameters.currentPage != 1}">
                                     <li class="page-item"><a class="page-link"
-                                                             href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                                             href="/${sessionScope.role}/search?title=${param.title}&genre=${param.genre}&leftPriceBoundary=${param.leftPriceBoundary}&rightPriceBoundary=${param.rightPriceBoundary}&recordsPerPage=${param.recordsPerPage}&currentPage=${param.currentPage-1}">Previous</a>
                                     </li>
                                 </c:if>
                                 <c:forEach begin="1" end="${paginationParameters.numberOfPages}" var="i">
@@ -207,14 +201,14 @@
                                         </c:when>
                                         <c:otherwise>
                                             <li class="page-item"><a class="page-link"
-                                                                     href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${i}">${i}</a>
+                                                                     href="/${sessionScope.role}/search?title=${param.title}&genre=${param.genre}&leftPriceBoundary=${param.leftPriceBoundary}&rightPriceBoundary=${param.rightPriceBoundary}&recordsPerPage=${param.recordsPerPage}&currentPage=${i}">${i}</a>
                                             </li>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
                                 <c:if test="${paginationParameters.currentPage lt paginationParameters.numberOfPages}">
                                     <li class="page-item"><a class="page-link"
-                                                             href="/${sessionScope.role}/search?title=${title}&genre=${genre}&leftPriceBoundary=${leftPriceBoundary}&rightPriceBoundary=${rightPriceBoundary}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                                             href="/${sessionScope.role}/search?title=${param.title}&genre=${param.genre}&leftPriceBoundary=${param.leftPriceBoundary}&rightPriceBoundary=${param.rightPriceBoundary}&recordsPerPage=${param.recordsPerPage}&currentPage=${param.currentPage+1}">Next</a>
                                     </li>
                                 </c:if>
                             </ul>

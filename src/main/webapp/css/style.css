@@ -21,27 +21,6 @@ h2 {
     text-align: center;
 }
 
-.title {
-    padding-top: 100px;
-    padding-bottom:70px;
-    text-align: center;
-}
-
-.title__main {
-    font-size: 32px;
-}
-
-.title__text {
-    font-size: 20px;
-    width: 780px;
-    margin: 0 auto;
-}
-
-.yellow {
-    color: #fcdb00;
-}
-
-
 .head {
     background: rgba(2, 109, 16, 0.91);
     color: #010101;
@@ -57,181 +36,6 @@ h2 {
     font-size:22px;
     font-weight:700;
     color: #ffffff;
-}
-
-.menu {
-    margin-top:8px;
-}
-
-.menu__item {
-    margin: 0 10px;
-}
-
-.menu__item a {
-    font-size:22px;
-    font-weight:700;
-    color: #ffffff;
-}
-
-.menu__item p {
-    font-size:22px;
-    font-weight:700;
-    color: #ffffff;
-}
-
-.offer {
-    margin-top:117px;
-}
-
-.offer__title {
-    font-size:32px;
-    margin-bottom: 15px;
-}
-
-.offer__intro {
-    font-size: 20px;
-    line-height: 1.3em;
-}
-
-.offer__text {
-    font-size: 16px;
-    margin-top:15px;
-    color: #555555;
-    width: 400px;
-}
-
-.icons__item {
-    margin-right:30px;
-}
-
-.icons__item a {
-    color: #000;
-    font-size: 42px;
-    transition: all 0.3s ease;
-}
-
-.icons__item a:hover {
-    text-decoration: none;
-    color: #ff4800;
-}
-
-.ipad {
-    display: block;
-    margin: 60px auto 0;
-}
-
-/* Р’С‚РѕСЂРѕР№ СЌРєСЂР°РЅ */
-
-.feature {
-    margin-bottom: 65px;
-}
-
-.feature__icon {
-    font-size: 50px;
-    margin-right: 37px;
-    color: #000
-}
-
-.feature__text {
-    color: #898989
-}
-
-/* РўСЂРµС‚РёР№ СЌРєСЂР°РЅ */
-
-.touch {
-    background: #010101;
-    color: #fff;
-}
-
-.form {
-    text-align: center;
-}
-
-.form__input {
-    background: #fff;
-    font-size: 16px;
-    font-family: 'PT Sans', sans-serif;
-    border-radius: 5px;
-    width: 580px;
-    padding: 14px 0;
-    margin-right:21px;
-    border: 0;
-    padding-left:23px;
-    outline: none;
-}
-
-.form__btn {
-    font-family: 'PT Sans', sans-serif;
-    background: #fcdb00;
-    color: #000;
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 5px;
-    width: 126px;
-    border: 0;
-    padding: 14px 0;
-    cursor: pointer;
-    outline: none;
-}
-
-/* Р¤СѓС‚РµСЂ */
-
-
-
-.credits {
-    color: #fff;
-    font-size: 16px;
-    width: 184px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-/* РњРµРґРёР°-Р·Р°РїСЂРѕСЃС‹ */
-
-@media screen and (max-width: 992px) {
-    .logo {
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 30px;
-    }
-    .offer {
-        text-align: center;
-    }
-    .offer__text {
-        margin: 20px auto;
-        width: auto;
-    }
-    .icons {
-        justify-content: center;
-    }
-    .icons__item:nth-child(3) {
-        margin-right: 0;
-    }
-    .form__input {
-        margin-right:0;
-        width: 100%;
-    }
-    .form__btn {
-        margin-top: 20px;
-        width: 100%;
-    }
-    .title__text {
-        width: auto;
-    }
-}
-
-@media screen and (max-width: 576px) {
-    .ipad {
-        width: 100%;
-    }
-    .menu {
-        flex-direction: column;
-    }
-    .menu__item {
-        text-align: center;
-        margin-bottom:10px;
-    }
 }
 
 .vertical-offset-100{
@@ -254,14 +58,6 @@ h2 {
     margin-right: 10px;
 }
 
-/*.foot {
-    background: rgba(2, 109, 16, 0.91);
-    overflow: auto;
-    bottom: 0;
-    width: 100%;
-    flex-shrink: 0;
-}*/
-
 .rightsSignBlock {
     margin: 20px 15px;
     color: white;
@@ -276,7 +72,6 @@ h2 {
     padding-bottom:180px;
 }
 
-
 .login {
     display: block;
     min-height: 80%;
@@ -287,58 +82,13 @@ h2 {
     overflow: auto;
 }
 
-
-
 .min_height {
     min-height: 70%;
 }
 
-
-
 .menu-href {
     display: flex;
     justify-content: space-between;
-}
-
-.c{
-    text-align: center;
-    display: block;
-    position: relative;
-    width:80%;
-    margin:100px auto;
-}
-._404{
-    font-size: 220px;
-    position: relative;
-    display: inline-block;
-    z-index: 2;
-    height: 250px;
-    letter-spacing: 15px;
-}
-._1{
-    text-align:center;
-    display:block;
-    position:relative;
-    letter-spacing: 12px;
-    font-size: 4em;
-    line-height: 80%;
-}
-._2{
-    text-align:center;
-    display:block;
-    position: relative;
-    font-size: 20px;
-}
-.text{
-    font-size: 70px;
-    text-align: center;
-    position: relative;
-    display: inline-block;
-    margin: 19px 0px 0px 0px;
-    z-index: 3;
-    width: 100%;
-    line-height: 1.2em;
-    display: inline-block;
 }
 
 .header__container{
