@@ -1,20 +1,18 @@
 package controller.filters;
 
 
-import model.entity.User;
 import model.exception.AccessDeniedException;
 import controller.utils.SecurityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class AuthFilter implements Filter {
+    private final static Logger log = LogManager.getLogger(SecurityUtils.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -23,7 +21,6 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
 
@@ -31,10 +28,11 @@ public class AuthFilter implements Filter {
         String urlPattern = request.getRequestURI();
         String userRole = (String) session.getAttribute("role");
 
-
         if (utils.isSecurityPage(urlPattern)) {
             boolean hasPermission = utils.hasPermission(urlPattern, userRole);
             if (!hasPermission) {
+                String login = (String)request.getSession().getAttribute("login");
+                log.warn("Unauthorized access attempt, login: " + (login == null ? "unknown user" : login)) ;
                 throw new AccessDeniedException();
             }
         }
@@ -46,21 +44,3 @@ public class AuthFilter implements Filter {
 
     }
 }
-
-
-/*
- if (utils.isSecurityPage(request)){
-            if (userRole == null) {
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
-
-            } else {
-                System.out.println(userRole);
-                boolean hasPermission = utils.hasPermission(request);
-                System.out.println("hello after boolean haspermission");
-                if (!hasPermission) {
-                    System.out.println("hellor from if");
-                    throw new AccessDeniedException();
-                }
-            }
-            }
- */
