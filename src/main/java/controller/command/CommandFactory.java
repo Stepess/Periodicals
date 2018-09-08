@@ -8,7 +8,6 @@ public class CommandFactory {
         Command command = new DefaultCommand();
 
         String commandName = request.getRequestURI();
-        //commandName = commandName.replaceAll(".*/app/", "");
         commandName = commandName.replaceAll(".*/user/|.*/admin/|.*/guest/", "");
 
         if (commandName == null || commandName.isEmpty()) {

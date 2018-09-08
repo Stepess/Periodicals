@@ -64,7 +64,9 @@
 
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/user/*</url-pattern>
+    <url-pattern>/admin/*</url-pattern>
+    <url-pattern>/guest/*</url-pattern>
   </filter-mapping>
 
   <filter>

@@ -83,7 +83,7 @@
         </div>
         <div class="row">
             <div class="container-fluid">
-                <p class="text-center text-danger">${fail}</p>
+                <p class="text-center text-danger">${fail}${wrongmonths}</p>
             </div>
         </div>
         <div class="row">

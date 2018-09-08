@@ -1,11 +1,19 @@
-import model.exception.NotEnoughMoney;
-import model.dao.*;
+package model.dao.jdbc;
+
+import model.dao.DaoFactory;
+import model.dao.PublicationDao;
+import model.dao.SubscriptionDao;
+import model.dao.UserDao;
 import model.entity.DTO.PublicationDto;
 import model.entity.DTO.SubscriptionDto;
 import model.entity.Publication;
 import model.entity.Subscription;
 import model.entity.User;
-import model.service.builders.*;
+import model.exception.NotEnoughMoney;
+import model.service.builders.PaymentBuilder;
+import model.service.builders.PublicationDtoBuilder;
+import model.service.builders.SubscriptionBuilder;
+import model.service.builders.UserBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -17,9 +25,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import static org.junit.Assert.*;
+
 public class JdbcSubscriptionDaoTest {
     private static DaoFactory daoFactory;
-    private final static int TEST_ID = 1000000;
     private static User user;
     private static Publication publication;
     private static Subscription subscription;
@@ -93,25 +102,9 @@ public class JdbcSubscriptionDaoTest {
 
 
     @Test(expected = NotEnoughMoney.class)
-    public void When_UserHaveNoEnoughMoney_Then_TransactionFail() {
-        /*double bill = 15.5d;
-        double account = 5.1d;
-
-        Subscription subscription = new SubscriptionBuilder(TEST_ID)
-                .buildPayment(new PaymentBuilder()
-                .buildBill(new BigDecimal(bill))
-                .build())
-                .build();
-        User user = new UserBuilder(TEST_ID)
-                .buildAccount(new BigDecimal(account))
-                .build();*/
-
-
-
+    public void GivenUserHaveNoEnoughMoneyWhenTryToPayThenThrowExceptionFromDaoLayer() {
         try(SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             dao.pay(user, subscription);
         }
     }
-
-
 }

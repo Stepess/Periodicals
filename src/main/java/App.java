@@ -16,10 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class App {
@@ -128,6 +125,32 @@ public class App {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(manager.getProperty("pattern.date"), locale);
         System.out.println((localDateTime.toLocalDate().format(dateFormatter) + " " +
                 localDateTime.toLocalTime().format(timeFormatter)));*/
+/*
+       Toyota t = (Toyota) new Car();
+        System.out.println(t);*/
+
+        //Integer i = new Double(12.5d);
+        /*Double d = new Double(12.5);
+        int i = (int) 5+d + 5);
+        System.out.println(i);*/
+
+        /*Object o = new Toyota();
+        Car car = (Car) o;
+        System.out.println(car);
+
+        String s;
+        s.substring(1);
+        */
+
+      /*
+       Byte b=0;
+        b += 3;*/
+
 
     }
 }
+
+class Car{
+}
+
+class Toyota extends Car{}

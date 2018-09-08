@@ -219,6 +219,7 @@
                     <div class="container-fluid mt-3 font-weight-bold">
                         <p class="text-center text-danger">
                                 ${fail}
+                            ${wrongmonths}
                         </p>
                     </div>
                 </c:otherwise>

@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class SubscribeCommand implements Command{
+    //TODO static final green string
+
     @Override
     public String execute(HttpServletRequest request) {
         LocalDate from = LocalDate.now();
@@ -31,8 +33,7 @@ public class SubscribeCommand implements Command{
         new DataValidationUtil(locale).isDataValid(request, "months",
                 new RegexpManager(locale).getProperty("subscription.months"));
 
-        if (request.getParameter("wrongmonths") == null) {
-            request.setAttribute("fail", new MessageManager(locale).getProperty("message.wrong.months"));
+        if (request.getAttribute("wrongmonths") != null) {
             return new PagePathManager().getProperty("path.command.user.catalog");
         }
 
