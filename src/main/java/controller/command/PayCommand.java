@@ -18,9 +18,20 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashSet;
 import java.util.Locale;
 
+
+/**
+ * Command {@code PayCommand} provides subscription payment.
+ */
 public class PayCommand implements Command {
     private final static Logger log = LogManager.getLogger(Payment.class);
 
+
+    /**
+     * Checks subscription for uniqueness.
+     * If check for uniqueness passed executes pay.
+     * @param request represents http request obtained from client
+     * @return path to which will be forwarded user's request and response
+     */
     @Override
     public String execute(HttpServletRequest request) {
         int subId = Integer.parseInt(request.getParameter("subId"));

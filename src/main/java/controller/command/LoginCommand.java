@@ -12,12 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
-
+/**
+ * Provides login process
+ */
 public class LoginCommand implements Command {
     private final static Logger log = LogManager.getLogger(User.class);
 
+    /**
+     * Checks for user existence, checks if pair "login-password" is correct.
+     * If all checks passed then user will be logged: set user's data in session and user's login in {@code ServletContext}
+     * @param request request represents http request obtained from client
+     * @return path to which will be forwarded user's request and response
+     */
     @Override
-    public String execute(HttpServletRequest request) {//TODO change logic separetly check login and password
+    public String execute(HttpServletRequest request) {
         ResourceManager manager = new PagePathManager();
 
         String login = request.getParameter("login");

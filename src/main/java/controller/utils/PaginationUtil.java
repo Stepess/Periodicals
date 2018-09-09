@@ -4,7 +4,17 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Calculates pagination parameters
+ */
 public class PaginationUtil {
+
+    /**
+     * Calculates pagination parameters to show information paginated
+     * @param request represents http request obtained from client
+     * @param rows number of rows to show
+     * @return {@code HashMap} that contains pagination parameters
+     */
     public Map<String, Integer> calculatePaginationParameters(HttpServletRequest request, int rows) {
         RequestContentUtil requestContentUtil = new RequestContentUtil();
         int currentPage =
