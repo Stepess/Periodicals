@@ -31,12 +31,12 @@ public class AuthFilter implements Filter {
         if (utils.isSecurityPage(urlPattern)) {
             boolean hasPermission = utils.hasPermission(urlPattern, userRole);
             if (!hasPermission) {
-                String login = (String)request.getSession().getAttribute("login");
-                log.warn("Unauthorized access attempt, login: " + (login == null ? "unknown user" : login)) ;
+                String login = (String) request.getSession().getAttribute("login");
+                log.warn("Unauthorized access attempt, login: " + (login == null ? "unknown user" : login));
                 throw new AccessDeniedException();
             }
         }
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

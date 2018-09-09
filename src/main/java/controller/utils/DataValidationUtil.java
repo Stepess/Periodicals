@@ -4,6 +4,7 @@ import model.service.resource.manager.MessageManager;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
+
 import model.service.resource.manager.ResourceManager;
 
 public class DataValidationUtil {
@@ -16,9 +17,9 @@ public class DataValidationUtil {
 
     public void isDataValid(HttpServletRequest request, String parameter, String regex) {
         String data = request.getParameter(parameter);
-        if (data== null || !data.matches(regex)) {
-            request.setAttribute("wrong"+parameter,
-                    manager.getProperty("message.wrong."+parameter));
+        if (data == null || !data.matches(regex)) {
+            request.setAttribute("wrong" + parameter,
+                    manager.getProperty("message.wrong." + parameter));
         }
     }
 

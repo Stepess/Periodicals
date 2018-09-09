@@ -45,7 +45,6 @@ public class PayCommand implements Command {
             log.error("Attempt to pay has failed, payment id " + subscription.getPayment().getId() + "user " +
                     request.getSession().getAttribute("login"));
             request.setAttribute("fail", manager.getProperty("message.pay.error"));
-            /*throw new RuntimeException(manager.getProperty("message.pay.error"));*/
             return new PagePathManager().getProperty("path.command.user.subscription");
         }
 

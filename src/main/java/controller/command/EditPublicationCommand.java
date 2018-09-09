@@ -20,7 +20,6 @@ import java.util.Locale;
 public class EditPublicationCommand implements Command {
     private final static Logger log = LogManager.getLogger(Publication.class);
 
-    //TODO npe when change lang on the form
     //TODO check form is empty after wrong request
     @Override
     public String execute(HttpServletRequest request) {

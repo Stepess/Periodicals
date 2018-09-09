@@ -19,12 +19,12 @@ public class SubscriptionCommand implements Command {
         request.setAttribute("states", Subscription.StateEnum.values());
         request.setAttribute("chosen_state", state);
         List<Subscription> subscriptions = new SubscriptionService().getAllUserSubscription(
-                (String)request.getSession().getAttribute("login"), state)
+                (String) request.getSession().getAttribute("login"), state)
                 .stream()
-                .map(dto -> dto.convertToInternationalizedEntity((Locale)request.getSession().getAttribute("locale")))
+                .map(dto -> dto.convertToInternationalizedEntity((Locale) request.getSession().getAttribute("locale")))
                 .collect(Collectors.toList());
         if (subscriptions.isEmpty()) {
-            request.setAttribute("fail", new MessageManager((Locale)request.getSession().getAttribute("locale"))
+            request.setAttribute("fail", new MessageManager((Locale) request.getSession().getAttribute("locale"))
                     .getProperty("message.not.subscriptions"));
         } else {
             request.setAttribute("subscriptions", subscriptions);

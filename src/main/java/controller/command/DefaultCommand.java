@@ -1,6 +1,5 @@
 package controller.command;
 
-import model.entity.Publication;
 import model.service.resource.manager.PagePathManager;
 import model.service.resource.manager.ResourceManager;
 import org.apache.logging.log4j.LogManager;

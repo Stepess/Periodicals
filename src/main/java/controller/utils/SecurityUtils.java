@@ -2,8 +2,6 @@ package controller.utils;
 
 
 import model.entity.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +15,7 @@ public class SecurityUtils {
         init();
     }
 
-    private static void init(){
+    private static void init() {
         List<String> adminCommand = new ArrayList<>();
         adminCommand.add("addPublication");
         adminCommand.add("editPublication");
@@ -59,7 +57,7 @@ public class SecurityUtils {
 
     public boolean isSecurityPage(String urlPattern) {
         for (User.RoleEnum role : User.RoleEnum.values()) {
-            if (urlPattern.contains(role.getValue())){
+            if (urlPattern.contains(role.getValue())) {
                 return true;
             }
         }

@@ -31,7 +31,7 @@ public class GuestFilter implements Filter {
             return;
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
     @Override

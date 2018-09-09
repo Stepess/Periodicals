@@ -1,7 +1,5 @@
 package controller.utils;
 
-import model.service.PublicationService;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;

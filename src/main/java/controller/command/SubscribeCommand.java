@@ -22,13 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class SubscribeCommand implements Command{
+public class SubscribeCommand implements Command {
     //TODO static final green string
 
     @Override
     public String execute(HttpServletRequest request) {
         LocalDate from = LocalDate.now();
-        Locale locale = (Locale)request.getSession().getAttribute("locale");
+        Locale locale = (Locale) request.getSession().getAttribute("locale");
 
         new DataValidationUtil(locale).isDataValid(request, "months",
                 new RegexpManager(locale).getProperty("subscription.months"));
@@ -38,7 +38,7 @@ public class SubscribeCommand implements Command{
         }
 
         int months = Integer.parseInt(request.getParameter("months"));
-        ResourceManager manager = new MessageManager((Locale)request.getSession().getAttribute("locale"));
+        ResourceManager manager = new MessageManager((Locale) request.getSession().getAttribute("locale"));
         PublicationDto dto = new PublicationService().getById(Integer.parseInt(request.getParameter("pubId")));
         String login = (String) request.getSession().getAttribute("login");
 
@@ -53,12 +53,12 @@ public class SubscribeCommand implements Command{
 
         subscription.calculatePrice(months);
 
-        if (! new SubscriptionService().isUserSubscriptionUnique(login, Integer.parseInt(request.getParameter("pubId")))) {
+        if (!new SubscriptionService().isUserSubscriptionUnique(login, Integer.parseInt(request.getParameter("pubId")))) {
             request.setAttribute("fail", manager.getProperty("message.already.subscribed"));
             return new PagePathManager().getProperty("path.command.user.catalog");
         }
 
         new SubscriptionService().addSubscription(subscription);
-        return new PagePathManager().getProperty("path.command.user.subscription")+"?state=UNPAID";
+        return new PagePathManager().getProperty("path.command.user.subscription") + "?state=UNPAID";
     }
 }
