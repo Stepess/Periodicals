@@ -24,7 +24,7 @@ public class JdbcUserDao implements UserDao {
     private Connection connection;
     private ResourceManager manager;
 
-    public JdbcUserDao(Connection connection) {
+    JdbcUserDao(Connection connection) {
         this.connection = connection;
         this.manager = new DataBaseManager();
     }
@@ -77,10 +77,12 @@ public class JdbcUserDao implements UserDao {
         return user != null;
     }
 
+    //TODO delete comment
     @Override
     public boolean checkUserPassword(String login, String password) {
         User user = getByLogin(login);
-        return user.getPassword().equals(password);
+        //return user.getPassword().equals(password);
+        return password.equals(user.getPassword());
     }
 
 
@@ -91,9 +93,9 @@ public class JdbcUserDao implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.login"))) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next())//TODO change
+            if (resultSet.next()) {
                 user = userMapper.extractFromResultSet(resultSet);
-
+            }
         } catch (SQLException e) {
             log.error(e);
         }
@@ -117,7 +119,6 @@ public class JdbcUserDao implements UserDao {
             if (resultSet.next()) {
                 throw new NotUniqueEmailException();
             }
-
         } catch (SQLException e) {
             log.error(e);
         }

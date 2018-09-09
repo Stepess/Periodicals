@@ -28,7 +28,7 @@ public class JdbcPublicationDao implements PublicationDao {
     private Connection connection;
     private ResourceManager manager;
 
-    public JdbcPublicationDao(Connection connection) {
+    JdbcPublicationDao(Connection connection) {
         this.connection = connection;
         this.manager = new DataBaseManager();
     }
@@ -102,7 +102,7 @@ public class JdbcPublicationDao implements PublicationDao {
             statement.setFloat(6, entity.getPrice().floatValue());
             statement.setString(7, entity.getDescriptionEn());
             statement.setString(8, entity.getDescriptionUa());
-            statement.setInt(10, entity.getId());
+            statement.setInt(9, entity.getId());
             result = statement.executeUpdate();
         } catch (SQLException e) {
             log.error(e);

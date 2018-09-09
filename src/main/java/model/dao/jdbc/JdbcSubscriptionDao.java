@@ -24,7 +24,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     private Connection connection;
     private ResourceManager manager;
 
-    public JdbcSubscriptionDao(Connection connection) {
+    JdbcSubscriptionDao(Connection connection) {
         this.connection = connection;
         this.manager = new DataBaseManager();
     }
@@ -51,7 +51,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             } else {
                 throw new SQLException();
             }
-
 
             setPaymentStatement.setFloat(1, entity.getPayment().getBill().floatValue());
             setPaymentStatement.setInt(2, subscriptionId);
@@ -193,7 +192,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             updatePaymentStatement.executeUpdate();
 
             connection.commit();
-
         } catch (SQLException ex) {
             try {
                 connection.rollback();

@@ -16,6 +16,7 @@ public class JdbcDaoFactory extends DaoFactory {
     private final static Logger log = LogManager.getLogger(JdbcDaoFactory.class);
 
     private DataSource dataSource = ConnectionPoolHolder.getSource();
+
     @Override
     public UserDao createUserDao() {
         return new JdbcUserDao(getConnection());
@@ -31,7 +32,7 @@ public class JdbcDaoFactory extends DaoFactory {
         return new JdbcSubscriptionDao(getConnection());
     }
 
-    private Connection getConnection(){
+    private Connection getConnection() {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
