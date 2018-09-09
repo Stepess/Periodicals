@@ -11,6 +11,7 @@ public class User {
     private String login;
     private String password;
     private String email;
+
     public enum RoleEnum {
         GUEST("guest"), USER("user"), ADMIN("admin");
 
@@ -20,19 +21,19 @@ public class User {
             this.value = value;
         }
 
-        public String getValue(){
+        public String getValue() {
             return value;
         }
 
     }
+
     private RoleEnum role;
     private String firstName;
     private String lastName;
     private String address;
     private BigDecimal account;
-    private Map<String, String> nationalFields;
 
-    public User(UserBuilder builder){
+    public User(UserBuilder builder) {
         this.id = builder.getId();
         this.login = builder.getLogin();
         this.password = builder.getPassword();
@@ -42,7 +43,6 @@ public class User {
         this.lastName = builder.getLastName();
         this.address = builder.getAddress();
         this.account = builder.getAccount();
-        nationalFields = new HashMap<>();
     }
 
     public int getId() {
@@ -79,14 +79,6 @@ public class User {
 
     public BigDecimal getAccount() {
         return account;
-    }
-
-    public Map<String, String> getNationalFields() {
-        return nationalFields;
-    }
-
-    public String getNationalField(String key) {
-        return nationalFields.get(key);
     }
 
     public void setPassword(String password) {

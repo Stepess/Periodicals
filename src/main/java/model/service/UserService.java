@@ -16,19 +16,19 @@ public class UserService {
     }
 
     public boolean isUserExist(String login) {
-        try(UserDao dao = daoFactory.createUserDao()) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.isUserExist(login);
         }
     }
 
     public boolean checkUserPassword(String login, String password) {
-        try(UserDao dao = daoFactory.createUserDao()) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.checkUserPassword(login, password);
         }
     }
 
     public User.RoleEnum getUserRole(String login) {
-        try(UserDao dao = daoFactory.createUserDao()) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             return dao.getByLogin(login).getRole();
         }
     }
@@ -51,7 +51,7 @@ public class UserService {
         }
     }
 
-    public User getUserByLogin(String login){
+    public User getUserByLogin(String login) {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.getByLogin(login);
         }
@@ -63,7 +63,7 @@ public class UserService {
         }
     }
 
-    public String MD5(String in)  {
+    public String MD5(String in) {
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");
@@ -84,9 +84,9 @@ public class UserService {
 
         //convert the byte to hex format method 2
         StringBuffer hexString = new StringBuffer();
-        for (int i=0;i<byteData.length;i++) {
-            String hex=Integer.toHexString(0xff & byteData[i]);
-            if(hex.length()==1) hexString.append('0');
+        for (int i = 0; i < byteData.length; i++) {
+            String hex = Integer.toHexString(0xff & byteData[i]);
+            if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }
         return hexString.toString();

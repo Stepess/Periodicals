@@ -13,12 +13,12 @@ public class SubscriptionBuilder {
     private LocalDate startDate;
     private LocalDate endDate;
     private Subscription.StateEnum state;
-    private BigDecimal sum;//TODO maybe deletePublication
     private Publication publication;
     private Payment payment;
     private int ownerId;
 
-    public SubscriptionBuilder(){}
+    public SubscriptionBuilder() {
+    }
 
     public SubscriptionBuilder(int id) {
         this.id = id;
@@ -44,11 +44,6 @@ public class SubscriptionBuilder {
         return this;
     }
 
-    public SubscriptionBuilder buildSum(BigDecimal sum) {
-        this.sum = sum;
-        return this;
-    }
-
     public SubscriptionBuilder buildPublication(Publication publication) {//TODO check null?
         this.publication = publication;
         return this;
@@ -64,7 +59,7 @@ public class SubscriptionBuilder {
         return this;
     }
 
-    public Subscription build(){
+    public Subscription build() {
         return new Subscription(this);
     }
 
@@ -86,10 +81,6 @@ public class SubscriptionBuilder {
 
     public Subscription.StateEnum getState() {
         return state;
-    }
-
-    public BigDecimal getSum() {
-        return sum;
     }
 
     public Publication getPublication() {

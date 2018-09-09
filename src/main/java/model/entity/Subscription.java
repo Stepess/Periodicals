@@ -7,12 +7,13 @@ import java.time.LocalDate;
 
 public class Subscription {
     private int id;
-    private BigDecimal total;
     private LocalDate startDate;
     private LocalDate endDate;
-    public enum StateEnum{
+
+    public enum StateEnum {
         PAID, UNPAID
     }
+
     private StateEnum state;
     private Publication publication;
     private Payment payment;
@@ -20,7 +21,6 @@ public class Subscription {
 
     public Subscription(SubscriptionBuilder builder) {
         this.id = builder.getId();
-        this.total = builder.getTotal();
         this.startDate = builder.getStartDate();
         this.endDate = builder.getEndDate();
         this.state = builder.getState();
@@ -29,16 +29,12 @@ public class Subscription {
         this.ownerId = builder.getOwnerId();
     }
 
-    public void calculatePrice(int month){
+    public void calculatePrice(int month) {
         payment.setBill(BigDecimal.valueOf(month).multiply(publication.getPrice()));
     }
 
     public int getId() {
         return id;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
     }
 
     public LocalDate getStartDate() {

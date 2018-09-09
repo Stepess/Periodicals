@@ -21,7 +21,6 @@ public class PublicationDto {
     private BigDecimal price;
     private String descriptionEn;
     private String descriptionUa;
-    private Image image; //TODO figure out about work with image
 
     public PublicationDto(PublicationDtoBuilder builder) {
         this.id = builder.getId();
@@ -117,14 +116,6 @@ public class PublicationDto {
         this.descriptionUa = descriptionUa;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
     @Override
     public String toString() {
         return "PublicationDto{" +
@@ -137,7 +128,6 @@ public class PublicationDto {
                 ", price=" + price +
                 ", descriptionEn='" + descriptionEn + '\'' +
                 ", descriptionUa='" + descriptionUa + '\'' +
-                ", image=" + image +
                 '}';
     }
 }

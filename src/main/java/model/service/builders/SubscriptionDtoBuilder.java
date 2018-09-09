@@ -26,7 +26,8 @@ public class SubscriptionDtoBuilder {
     private int paymentId;
     private int publicationId;
 
-    public SubscriptionDtoBuilder(){}
+    public SubscriptionDtoBuilder() {
+    }
 
     public SubscriptionDtoBuilder(int id) {
         this.id = id;
@@ -82,7 +83,7 @@ public class SubscriptionDtoBuilder {
         return this;
     }
 
-    public SubscriptionDtoBuilder buildPublicationDto(PublicationDto dto){
+    public SubscriptionDtoBuilder buildPublicationDto(PublicationDto dto) {
         this.publicationDto = dto;
         return this;
     }
@@ -97,7 +98,7 @@ public class SubscriptionDtoBuilder {
         return this;
     }
 
-    public SubscriptionDto build(){
+    public SubscriptionDto build() {
         return new SubscriptionDto(this);
     }
 

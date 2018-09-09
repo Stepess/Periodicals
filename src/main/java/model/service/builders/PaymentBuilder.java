@@ -10,14 +10,15 @@ public class PaymentBuilder {
     private BigDecimal bill;
     private LocalDateTime paymentDateTime;
 
-    public PaymentBuilder(){};
+    public PaymentBuilder() {
+    }
 
     public PaymentBuilder(int id) {
         this.id = id;
     }
 
     public PaymentBuilder buildBill(BigDecimal bill) {
-        this.bill = bill;//TODO guess gow better to copy
+        this.bill = bill;
         return this;
     }
 

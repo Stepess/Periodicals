@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PublicationDTOMapper implements ObjectMapper<PublicationDto> {
-
     @Override
     public PublicationDto extractFromResultSet(ResultSet resultSet) throws SQLException {
         PublicationDtoBuilder builder = new PublicationDtoBuilder(resultSet.getInt("publication.id"))

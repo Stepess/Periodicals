@@ -38,7 +38,7 @@ public class SubscriptionServiceTest {
                 .buildEndDate(LocalDate.now().plusMonths(1))
                 .buildOwnerId(user.getId())
                 .buildState(Subscription.StateEnum.UNPAID)
-                .buildPayment( new PaymentBuilder()
+                .buildPayment(new PaymentBuilder()
                         .buildBill(new BigDecimal(54.7))
                         .build())
                 .build();

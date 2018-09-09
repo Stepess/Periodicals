@@ -15,7 +15,8 @@ public class PublicationDtoBuilder {
     private String descriptionEn;
     private String descriptionUa;
 
-    public PublicationDtoBuilder() {}
+    public PublicationDtoBuilder() {
+    }
 
     public PublicationDtoBuilder(int id) {
         this.id = id;
@@ -60,7 +61,7 @@ public class PublicationDtoBuilder {
         this.descriptionUa = descriptionUa;
         return this;
     }
-    
+
     public PublicationDto build() {
         return new PublicationDto(this);
     }

@@ -29,7 +29,6 @@ public class SubscriptionDto {
     private int paymentId;
     private int publicationId;
 
-   // private PublicationDto publicationDto;
 
     public SubscriptionDto(SubscriptionDtoBuilder builder) {
         this.id = builder.getId();
@@ -45,22 +44,20 @@ public class SubscriptionDto {
         this.ownerId = builder.getOwnerId();
         this.paymentId = builder.getPaymentId();
         this.publicationId = builder.getPublicationId();
-       // this.publicationDto = builder.getPublicationDto();
     }
 
     public Subscription convertToInternationalizedEntity(Locale locale) {
         return new SubscriptionBuilder(id)
                 .buildPublication(
                         new PublicationBuilder(publicationId)
-                        .buildTitle(locale.getLanguage().equals(ukrainian) ? titleUa : titleEn)
+                                .buildTitle(locale.getLanguage().equals(ukrainian) ? titleUa : titleEn)
                                 .buildGenre(locale.getLanguage().equals(ukrainian) ? genreUa : genreEn)
-                        .build())
-                .buildTotal(total)
+                                .build())
                 .buildPayment(
                         new PaymentBuilder(paymentId)
-                        .buildBill(total)
-                        .buildPaymentDateTime(paymentDateTime)
-                        .build())
+                                .buildBill(total)
+                                .buildPaymentDateTime(paymentDateTime)
+                                .build())
                 .buildStartDate(startDate)
                 .buildEndDate(endDate)
                 .buildState(state)

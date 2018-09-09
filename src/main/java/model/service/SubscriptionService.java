@@ -16,13 +16,13 @@ public class SubscriptionService {
     }
 
     public List<SubscriptionDto> getAllUserSubscription(String login, String state) {
-        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             return dao.getByUserLogin(login, state);
         }
     }
 
     public Subscription getById(int id) {
-        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             return dao.getById(id);
         }
     }
@@ -37,19 +37,19 @@ public class SubscriptionService {
     }
 
     public void addSubscription(Subscription subscription) {
-        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             dao.setInDb(subscription);
         }
     }
 
     public boolean isUserSubscriptionUnique(String login, int publicationId) {
-        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             return dao.isUserSubscriptionUnique(login, publicationId);
         }
     }
 
     public boolean deleteUserSubscription(int id) {
-        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()){
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             return dao.delete(id);
         }
     }

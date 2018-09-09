@@ -12,9 +12,9 @@ public class PublicationBuilder {
     private String genre;
     private BigDecimal price;
     private String description;
-    private Image image; //TODO figure out about work with image
 
-    public PublicationBuilder() {}
+    public PublicationBuilder() {
+    }
 
     public PublicationBuilder(int id) {
         this.id = id;
@@ -45,11 +45,6 @@ public class PublicationBuilder {
         return this;
     }
 
-    public PublicationBuilder buildImage(Image image) {
-        this.image = image;
-        return this;
-    }
-
     public Publication build() {
         return new Publication(this);
     }
@@ -76,9 +71,5 @@ public class PublicationBuilder {
 
     public String getDescription() {
         return description;
-    }
-
-    public Image getImage() {
-        return image;
     }
 }

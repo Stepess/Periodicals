@@ -15,9 +15,6 @@ public class Publication {
     private String genre;
     private BigDecimal price;
     private String description;
-    private Image image; //TODO figure out about work with image
-    //private Blob blob;
-    private Map<String, String> nationalFields;
 
     public Publication(String title) {
         this.title = title;
@@ -30,8 +27,6 @@ public class Publication {
         this.genre = builder.getGenre();
         this.price = builder.getPrice();
         this.description = builder.getDescription();
-        this.image = builder.getImage();
-        nationalFields = new HashMap<>();
     }
 
 
@@ -59,10 +54,6 @@ public class Publication {
         return description;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,13 +64,12 @@ public class Publication {
                 Objects.equals(author, that.author) &&
                 Objects.equals(genre, that.genre) &&
                 Objects.equals(price, that.price) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(image, that.image);
+                Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, genre, price, description, image);
+        return Objects.hash(id, title, author, genre, price, description);
     }
 
     @Override
@@ -91,7 +81,6 @@ public class Publication {
                 ", genre='" + genre + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
-                ", image=" + image +
                 '}';
     }
 }

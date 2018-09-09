@@ -39,7 +39,7 @@ public class JdbcSubscriptionDaoTest {
     @Before
     public void insertTestData() {
 
-        try(UserDao dao = daoFactory.createUserDao()) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             dao.setInDb(new UserBuilder()
                     .buildLogin("test")
                     .buildPassword("testik")
@@ -64,7 +64,7 @@ public class JdbcSubscriptionDaoTest {
                 .buildDescriptionUa("ТестТестТест")
                 .build();
 
-        try(PublicationDao dao = daoFactory.createPublicationDao()) {
+        try (PublicationDao dao = daoFactory.createPublicationDao()) {
             dao.setInDb(publicationDto);
             List<PublicationDto> result = dao.getAll().stream().filter(dto -> dto.getTitleEn().equals("test")).collect(Collectors.toList());
             publication = result.get(0).convertToInternationalizedEntity(new Locale("en"));
@@ -75,13 +75,13 @@ public class JdbcSubscriptionDaoTest {
                 .buildEndDate(LocalDate.now().plusMonths(1))
                 .buildOwnerId(user.getId())
                 .buildState(Subscription.StateEnum.UNPAID)
-                .buildPayment( new PaymentBuilder()
+                .buildPayment(new PaymentBuilder()
                         .buildBill(new BigDecimal(54.7))
                         .build())
                 .buildPublication(publication)
                 .build();
 
-        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             dao.setInDb(subscription);
             List<SubscriptionDto> result = dao.getByUserLogin(user.getLogin(), Subscription.StateEnum.UNPAID.toString());
             subscription = result.get(0).convertToInternationalizedEntity(new Locale("en"));
@@ -90,10 +90,10 @@ public class JdbcSubscriptionDaoTest {
 
     @After
     public void deleteTestData() {
-        try(UserDao dao = daoFactory.createUserDao()) {
+        try (UserDao dao = daoFactory.createUserDao()) {
             dao.delete(user.getId());
         }
-        try(PublicationDao dao = daoFactory.createPublicationDao()) {
+        try (PublicationDao dao = daoFactory.createPublicationDao()) {
             dao.delete(publication.getId());
         }
     }
@@ -101,7 +101,7 @@ public class JdbcSubscriptionDaoTest {
 
     @Test(expected = NotEnoughMoneyException.class)
     public void GivenUserHaveNoEnoughMoneyWhenTryToPayThenThrowExceptionFromDaoLayer() {
-        try(SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             dao.pay(user, subscription);
         }
     }

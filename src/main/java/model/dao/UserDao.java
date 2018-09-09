@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Payment;
 import model.entity.User;
 
 import java.math.BigDecimal;
