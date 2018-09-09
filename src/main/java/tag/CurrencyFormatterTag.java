@@ -5,17 +5,15 @@ import model.service.resource.manager.LocalePatternManager;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.math.BigDecimal;
 import java.util.Locale;
 
-public class timeFormatter extends SimpleTagSupport {
-    private LocalTime localTime;
+public class CurrencyFormatterTag extends SimpleTagSupport {
+    private BigDecimal money;
     private Locale locale;
 
-    public void setLocalTime(LocalTime localTime) {
-        this.localTime = localTime;
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
 
     public void setLocale(Locale locale) {
@@ -25,7 +23,8 @@ public class timeFormatter extends SimpleTagSupport {
     @Override
     public void doTag() throws JspException, IOException {
         LocalePatternManager manager = new LocalePatternManager(locale);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(manager.getProperty("pattern.time"), locale);
-        getJspContext().getOut().write(localTime.format(formatter));
+        getJspContext().getOut().write(manager.getProperty("pattern.currency.sign") +
+                money.multiply(new BigDecimal(manager.getProperty("pattern.currency.course")))
+                        .setScale(2, BigDecimal.ROUND_DOWN));
     }
 }

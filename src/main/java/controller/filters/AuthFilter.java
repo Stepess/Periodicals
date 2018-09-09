@@ -21,12 +21,12 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpSession session = request.getSession();
+        final HttpServletRequest request = (HttpServletRequest) servletRequest;
+        final HttpSession session = request.getSession();
 
-        SecurityUtils utils = new SecurityUtils();
         String urlPattern = request.getRequestURI();
         String userRole = (String) session.getAttribute("role");
+        SecurityUtils utils = new SecurityUtils();
 
         if (utils.isSecurityPage(urlPattern)) {
             boolean hasPermission = utils.hasPermission(urlPattern, userRole);

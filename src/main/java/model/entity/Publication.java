@@ -82,8 +82,6 @@ public class Publication {
         return Objects.hash(id, title, author, genre, price, description, image);
     }
 
-
-
     @Override
     public String toString() {
         return "Publication{" +
@@ -95,13 +93,5 @@ public class Publication {
                 ", description='" + description + '\'' +
                 ", image=" + image +
                 '}';
-    }
-
-    public String getNationalField(String key) {
-        return nationalFields.get(key);
-    }
-
-    public void setNationalField(String key, String field) {
-        this.nationalFields.put(key, field);
     }
 }

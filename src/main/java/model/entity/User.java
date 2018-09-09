@@ -89,10 +89,6 @@ public class User {
         return nationalFields.get(key);
     }
 
-    public void setNationalField(String key, String field) {
-        this.nationalFields.put(key, field);
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }

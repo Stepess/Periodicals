@@ -1,14 +1,11 @@
 package model.service.builders;
 
-import model.entity.BookedPublication;
 import model.entity.Payment;
 import model.entity.Publication;
 import model.entity.Subscription;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SubscriptionBuilder {
     private int id;

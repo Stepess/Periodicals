@@ -9,31 +9,10 @@
     <short-name>myshortname</short-name>
     <uri>http://mycompany.com</uri>
 
-    <!-- Invoke 'Generate' action to add tags or functions -->
-    <tag>
-        <name>setParamInQuery</name>
-        <tag-class>tag.setParamInQueryStringTag</tag-class>
-        <body-content>empty</body-content>
-        <attribute>
-            <name>query</name>
-            <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <!--<attribute>
-            <name>paramName</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <name>paramValue</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>-->
-    </tag>
 
     <tag>
         <name>formatDate</name>
-        <tag-class>tag.dateFormatter</tag-class>
+        <tag-class>tag.DateFormatterTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>localDate</name>
@@ -49,7 +28,7 @@
 
     <tag>
         <name>formatTime</name>
-        <tag-class>tag.timeFormatter</tag-class>
+        <tag-class>tag.TimeFormatterTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>localTime</name>
@@ -65,7 +44,7 @@
 
     <tag>
         <name>formatDateTime</name>
-        <tag-class>tag.dateTimeFormatter</tag-class>
+        <tag-class>tag.DateTimeFormatterTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>localDateTime</name>
@@ -81,7 +60,7 @@
 
     <tag>
         <name>formatCurrency</name>
-        <tag-class>tag.currencyFormatter</tag-class>
+        <tag-class>tag.CurrencyFormatterTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>money</name>

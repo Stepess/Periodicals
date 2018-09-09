@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class dateFormatter extends SimpleTagSupport {
+public class DateFormatterTag extends SimpleTagSupport {
     private LocalDate localDate;
     private Locale locale;
 

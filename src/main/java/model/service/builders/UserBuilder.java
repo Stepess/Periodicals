@@ -65,7 +65,6 @@ public class UserBuilder {
         return new User(this);
     }
 
-
     public int getId() {
         return id;
     }
