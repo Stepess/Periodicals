@@ -92,7 +92,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         return subscription;
     }
 
-    //TODO perhaps never used
     @Override
     public List<Subscription> getAll() {
         SubscriptionMapper subscriptionMapper = new SubscriptionMapper();
@@ -111,40 +110,9 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         return subscriptions;
     }
 
-    //TODO never used
     @Override
     public boolean update(Subscription entity) {
-        int result = 0;
-        try (
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.update"));
-                PreparedStatement paymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))
-        ) {
-            connection.setAutoCommit(false);
-            statement.setString(1, entity.getState().toString().toLowerCase());
-            statement.setFloat(2, entity.getTotal().floatValue());
-            statement.setDate(3, Date.valueOf(entity.getStartDate()));
-            statement.setDate(4, Date.valueOf(entity.getEndDate()));
-            statement.setInt(5, entity.getOwnerId());
-            statement.setInt(6, entity.getPublication().getId());
-            Payment payment = entity.getPayment();
-
-            paymentStatement.setFloat(1, payment.getBill().floatValue());
-            paymentStatement.setTimestamp(2, Timestamp.valueOf(payment.getPaymentDateTime()));
-            paymentStatement.setInt(3, entity.getPublication().getId());
-            paymentStatement.setInt(4, entity.getOwnerId());
-            paymentStatement.setInt(5, payment.getId());
-
-            result = statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                log.error(ex);
-            }
-            log.error(e);
-        }
-        return result > 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -159,33 +127,6 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         }
         return result > 0;
     }
-
-
-   /* @Override
-    public List<Subscription> getByUserLogin(String login) {
-        SubscriptionMapper subscriptionMapper = new SubscriptionMapper();
-        List<Subscription> subscriptions = new ArrayList<>();
-        try (
-                Connection connection = source.getConnection();
-                PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))
-        ) {
-            statement.setString(1, login);
-            try (
-                    ResultSet resultSet = statement.executeQuery()
-            ) {
-                while (resultSet.next()) {
-                    subscriptions.add(subscriptionMapper.extractFromResultSet(resultSet));
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return subscriptions;
-    }*/
 
     @Override
     public List<SubscriptionDto> getByUserLogin(String login, String state) {
@@ -214,7 +155,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                 PreparedStatement setPaidPubStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.pub"));
                 PreparedStatement updateSubscriptionStatement = connection.prepareStatement(manager.getProperty("db.user.query.set.sub.paid"));
                 PreparedStatement updateAccountStatement = connection.prepareStatement(manager.getProperty("db.user.query.update.account"));
-                PreparedStatement updatePaymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.update.date.time"));
+                PreparedStatement updatePaymentStatement = connection.prepareStatement(manager.getProperty("db.payment.query.update.date.time"))
         ) {
             connection.setAutoCommit(false);
 

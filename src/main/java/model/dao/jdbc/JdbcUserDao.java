@@ -19,9 +19,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO handle exception
-//TODO maybe send to the dao DTO
-
 public class JdbcUserDao implements UserDao {
     private final static Logger log = LogManager.getLogger(JdbcUserDao.class);
     private Connection connection;
@@ -43,7 +40,7 @@ public class JdbcUserDao implements UserDao {
             statement.setString(5, entity.getFirstName());
             statement.setString(6, entity.getLastName());
             statement.setString(7, entity.getAddress());
-            statement.setFloat(8, 0.0f);//TODO guess how handle money
+            statement.setFloat(8, 0.0f);
             result = statement.executeUpdate();
         } catch (SQLException e) {
             log.error(e);
@@ -53,19 +50,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public User getById(int id) {
-        UserMapper userMapper = new UserMapper();
-        User user = null;
-        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.id"))) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                user = userMapper.extractFromResultSet(resultSet);
-            }
-
-        } catch (SQLException e) {
-            log.error(e);
-        }
-        return user;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -140,25 +125,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public boolean update(User entity) {
-        int result = 0;
-        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.update"))) {
-            statement.setString(1, entity.getLogin());
-            statement.setString(2, entity.getPassword());
-            statement.setString(3, entity.getEmail());
-            statement.setString(4, entity.getRole().toString().toLowerCase());
-            statement.setString(5, entity.getFirstName());
-            statement.setString(6, entity.getNationalField("firstName"));//TODO guess how put right name
-            statement.setString(7, entity.getLastName());
-            statement.setString(8, entity.getNationalField("lastName"));//TODO guess how put right name
-            statement.setString(9, entity.getAddress());
-            statement.setString(10, entity.getNationalField("address"));//TODO guess how put right name
-            statement.setFloat(11, entity.getAccount().floatValue());//TODO guess how handle money
-            statement.setInt(12, entity.getId());
-            result = statement.executeUpdate();
-        } catch (SQLException e) {
-            log.error(e);
-        }
-        return result > 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -11,9 +11,6 @@ public interface PublicationDao extends GenericDao<PublicationDto>{
     Map<PublicationDto, Integer> getStatistics();
     List<User> getReport(int id);
     void checkDataUnique(String titleEn, String titleUa);
-/*    List<PublicationDto> getAllMultiLanguagePublication();
-    void insertPublicationDto(PublicationDto dto);*/
-    List<PublicationDto> search(Map<String, String> searchParameters);
     int getNumberOfPublications();
     List<PublicationDto> getPaginatedList(int start, int recordsPerPage);
     int getNumberOfSearchedPublications(Map<String, String> searchParameters);

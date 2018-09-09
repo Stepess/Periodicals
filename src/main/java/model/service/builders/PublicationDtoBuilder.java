@@ -60,9 +60,7 @@ public class PublicationDtoBuilder {
         this.descriptionUa = descriptionUa;
         return this;
     }
-
-
-
+    
     public PublicationDto build() {
         return new PublicationDto(this);
     }

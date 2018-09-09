@@ -70,7 +70,6 @@ public class JdbcPublicationDao implements PublicationDao {
         return publicationDto;
     }
 
-    //TODO do I need?
     @Override
     public List<PublicationDto> getAll() {
         List<PublicationDto> publications = new ArrayList<>();
@@ -89,8 +88,6 @@ public class JdbcPublicationDao implements PublicationDao {
         }
         return publications;
     }
-
-    //TODO think about changing title
 
     @Override
     public boolean update(PublicationDto entity) {
@@ -185,37 +182,6 @@ public class JdbcPublicationDao implements PublicationDao {
             log.error(e);
         }
     }
-
-    //TODO do I need?
-    @Override
-    public List<PublicationDto> search(Map<String, String> searchParameters) {
-        List<PublicationDto> publications = new ArrayList<>();
-        PublicationDTOMapper mapper = new PublicationDTOMapper();
-        try (PreparedStatement statement =
-                     connection.prepareStatement(manager.getProperty("db.publication.query.search"))) {
-            statement.setString(1, "%" + searchParameters.getOrDefault("title", "") + "%");
-            statement.setString(2, "%" + searchParameters.getOrDefault("title", "") + "%");
-            statement.setString(3, "%" + searchParameters.getOrDefault("genre", "") + "%");
-            statement.setString(4, "%" + searchParameters.getOrDefault("genre", "") + "%");
-            statement.setFloat(5, Float.parseFloat(searchParameters
-                    .getOrDefault("leftPriceBoundary", "0.0")));
-            statement.setFloat(6, Float.parseFloat(searchParameters
-                    .getOrDefault("rightPriceBoundary", "10000.0")));
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                PublicationDto publicationDto = mapper.extractFromResultSet(resultSet);
-                publications.add(publicationDto);
-            }
-
-            if (publications.isEmpty()) {
-                throw new NothingFoundException();
-            }
-        } catch (SQLException e) {
-            log.error(e);
-        }
-        return publications;
-    }
-
 
     @Override
     public int getNumberOfPublications() {

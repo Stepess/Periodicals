@@ -95,7 +95,8 @@ public class RegistrationCommand implements Command {
         request.getSession().setAttribute("login", user.getLogin());
         request.getSession().setAttribute("role", User.RoleEnum.USER.getValue());
         request.getSession().getServletContext().setAttribute(user.getLogin(), request.getSession());
-        return  "redirect:/user" + new PagePathManager().getProperty("path.page.main");
+        
+        return "redirect:" + new PagePathManager().getProperty("path.command.user.profile");
     }
 
 
