@@ -1,11 +1,9 @@
 package model.service;
 
-import model.entity.DTO.PublicationDto;
 import model.entity.Subscription;
 import model.entity.User;
-import model.exception.NotEnoughMoney;
+import model.exception.NotEnoughMoneyException;
 import model.service.builders.PaymentBuilder;
-import model.service.builders.PublicationDtoBuilder;
 import model.service.builders.SubscriptionBuilder;
 import model.service.builders.UserBuilder;
 import org.junit.BeforeClass;
@@ -13,8 +11,6 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
-import static org.junit.Assert.*;
 
 public class SubscriptionServiceTest {
     private static SubscriptionService service;
@@ -24,7 +20,7 @@ public class SubscriptionServiceTest {
         service = new SubscriptionService();
     }
 
-    @Test(expected = NotEnoughMoney.class)
+    @Test(expected = NotEnoughMoneyException.class)
     public void GivenUserHaveNotEnoughMoneyWhenUserPaySubscriptionThenThrowException() {
         User user = new UserBuilder()
                 .buildLogin("test")

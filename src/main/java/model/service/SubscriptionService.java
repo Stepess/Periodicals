@@ -1,6 +1,6 @@
 package model.service;
 
-import model.exception.NotEnoughMoney;
+import model.exception.NotEnoughMoneyException;
 import model.dao.DaoFactory;
 import model.dao.SubscriptionDao;
 import model.entity.DTO.SubscriptionDto;
@@ -30,7 +30,7 @@ public class SubscriptionService {
     public void paySubscription(User user, Subscription subscription) {
         try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             if (user.getAccount().compareTo(subscription.getPayment().getBill()) < 0) {
-                throw new NotEnoughMoney();
+                throw new NotEnoughMoneyException();
             }
             dao.pay(user, subscription);
         }

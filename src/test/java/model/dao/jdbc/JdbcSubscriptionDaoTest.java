@@ -9,7 +9,7 @@ import model.entity.DTO.SubscriptionDto;
 import model.entity.Publication;
 import model.entity.Subscription;
 import model.entity.User;
-import model.exception.NotEnoughMoney;
+import model.exception.NotEnoughMoneyException;
 import model.service.builders.PaymentBuilder;
 import model.service.builders.PublicationDtoBuilder;
 import model.service.builders.SubscriptionBuilder;
@@ -24,8 +24,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.*;
 
 public class JdbcSubscriptionDaoTest {
     private static DaoFactory daoFactory;
@@ -101,7 +99,7 @@ public class JdbcSubscriptionDaoTest {
     }
 
 
-    @Test(expected = NotEnoughMoney.class)
+    @Test(expected = NotEnoughMoneyException.class)
     public void GivenUserHaveNoEnoughMoneyWhenTryToPayThenThrowExceptionFromDaoLayer() {
         try(SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             dao.pay(user, subscription);

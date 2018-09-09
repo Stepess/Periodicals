@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 //TODO delete?
 public class JdbcPaymentDao implements PaymentDao {
     private Connection connection;
@@ -30,15 +31,9 @@ public class JdbcPaymentDao implements PaymentDao {
         try (PreparedStatement statement
                      = connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))) {
             statement.setString(1, login);
-            try (
-                    ResultSet resultSet = statement.executeQuery()
-            ) {
-                while (resultSet.next()) {
-                    subscriptions.add(paymentMapper.extractFromResultSet(resultSet));
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscriptions.add(paymentMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,22 +44,12 @@ public class JdbcPaymentDao implements PaymentDao {
 
     @Override
     public boolean setInDb(Payment entity) {
-        /*int result=0;
-        try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.payment.query.set"))) {
-            statement.setFloat(1, entity.getBill().floatValue());
-            statement.setInt(2, entity.subscriptionId);
-            statement.setInt(3, );
-            result = statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result>0;*/
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Payment getById(int id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override

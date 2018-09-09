@@ -17,7 +17,6 @@ public class PublicationDTOMapper implements ObjectMapper<PublicationDto> {
                 .buildGenreEn(resultSet.getString("genre_en"))
                 .buildGenreUa(resultSet.getString("genre_ua"))
                 .buildPrice(resultSet.getBigDecimal("price"))
-                //.getImage(resultSet.getBlob("image"));//TODO
                 .buildDescriptionEn( resultSet.getString("description_en"))
                 .buildDescriptionUa( resultSet.getString("description_ua"));
         return builder.build();

@@ -57,11 +57,11 @@ public class JdbcUserDao implements UserDao {
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.id"))) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    user = userMapper.extractFromResultSet(resultSet);
-                }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                user = userMapper.extractFromResultSet(resultSet);
             }
+
         } catch (SQLException e) {
             log.error(e);
         }
@@ -105,10 +105,10 @@ public class JdbcUserDao implements UserDao {
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.login"))) {
             statement.setString(1, login);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next())//TODO change
-                    user = userMapper.extractFromResultSet(resultSet);
-            }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next())//TODO change
+                user = userMapper.extractFromResultSet(resultSet);
+
         } catch (SQLException e) {
             log.error(e);
         }
@@ -122,17 +122,17 @@ public class JdbcUserDao implements UserDao {
                 PreparedStatement emailStatement = connection.prepareStatement(manager.getProperty("db.user.query.get.by.email"))
         ) {
             loginStatement.setString(1, login);
-            try (ResultSet resultSet = loginStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    throw new NotUniqueLoginException();
-                }
+            ResultSet resultSet = loginStatement.executeQuery();
+            if (resultSet.next()) {
+                throw new NotUniqueLoginException();
             }
+
             emailStatement.setString(1, email);
-            try (ResultSet resultSet = emailStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    throw new NotUniqueEmailException();
-                }
+            resultSet = emailStatement.executeQuery();
+            if (resultSet.next()) {
+                throw new NotUniqueEmailException();
             }
+
         } catch (SQLException e) {
             log.error(e);
         }

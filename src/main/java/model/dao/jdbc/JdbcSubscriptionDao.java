@@ -1,6 +1,6 @@
 package model.dao.jdbc;
 
-import model.exception.NotEnoughMoney;
+import model.exception.NotEnoughMoneyException;
 import model.dao.SubscriptionDao;
 import model.dao.mappers.SubscriptionDtoMapper;
 import model.dao.mappers.SubscriptionMapper;
@@ -45,13 +45,13 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
 
             int subscriptionId;
 
-            try (ResultSet resultSet = setSubscriptionStatement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    subscriptionId = resultSet.getInt(1);
-                } else {
-                    throw new SQLException();
-                }
+            ResultSet resultSet = setSubscriptionStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                subscriptionId = resultSet.getInt(1);
+            } else {
+                throw new SQLException();
             }
+
 
             setPaymentStatement.setFloat(1, entity.getPayment().getBill().floatValue());
             setPaymentStatement.setInt(2, subscriptionId);
@@ -79,16 +79,12 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
         try (PreparedStatement statement =
                      connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.id"))) {
             statement.setInt(1, id);
-            try (
-                    ResultSet resultSet = statement.executeQuery()
-            ) {
-                while (resultSet.next()) {
-                    subscription = subscriptionMapper.extractFromResultSet(resultSet);
-                }
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscription = subscriptionMapper.extractFromResultSet(resultSet);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -199,11 +195,11 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                      connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))) {
             statement.setString(1, login);
             statement.setString(2, state);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    subscriptions.add(subscriptionMapper.extractFromResultSet(resultSet));
-                }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscriptions.add(subscriptionMapper.extractFromResultSet(resultSet));
             }
+
         } catch (SQLException e) {
             log.error(e);
         }
@@ -237,7 +233,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             }
 
             if (account.compareTo(bill) < 0) {
-                throw new NotEnoughMoney();
+                throw new NotEnoughMoneyException();
             }
 
             updateAccountStatement.setBigDecimal(1, account.subtract(bill));
@@ -277,11 +273,11 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                      connection.prepareStatement(manager.getProperty("db.subscription.query.check.unique"))) {
             statement.setString(1, login);
             statement.setInt(2, publicationId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    subscription = mapper.extractFromResultSet(resultSet);
-                }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscription = mapper.extractFromResultSet(resultSet);
             }
+
         } catch (SQLException e) {
             log.error(e);
         }

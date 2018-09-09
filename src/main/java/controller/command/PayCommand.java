@@ -1,6 +1,6 @@
 package controller.command;
 
-import model.exception.NotEnoughMoney;
+import model.exception.NotEnoughMoneyException;
 import model.entity.Payment;
 import model.entity.Subscription;
 import model.entity.User;
@@ -15,6 +15,7 @@ import model.service.resource.manager.ResourceManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashSet;
 import java.util.Locale;
 
 public class PayCommand implements Command {
@@ -36,7 +37,7 @@ public class PayCommand implements Command {
         try {
             new SubscriptionService().paySubscription(user, subscription);
         }
-        catch (NotEnoughMoney e) {
+        catch (NotEnoughMoneyException e) {
             request.setAttribute("fail", manager.getProperty("message.not.enough.money"));
             return new PagePathManager().getProperty("path.command.user.subscription");
         }
