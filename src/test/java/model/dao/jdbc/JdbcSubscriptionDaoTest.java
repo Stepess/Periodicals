@@ -53,6 +53,7 @@ public class JdbcSubscriptionDaoTest {
             user = dao.getByLogin("test");
         }
 
+
         PublicationDto publicationDto = new PublicationDtoBuilder()
                 .buildTitleEn("test")
                 .buildTitleUa("тест")
