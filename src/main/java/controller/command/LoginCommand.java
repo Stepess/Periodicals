@@ -21,6 +21,7 @@ public class LoginCommand implements Command {
     /**
      * Checks for user existence, checks if pair "login-password" is correct.
      * If all checks passed then user will be logged: set user's data in session and user's login in {@code ServletContext}
+     *
      * @param request request represents http request obtained from client
      * @return path to which will be forwarded user's request and response
      */
@@ -29,43 +30,59 @@ public class LoginCommand implements Command {
         ResourceManager manager = new PagePathManager();
 
         String login = request.getParameter("login");
-        String password =  request.getParameter("password");
+        String password = request.getParameter("password");
 
-        if (login == null || password == null){
+        if (login == null || password == null) {
             return manager.getProperty("path.page.login");
         }
 
         UserService loginService = new UserService();
 
-        if (!request.getSession().getAttribute("role").equals(User.RoleEnum.GUEST.getValue())) {
+        if (!isUserRoleGuest(request)) {
             log.warn("User that already logged tried to sign in");
-            return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
+            return "redirect:/" + loginService.getUserRole(login).toString().toLowerCase()
                     + manager.getProperty("path.command.user.catalog");
         }
 
-        if (! loginService.isUserExist(login)) {
-            request.setAttribute("wrongLogin",
-                    new MessageManager((Locale)request.getSession().getAttribute("locale"))
-                            .getProperty("message.auth.wrong.login"));
-            return  manager.getProperty("path.page.login");
+        if (!loginService.isUserExist(login)) {
+            setMessageToRequest(request, "wrongLogin", "message.auth.wrong.login");
+            return manager.getProperty("path.page.login");
         }
 
         if (loginService.checkUserPassword(login, loginService.MD5(password))) {
-            if (request.getSession().getServletContext().getAttribute(login) != null){
-                ((HttpSession) request.getSession().getServletContext().getAttribute(login)).invalidate();
-            }
-            request.getSession().setAttribute("login", login);
-            request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
-            request.getSession().getServletContext().setAttribute(login, request.getSession());
+
+            invalidateUserSessionIfAlreadyLogged(request, login);
+            loginUser(request, login, loginService);
+
             log.info("User " + login + " has been logged");
-            return "redirect:/" +  loginService.getUserRole(login).toString().toLowerCase()
+            return "redirect:/" + loginService.getUserRole(login).toString().toLowerCase()
                     + "/catalog";
         } else {
-            request.setAttribute("wrongPassword",
-                    new MessageManager((Locale)request.getSession().getAttribute("locale"))
-                            .getProperty("message.auth.wrong.password"));
+            setMessageToRequest(request, "wrongPassword", "message.auth.wrong.password");
         }
         return manager.getProperty("path.page.login");
+    }
+
+    private boolean isUserRoleGuest(HttpServletRequest request) {
+        return request.getSession().getAttribute("role").equals(User.RoleEnum.GUEST.getValue());
+    }
+
+    private void invalidateUserSessionIfAlreadyLogged(HttpServletRequest request, String login) {
+        if (request.getSession().getServletContext().getAttribute(login) != null) {
+            ((HttpSession) request.getSession().getServletContext().getAttribute(login)).invalidate();
+        }
+    }
+
+    private void setMessageToRequest(HttpServletRequest request, String attributeName, String messagePropertyKey) {
+        request.setAttribute(attributeName,
+                new MessageManager((Locale) request.getSession().getAttribute("locale"))
+                        .getProperty(messagePropertyKey));
+    }
+
+    private void loginUser(HttpServletRequest request, String login, UserService loginService) {
+        request.getSession().setAttribute("login", login);
+        request.getSession().setAttribute("role", loginService.getUserRole(login).getValue());
+        request.getSession().getServletContext().setAttribute(login, request.getSession());
     }
 }
 
