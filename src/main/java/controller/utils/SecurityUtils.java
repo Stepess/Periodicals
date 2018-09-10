@@ -3,10 +3,7 @@ package controller.utils;
 
 import model.entity.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SecurityUtils {
     private static final Map<String, List<String>> permittedCommandMap = new HashMap<>();
@@ -16,7 +13,7 @@ public class SecurityUtils {
     }
 
     private static void init() {
-        List<String> adminCommand = new ArrayList<>();
+        List<String> adminCommand = new LinkedList<>();
         adminCommand.add("addPublication");
         adminCommand.add("editPublication");
         adminCommand.add("statistics");
@@ -28,7 +25,7 @@ public class SecurityUtils {
         adminCommand.add("showReport");
         adminCommand.add("deletePublication");
 
-        List<String> userCommand = new ArrayList<>();
+        List<String> userCommand = new LinkedList<>();
         userCommand.add("subscribe");
         userCommand.add("subscriptions");
         userCommand.add("search");
@@ -42,7 +39,7 @@ public class SecurityUtils {
         userCommand.add("changeLanguage");
         userCommand.add("default");
 
-        List<String> guestCommand = new ArrayList<>();
+        List<String> guestCommand = new LinkedList<>();
         guestCommand.add("login");
         guestCommand.add("registration");
         guestCommand.add("catalog");

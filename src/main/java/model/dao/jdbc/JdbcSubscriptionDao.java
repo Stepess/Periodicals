@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class JdbcSubscriptionDao implements SubscriptionDao {
@@ -94,7 +94,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     @Override
     public List<Subscription> getAll() {
         SubscriptionMapper subscriptionMapper = new SubscriptionMapper();
-        List<Subscription> subscriptions = new ArrayList<>();
+        List<Subscription> subscriptions = new LinkedList<>();
         try (
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(manager.getProperty("db.subscription.query.get.all"))
@@ -130,7 +130,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
     @Override
     public List<SubscriptionDto> getByUserLogin(String login, String state) {
         SubscriptionDtoMapper subscriptionMapper = new SubscriptionDtoMapper();
-        List<SubscriptionDto> subscriptions = new ArrayList<>();
+        List<SubscriptionDto> subscriptions = new LinkedList<>();
         try (PreparedStatement statement =
                      connection.prepareStatement(manager.getProperty("db.subscription.query.get.by.user"))) {
             statement.setString(1, login);

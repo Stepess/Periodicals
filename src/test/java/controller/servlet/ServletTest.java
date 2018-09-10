@@ -15,8 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Locale;
 
 import static org.junit.Assert.*;
@@ -92,7 +91,7 @@ public class ServletTest {
         when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
         when(request.getParameter(anyString())).thenReturn(login);
         when(request.getSession()).thenReturn(session);
-        when(service.getAllUserSubscription(login, state)).thenReturn(new ArrayList<SubscriptionDto>());
+        when(service.getAllUserSubscription(login, state)).thenReturn(new LinkedList<SubscriptionDto>());
         when(session.getAttribute("locale")).thenReturn(new Locale("en", "US"));
         servlet.doPost(request, response);
 

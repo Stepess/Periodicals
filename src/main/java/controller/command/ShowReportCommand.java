@@ -6,7 +6,6 @@ import model.service.resource.manager.MessageManager;
 import model.service.resource.manager.PagePathManager;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 

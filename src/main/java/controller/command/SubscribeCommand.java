@@ -16,10 +16,7 @@ import model.service.resource.manager.RegexpManager;
 import model.service.resource.manager.ResourceManager;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class SubscribeCommand implements Command {

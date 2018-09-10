@@ -16,10 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class JdbcPublicationDao implements PublicationDao {
@@ -72,7 +69,7 @@ public class JdbcPublicationDao implements PublicationDao {
 
     @Override
     public List<PublicationDto> getAll() {
-        List<PublicationDto> publications = new ArrayList<>();
+        List<PublicationDto> publications = new LinkedList<>();
         PublicationDTOMapper mapper = new PublicationDTOMapper();
         try (
                 Statement statement = connection.createStatement();
@@ -140,7 +137,7 @@ public class JdbcPublicationDao implements PublicationDao {
     }
 
     public List<User> getReport(int id) {
-        List<User> report = new ArrayList<>();
+        List<User> report = new LinkedList<>();
         UserMapper mapper = new UserMapper();
         User user;
         try (PreparedStatement statement =
@@ -200,7 +197,7 @@ public class JdbcPublicationDao implements PublicationDao {
 
     @Override
     public List<PublicationDto> getPaginatedList(int start, int recordsPerPage) {
-        List<PublicationDto> publications = new ArrayList<>();
+        List<PublicationDto> publications = new LinkedList<>();
         PublicationDTOMapper mapper = new PublicationDTOMapper();
         try (PreparedStatement statement =
                      connection.prepareStatement(manager.getProperty("db.publication.query.get.limit"))) {
@@ -246,7 +243,7 @@ public class JdbcPublicationDao implements PublicationDao {
 
     @Override
     public List<PublicationDto> getPaginatedSearchList(Map<String, String> searchParameters, int start, int recordsPerPage) {
-        List<PublicationDto> publications = new ArrayList<>();
+        List<PublicationDto> publications = new LinkedList<>();
         PublicationDTOMapper mapper = new PublicationDTOMapper();
         try (PreparedStatement statement =
                      connection.prepareStatement(manager.getProperty("db.publication.query.search.limit"))) {

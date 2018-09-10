@@ -23,7 +23,7 @@ public class PublicationMapper implements ObjectMapper<Publication> {
         return builder.build();
     }
 
-    public Publication makeUnique(Map<Integer, Publication> cache, Publication publication) {
+    Publication makeUnique(Map<Integer, Publication> cache, Publication publication) {
         cache.putIfAbsent(publication.getId(), publication);
         return cache.get(publication.getId());
     }

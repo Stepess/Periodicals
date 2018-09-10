@@ -11,12 +11,9 @@ import model.service.resource.manager.ResourceManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class JdbcUserDao implements UserDao {
@@ -55,7 +52,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public List<User> getAll() {
-        List<User> users = new ArrayList<>();
+        List<User> users = new LinkedList<>();
         UserMapper userMapper = new UserMapper();
         try (
                 Statement statement = connection.createStatement();
