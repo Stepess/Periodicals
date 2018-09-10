@@ -7,6 +7,7 @@ import model.service.builders.PublicationDtoBuilder;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.Locale;
+import java.util.Objects;
 
 
 public class PublicationDto {
@@ -129,5 +130,27 @@ public class PublicationDto {
                 ", descriptionEn='" + descriptionEn + '\'' +
                 ", descriptionUa='" + descriptionUa + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PublicationDto that = (PublicationDto) o;
+        return id == that.id &&
+                Objects.equals(ukrainian, that.ukrainian) &&
+                Objects.equals(titleEn, that.titleEn) &&
+                Objects.equals(titleUa, that.titleUa) &&
+                Objects.equals(author, that.author) &&
+                Objects.equals(genreEn, that.genreEn) &&
+                Objects.equals(genreUa, that.genreUa) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(descriptionEn, that.descriptionEn) &&
+                Objects.equals(descriptionUa, that.descriptionUa);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ukrainian, id, titleEn, titleUa, author, genreEn, genreUa, price, descriptionEn, descriptionUa);
     }
 }
