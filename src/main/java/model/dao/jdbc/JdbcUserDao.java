@@ -77,11 +77,9 @@ public class JdbcUserDao implements UserDao {
         return user != null;
     }
 
-    //TODO delete comment
     @Override
     public boolean checkUserPassword(String login, String password) {
         User user = getByLogin(login);
-        //return user.getPassword().equals(password);
         return password.equals(user.getPassword());
     }
 

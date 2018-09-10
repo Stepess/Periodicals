@@ -20,14 +20,13 @@ import java.util.Locale;
 public class EditPublicationCommand implements Command {
     private final static Logger log = LogManager.getLogger(Publication.class);
 
-    //TODO check form is empty after wrong request
     @Override
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale)request.getSession().getAttribute("locale");
         DataValidationUtil validationUtil = new DataValidationUtil(locale);
         ResourceManager regexManager = new RegexpManager(locale);
 
-        if (request.getAttribute("publication") == null && !"edit".equals(request.getParameter("flag"))) {//todo think about flag
+        if (request.getAttribute("publication") == null && !"edit".equals(request.getParameter("flag"))) {
             request.setAttribute("publication", new PublicationService().getById(
                     Integer.valueOf(request.getParameter("pubId"))));
             return new PagePathManager().getProperty("path.page.edit.publication");

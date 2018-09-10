@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class SubscribeCommand implements Command {
-    //TODO static final green string
 
     @Override
     public String execute(HttpServletRequest request) {

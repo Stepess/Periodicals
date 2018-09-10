@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class SubscriptionCommand implements Command {
-    //TODO check hidden
+
     @Override
     public String execute(HttpServletRequest request) {
         String state = new RequestContentUtil().getRequestParameterOrDefault(request, "state", "PAID");

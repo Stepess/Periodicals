@@ -44,7 +44,7 @@ public class SubscriptionBuilder {
         return this;
     }
 
-    public SubscriptionBuilder buildPublication(Publication publication) {//TODO check null?
+    public SubscriptionBuilder buildPublication(Publication publication) {
         this.publication = publication;
         return this;
     }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//TODO refactor
+
 public class SearchCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
